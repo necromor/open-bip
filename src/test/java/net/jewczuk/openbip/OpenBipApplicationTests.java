@@ -1,4 +1,4 @@
-package net.jewczuk.projektbip;
+package net.jewczuk.openbip;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ProjektBipApplicationTests {
+public class OpenBipApplicationTests {
 
 	@Test
 	public void contextLoads() {
