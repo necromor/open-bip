@@ -36,7 +36,7 @@ public class ArticleEntity extends AbstractEntity{
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="article_id")
-	private Collection<AtachmentEntity> atachments;
+	private Collection<AttachmentEntity> attachments;
 
 	public String getTitle() {
 		return title;
@@ -89,15 +89,15 @@ public class ArticleEntity extends AbstractEntity{
 		this.contentHistory = contentHistory;
 	}
 
-	public Collection<AtachmentEntity> getAtachments() {
-		if (this.atachments == null) {
-			this.atachments = new HashSet<AtachmentEntity>();
+	public Collection<AttachmentEntity> getAttachments() {
+		if (this.attachments == null) {
+			this.attachments = new HashSet<AttachmentEntity>();
 		}
-		return atachments;
+		return attachments;
 	}
 
-	public void setAtachments(Collection<AtachmentEntity> atachments) {
-		this.atachments = atachments;
+	public void setAttachments(Collection<AttachmentEntity> attachments) {
+		this.attachments = attachments;
 	}
 	
 }

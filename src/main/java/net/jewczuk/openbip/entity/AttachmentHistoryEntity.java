@@ -7,8 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="atachment_history")
-public class AtachmentHistoryEntity extends AbstractEntity {
+@Table(name="attachment_history")
+public class AttachmentHistoryEntity extends AbstractEntity {
 
 	@ManyToOne
 	@JoinColumn(name="editor_id")

@@ -12,8 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="atachment")
-public class AtachmentEntity extends AbstractEntity {
+@Table(name="attachment")
+public class AttachmentEntity extends AbstractEntity {
 	
 	@Column(name="file_name", nullable=false)
 	private String fileName;
@@ -36,7 +36,7 @@ public class AtachmentEntity extends AbstractEntity {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="atachment_id")
-	private Collection<AtachmentHistoryEntity> atachmentsHistory;
+	private Collection<AttachmentHistoryEntity> atachmentsHistory;
 
 	public String getFileName() {
 		return fileName;
@@ -86,14 +86,14 @@ public class AtachmentEntity extends AbstractEntity {
 		this.addedBy = addedBy;
 	}
 
-	public Collection<AtachmentHistoryEntity> getAtachmentsHistory() {
+	public Collection<AttachmentHistoryEntity> getAtachmentsHistory() {
 		if (this.atachmentsHistory == null) {
-			this.atachmentsHistory = new HashSet<AtachmentHistoryEntity>();
+			this.atachmentsHistory = new HashSet<AttachmentHistoryEntity>();
 		}
 		return atachmentsHistory;
 	}
 
-	public void setAtachmentsHistory(Collection<AtachmentHistoryEntity> atachmentsHistory) {
+	public void setAtachmentsHistory(Collection<AttachmentHistoryEntity> atachmentsHistory) {
 		this.atachmentsHistory = atachmentsHistory;
 	}
 
