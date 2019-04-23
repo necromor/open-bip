@@ -35,8 +35,8 @@ public class AttachmentEntity extends AbstractEntity {
 	private EditorEntity addedBy;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="atachment_id")
-	private Collection<AttachmentHistoryEntity> atachmentsHistory;
+	@JoinColumn(name="attachment_id")
+	private Collection<AttachmentHistoryEntity> attachmentsHistory;
 
 	public String getFileName() {
 		return fileName;
@@ -86,15 +86,15 @@ public class AttachmentEntity extends AbstractEntity {
 		this.addedBy = addedBy;
 	}
 
-	public Collection<AttachmentHistoryEntity> getAtachmentsHistory() {
-		if (this.atachmentsHistory == null) {
-			this.atachmentsHistory = new HashSet<AttachmentHistoryEntity>();
+	public Collection<AttachmentHistoryEntity> getAttachmentsHistory() {
+		if (this.attachmentsHistory == null) {
+			this.attachmentsHistory = new HashSet<AttachmentHistoryEntity>();
 		}
-		return atachmentsHistory;
+		return attachmentsHistory;
 	}
 
-	public void setAtachmentsHistory(Collection<AttachmentHistoryEntity> atachmentsHistory) {
-		this.atachmentsHistory = atachmentsHistory;
+	public void setAttachmentsHistory(Collection<AttachmentHistoryEntity> attachmentsHistory) {
+		this.attachmentsHistory = attachmentsHistory;
 	}
 
 }
