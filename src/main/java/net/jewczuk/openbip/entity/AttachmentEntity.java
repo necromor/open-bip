@@ -1,42 +1,33 @@
 package net.jewczuk.openbip.entity;
 
-import java.util.Collection;
-import java.util.HashSet;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="attachment")
+@Table(name = "attachment")
 public class AttachmentEntity extends AbstractEntity {
-	
-	@Column(name="file_name", nullable=false)
+
+	@Column(name = "file_name", nullable = false)
 	private String fileName;
-	
-	@Column(name="display_name", nullable=false)
+
+	@Column(name = "display_name", nullable = false)
 	private String displayName;
-	
-	@Column(name="extension", nullable=false)
+
+	@Column(name = "extension", nullable = false)
 	private String extension;
-	
-	@Column(name="size", nullable=false)
+
+	@Column(name = "size", nullable = false)
 	private Long size;
-	
-	@Column(name="display_position", nullable=false)
+
+	@Column(name = "display_position", nullable = false)
 	private int displayPosition;
-	
+
 	@ManyToOne
-	@JoinColumn(name="added_by", nullable=false)
+	@JoinColumn(name = "added_by", nullable = false)
 	private EditorEntity addedBy;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="attachment_id")
-	private Collection<AttachmentHistoryEntity> attachmentsHistory;
 
 	public String getFileName() {
 		return fileName;
@@ -84,17 +75,6 @@ public class AttachmentEntity extends AbstractEntity {
 
 	public void setAddedBy(EditorEntity addedBy) {
 		this.addedBy = addedBy;
-	}
-
-	public Collection<AttachmentHistoryEntity> getAttachmentsHistory() {
-		if (this.attachmentsHistory == null) {
-			this.attachmentsHistory = new HashSet<AttachmentHistoryEntity>();
-		}
-		return attachmentsHistory;
-	}
-
-	public void setAttachmentsHistory(Collection<AttachmentHistoryEntity> attachmentsHistory) {
-		this.attachmentsHistory = attachmentsHistory;
 	}
 
 }

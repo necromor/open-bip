@@ -13,39 +13,41 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @NamedQueries({
-	@NamedQuery(name=ArticleEntity.FIND_SINGLE_ARTICLE_BY_LINK_EAGER, 
-			query="SELECT article FROM ArticleEntity article "
-					+ "JOIN article.children JOIN article.attachments JOIN FETCH article.contentHistory WHERE link = :link")
-})
+		@NamedQuery(name = ArticleEntity.FIND_SINGLE_ARTICLE_BY_LINK_EAGER, query = "SELECT article FROM ArticleEntity article "
+				+ "JOIN article.children JOIN article.attachments JOIN FETCH article.contentHistory WHERE link = :link") })
 @Entity
-@Table(name="article")
+@Table(name = "article")
 public class ArticleEntity extends AbstractEntity {
-	
+
 	public static final String FIND_SINGLE_ARTICLE_BY_LINK_EAGER = "findSingleArticleByLinkEager";
 
-	@Column(name="title", nullable=false)
+	@Column(name = "title", nullable = false)
 	private String title;
-	
-	@Column(name="link", nullable=false, unique=true)
+
+	@Column(name = "link", nullable = false, unique = true)
 	private String link;
-	
-	@Column(name="display_position", nullable=false)
+
+	@Column(name = "display_position", nullable = false)
 	private int displayPosition;
-	
-	@Column(name="main_menu")
+
+	@Column(name = "main_menu")
 	private boolean mainMenu;
-	
+
 	@OneToMany
-	@JoinColumn(name="parent_id")
+	@JoinColumn(name = "parent_id")
 	private Collection<ArticleEntity> children;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="article_id")
+	@JoinColumn(name = "article_id")
 	private Collection<ContentHistoryEntity> contentHistory;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="article_id")
+	@JoinColumn(name = "article_id")
 	private Collection<AttachmentEntity> attachments;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "article_id")
+	private Collection<AttachmentHistoryEntity> attachmentsHistory;
 
 	public String getTitle() {
 		return title;
@@ -108,6 +110,16 @@ public class ArticleEntity extends AbstractEntity {
 	public void setAttachments(Collection<AttachmentEntity> attachments) {
 		this.attachments = attachments;
 	}
-	
+
+	public Collection<AttachmentHistoryEntity> getAttachmentsHistory() {
+		if (this.attachmentsHistory == null) {
+			this.attachmentsHistory = new HashSet<AttachmentHistoryEntity>();
+		}
+		return attachmentsHistory;
+	}
+
+	public void setAttachmentsHistory(Collection<AttachmentHistoryEntity> attachmentsHistory) {
+		this.attachmentsHistory = attachmentsHistory;
+	}
+
 }
- 
