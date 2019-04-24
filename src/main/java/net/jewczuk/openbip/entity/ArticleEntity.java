@@ -7,12 +7,21 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+@NamedQueries({
+	@NamedQuery(name=ArticleEntity.FIND_SINGLE_ARTICLE_BY_LINK_EAGER, 
+			query="SELECT article FROM ArticleEntity article "
+					+ "JOIN article.children JOIN article.attachments JOIN FETCH article.contentHistory WHERE link = :link")
+})
 @Entity
 @Table(name="article")
-public class ArticleEntity extends AbstractEntity{
+public class ArticleEntity extends AbstractEntity {
+	
+	public static final String FIND_SINGLE_ARTICLE_BY_LINK_EAGER = "findSingleArticleByLinkEager";
 
 	@Column(name="title", nullable=false)
 	private String title;
