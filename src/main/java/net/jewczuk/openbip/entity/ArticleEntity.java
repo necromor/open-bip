@@ -13,13 +13,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @NamedQueries({
-		@NamedQuery(name = ArticleEntity.FIND_SINGLE_ARTICLE_BY_LINK_EAGER, query = "SELECT article FROM ArticleEntity article "
-				+ "JOIN article.children JOIN article.attachments JOIN FETCH article.contentHistory WHERE link = :link") })
+	@NamedQuery(name = ArticleEntity.FIND_SINGLE_ARTICLE_BY_LINK, query = "SELECT article FROM ArticleEntity article "
+			+ " WHERE article.link = :link") })
 @Entity
 @Table(name = "article")
 public class ArticleEntity extends AbstractEntity {
 
-	public static final String FIND_SINGLE_ARTICLE_BY_LINK_EAGER = "findSingleArticleByLinkEager";
+	public static final String FIND_SINGLE_ARTICLE_BY_LINK = "findSingleArticleByLinkEager";
 
 	@Column(name = "title", nullable = false)
 	private String title;
