@@ -8,7 +8,7 @@ public class DisplaySingleArticleTO {
 	private String link;
 	private String title;
 	private String content;
-	private List<String> children;
+	private List<ArticleLinkTO> children;
 	private LocalDateTime createdAt;
 	private LocalDateTime editedAt;
 	private String createdBy;
@@ -19,7 +19,7 @@ public class DisplaySingleArticleTO {
 		private String link;
 		private String title;
 		private String content;
-		private List<String> children;
+		private List<ArticleLinkTO> children;
 		private LocalDateTime createdAt;
 		private LocalDateTime editedAt;
 		private String createdBy;
@@ -45,7 +45,7 @@ public class DisplaySingleArticleTO {
 			return this;
 		}
 
-		public Builder children(List<String> children) {
+		public Builder children(List<ArticleLinkTO> children) {
 			this.children = children;
 			return this;
 		}
@@ -120,11 +120,11 @@ public class DisplaySingleArticleTO {
 		this.content = content;
 	}
 
-	public List<String> getChildren() {
+	public List<ArticleLinkTO> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<String> children) {
+	public void setChildren(List<ArticleLinkTO> children) {
 		this.children = children;
 	}
 
