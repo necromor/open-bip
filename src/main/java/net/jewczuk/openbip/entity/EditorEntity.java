@@ -85,4 +85,8 @@ public class EditorEntity extends AbstractEntity {
 		this.active = active;
 	}
 	
+	public String getFullName() {
+		return this.firstName + " " + this.lastName;
+	}
+	
 }
