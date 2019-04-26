@@ -59,6 +59,7 @@ public class ArticleServiceImplTest {
 		assertThat(article.getCreatedBy()).isEqualTo(EDITOR_3);
 		assertThat(article.getEditedBy()).isEqualTo(EDITOR_3);
 		assertThat(article.getCreatedAt()).isEqualTo(article.getEditedAt());
+		assertThat(article.getContentChangesNumber()).isEqualTo(0);
 	}
 	
 	@Test
@@ -70,6 +71,7 @@ public class ArticleServiceImplTest {
 		assertThat(article.getCreatedBy()).isEqualTo(EDITOR_1);
 		assertThat(article.getEditedBy()).isEqualTo(EDITOR_1);
 		assertThat(article.getCreatedAt()).isNotEqualTo(article.getEditedAt());
+		assertThat(article.getContentChangesNumber()).isEqualTo(1);
 	}
 	
 	@Test
@@ -97,5 +99,6 @@ public class ArticleServiceImplTest {
 		assertThat(article.getEditedBy()).isEqualTo(EDITOR_1);
 		assertThat(article.getAttachments().size()).isEqualTo(3);
 		assertThat(article.getAttachments()).allMatch(a -> a.getExtension().equals("odt"));
+		assertThat(article.getContentChangesNumber()).isEqualTo(2);
 	}
 }

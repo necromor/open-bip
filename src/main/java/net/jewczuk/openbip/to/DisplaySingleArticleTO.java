@@ -14,6 +14,7 @@ public class DisplaySingleArticleTO {
 	private String createdBy;
 	private String editedBy;
 	private List<AttachmentTO> attachments;
+	private int contentChangesNumber;
 
 	public static class Builder {
 		private String link;
@@ -25,6 +26,7 @@ public class DisplaySingleArticleTO {
 		private String createdBy;
 		private String editedBy;
 		private List<AttachmentTO> attachments;
+		private int contentChangesNumber;
 
 		public Builder() {
 
@@ -74,6 +76,11 @@ public class DisplaySingleArticleTO {
 			this.attachments = attachments;
 			return this;
 		}
+		
+		public Builder contentChangesNumber(int contentChangesNumber) {
+			this.contentChangesNumber = contentChangesNumber;
+			return this;
+		}
 
 		public DisplaySingleArticleTO build() {
 			return new DisplaySingleArticleTO(this);
@@ -90,6 +97,7 @@ public class DisplaySingleArticleTO {
 		createdBy = builder.createdBy;
 		editedBy = builder.editedBy;
 		attachments = builder.attachments;
+		contentChangesNumber = builder.contentChangesNumber;
 	}
 
 	public DisplaySingleArticleTO() {
@@ -166,6 +174,14 @@ public class DisplaySingleArticleTO {
 
 	public void setAttachments(List<AttachmentTO> attachments) {
 		this.attachments = attachments;
+	}
+
+	public int getContentChangesNumber() {
+		return contentChangesNumber;
+	}
+
+	public void setContentChangesNumber(int contentChangesNumber) {
+		this.contentChangesNumber = contentChangesNumber;
 	}
 
 }
