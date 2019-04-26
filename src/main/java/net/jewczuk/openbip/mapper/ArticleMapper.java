@@ -30,7 +30,7 @@ public class ArticleMapper {
 				.createdAt(contentHistory.get(0).getCreatedAt())
 				.editedAt(contentHistory.get(lastElement).getCreatedAt())
 				.createdBy(contentHistory.get(0).getEditor().getFullName())
-				.createdBy(contentHistory.get(lastElement).getEditor().getFullName())
+				.editedBy(contentHistory.get(lastElement).getEditor().getFullName())
 				.children(article.getChildren().stream()
 						.sorted(Comparator.comparing(ArticleEntity::getDisplayPosition))
 						.map(a -> mapToLink(a))
