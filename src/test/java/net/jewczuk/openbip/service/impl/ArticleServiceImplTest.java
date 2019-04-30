@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
+import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 
 @RunWith(SpringRunner.class)
@@ -27,14 +28,18 @@ import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 @Transactional
 public class ArticleServiceImplTest {
 	
+	private static final String ARTICLE_WITHOUT_CHILDREN = "artykul-bez-dzieci";
+	private static final String INVALID_LINK = "nie-ma-takiego-artykulu";
 	private static final String EDITOR_1 = "Michał Niewiadomy";
 	private static final String EDITOR_2 = "Ewelina Test";
 	private static final String EDITOR_3 = "Aaron Rodgers";
 	private static final String CHILD_1_TITLE = "Dziecko nr 1";
 	private static final String CHILD_1_LINK = "dziecko-nr-1";
 	private static final String CHILD_1_CONTENT = "Artykuł dziecko 1 v2";
+	private static final String CHILD_1_CONTENT_OLD = "Artykuł dziecko 1 v1";
 	private static final String CHILD_2_TITLE = "Dziecko nr 2";
 	private static final String CHILD_2_LINK = "dziecko-nr-2";
+	private static final String CHILD_2_CONTENT = "Artykuł dziecko 2 v1";
 
 	@Autowired
 	private ArticleService articleService;
@@ -43,10 +48,10 @@ public class ArticleServiceImplTest {
     public ExpectedException excE = ExpectedException.none();
 	
 	@Test
-	public void shouldThrowEmptyResultDataAccessExceptionWhenGivenLinkIsInvalid() {
+	public void shouldThrowEmptyResultDataAccessExceptionWhenArticleLinkIsInvalid() {
 		
 		excE.expect(EmptyResultDataAccessException.class);
-		articleService.getArticleByLink("nie-ma-takiego-artykulu");
+		articleService.getArticleByLink(INVALID_LINK);
 	}
 	
 	@Test
@@ -91,7 +96,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldReturnArticleWithContentHistoryFromDifferentEditors() {
-		DisplaySingleArticleTO article = articleService.getArticleByLink("artykul-bez-dzieci");
+		DisplaySingleArticleTO article = articleService.getArticleByLink(ARTICLE_WITHOUT_CHILDREN);
 		
 		assertThat(article.getTitle()).isEqualTo("Artykuł bez dzieci");
 		assertThat(article.getContent()).isEqualTo("Artykuł bez dzieci v3");
@@ -101,4 +106,46 @@ public class ArticleServiceImplTest {
 		assertThat(article.getAttachments()).allMatch(a -> a.getExtension().equals("odt"));
 		assertThat(article.getContentChangesNumber()).isEqualTo(2);
 	}
+	
+	@Test
+	public void shouldThrowEmptyResultDataAccessExceptionWhenHistoryLinkIsInvalid() {
+		
+		excE.expect(EmptyResultDataAccessException.class);
+		articleService.getHistoryByLink(INVALID_LINK);
+	}
+	
+	@Test
+	public void shouldReturnHistoryWhenThereWereNoChangesInContentOrAttachments() {
+		DisplayArticleHistoryTO history = articleService.getHistoryByLink(CHILD_2_LINK);
+		
+		assertThat(history.getAttachmentsHistory()).isEmpty();
+		assertThat(history.getContentHistory().size()).isEqualTo(1);
+		assertThat(history.getTitle()).isEqualTo(CHILD_2_TITLE);
+		assertThat(history.getContentHistory().get(0).getContent()).isEqualTo(CHILD_2_CONTENT);
+		assertThat(history.getContentHistory().get(0).getCreatedBy()).isEqualTo(EDITOR_3);
+	}
+	
+	@Test
+	public void shouldReturnSortedHistory() {
+		DisplayArticleHistoryTO history = articleService.getHistoryByLink(CHILD_1_LINK);
+		List<String> contentList = history.getContentHistory().stream()
+				.map(ch -> ch.getContent())
+				.collect(Collectors.toList());
+		
+		assertThat(contentList).containsExactly(CHILD_1_CONTENT, CHILD_1_CONTENT_OLD);
+		assertThat(history.getContentHistory()).allMatch(ch -> ch.getCreatedBy().equals(EDITOR_1));
+	}
+	
+	@Test
+	public void shouldReturnSortedAttachmentsHistory() {
+		DisplayArticleHistoryTO history = articleService.getHistoryByLink(ARTICLE_WITHOUT_CHILDREN);
+		
+		assertThat(history.getAttachmentsHistory().size()).isEqualTo(5);
+		assertThat(history.getAttachmentsHistory().get(0).getCreatedBy()).isEqualTo(EDITOR_2);
+		assertThat(history.getAttachmentsHistory().get(4).getCreatedBy()).isEqualTo(EDITOR_1);
+		assertThat(history.getAttachmentsHistory().get(1).getLog()).isEqualTo("usunięto wniosek grupa B");
+		assertThat(history.getAttachmentsHistory().get(3).getLog()).isEqualTo("dodano wniosek grupa B");
+	}
+	
 }
+ 

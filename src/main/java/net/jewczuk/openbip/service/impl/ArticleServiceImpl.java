@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import net.jewczuk.openbip.mapper.ArticleMapper;
 import net.jewczuk.openbip.repository.ArticleRepository;
 import net.jewczuk.openbip.service.ArticleService;
+import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 
 @Service
@@ -20,6 +21,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public DisplaySingleArticleTO getArticleByLink(String link) {
 		return articleMapper.mapToDisplaySingleArticle(articleRepository.getArticleByLink(link));
+	}
+
+	@Override
+	public DisplayArticleHistoryTO getHistoryByLink(String link) {
+		return articleMapper.mapToHistory(articleRepository.getArticleByLink(link));
 	}
 
 }

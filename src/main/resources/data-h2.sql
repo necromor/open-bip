@@ -46,5 +46,16 @@ INSERT INTO attachment(id, article_id, file_name, display_name, extension, size,
 INSERT INTO attachment(id, article_id, file_name, display_name, extension, size, display_position, added_by, version, created_at, updated_at)
 	VALUES(5, 5, 'zal_art_bez_dzieci_3.odt', 'wniosek - grupa C', 'odt', 4321, 3, 2, 1, now(), default);
 	
+INSERT INTO attachment_history(id, article_id, editor_id, log, version, created_at, updated_at)
+	VALUES(1, 5, 2, 'dodano wniosek grupa A', 1, '2019-04-26T07:16:55.124', default);
+INSERT INTO attachment_history(id, article_id, editor_id, log, version, created_at, updated_at)
+	VALUES(2, 5, 2, 'dodano wniosek grupa B', 1, '2019-04-26T07:16:50.124', default);
+INSERT INTO attachment_history(id, article_id, editor_id, log, version, created_at, updated_at)
+	VALUES(3, 5, 1, 'usunięto wniosek grupa B', 1, '2019-04-26T07:16:52.124', default);
+INSERT INTO attachment_history(id, article_id, editor_id, log, version, created_at, updated_at)
+	VALUES(4, 5, 1, 'dodano wniosek grupa B', 1, '2019-04-26T07:16:57.124', default);
+INSERT INTO attachment_history(id, article_id, editor_id, log, version, created_at, updated_at)
+	VALUES(5, 5, 1, 'dodano wniosek grupa C', 1, '2019-04-26T07:16:59.124', default);
+	
 	
 	
