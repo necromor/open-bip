@@ -1,8 +1,6 @@
 package net.jewczuk.openbip.controller;
 
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,6 +50,27 @@ public class ArticleControllerTest {
 		resultActions
 			.andExpect(status().isNotFound())
 			.andExpect(view().name(ViewNames.ERROR_404));
+	}
+	
+	@Test
+	public void shouldDisplayArticleHistory() throws Exception {
+		ResultActions resultActions = mockMvc.perform(get("/historia/" + CHILD_2_LINK));
 		
+		resultActions
+			.andExpect(status().isOk())
+			.andExpect(view().name(ViewNames.SHOW_HISTORY))
+			.andExpect(model().attribute("history", allOf(
+					hasProperty("title", is(CHILD_2_TITLE)),
+					hasProperty("contentHistory", hasSize(1))
+					)));
+	}
+	
+	@Test
+	public void shouldReturnError404WhenInvalidHistoryLink() throws Exception {
+		ResultActions resultActions = mockMvc.perform(get("/historia/" + INVALID_LINK));
+		
+		resultActions
+			.andExpect(status().isNotFound())
+			.andExpect(view().name(ViewNames.ERROR_404));
 	}
 }
