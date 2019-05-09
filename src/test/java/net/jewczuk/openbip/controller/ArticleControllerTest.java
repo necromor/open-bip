@@ -48,8 +48,7 @@ public class ArticleControllerTest {
 		ResultActions resultActions = mockMvc.perform(get("/artykul/" + INVALID_LINK));
 		
 		resultActions
-			.andExpect(status().isNotFound())
-			.andExpect(view().name(ViewNames.ERROR_404));
+			.andExpect(status().isNotFound());
 	}
 	
 	@Test
@@ -70,7 +69,6 @@ public class ArticleControllerTest {
 		ResultActions resultActions = mockMvc.perform(get("/historia/" + INVALID_LINK));
 		
 		resultActions
-			.andExpect(status().isNotFound())
-			.andExpect(view().name(ViewNames.ERROR_404));
+			.andExpect(status().isNotFound());
 	}
 }
