@@ -6,7 +6,7 @@ INSERT INTO editor(id, first_name, last_name, email, password, role, phone, acti
 	VALUES(3, 'Aaron', 'Rodgers', 'rodgers@packers.com', 'test', 'EDITOR', '', true, 1, now(), default);
 	
 INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
-	VALUES(1, 'Strona Główna', 'strona-glowna', 1, true, null, 1, now(), default);
+	VALUES(1, 'Witaj na stronie Open Bip', 'strona-glowna', 1, true, null, 1, now(), default);
 INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
 	VALUES(2, 'Artykuł Rodzic', 'artykul-rodzic', 3, true, null, 1, now(), default);
 INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)

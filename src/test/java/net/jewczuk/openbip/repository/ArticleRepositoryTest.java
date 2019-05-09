@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.entity.ArticleEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
 
@@ -33,6 +34,8 @@ public class ArticleRepositoryTest {
 	@Rule
     public ExpectedException excE = ExpectedException.none();
 	
+	private static final String MAIN_PAGE_TITLE = "Witaj na stronie Open Bip";
+	
 	@Test
 	public void shouldThrowEmptyResultDataAccessExceptionWhenGivenLinkIsInvalid() {
 		
@@ -42,9 +45,9 @@ public class ArticleRepositoryTest {
 	
 	@Test
 	public void shouldReturnMainPageArticle() {
-		ArticleEntity article = articleRepository.getArticleByLink("strona-glowna");
+		ArticleEntity article = articleRepository.getArticleByLink(ApplicationProperties.MAIN_PAGE_LINK);
 		
-		assertThat(article.getTitle()).isEqualTo("Strona Główna");
+		assertThat(article.getTitle()).isEqualTo(MAIN_PAGE_TITLE);
 		assertThat(article.getAttachments()).isEmpty();
 		assertThat(article.getChildren()).isEmpty();
 	}

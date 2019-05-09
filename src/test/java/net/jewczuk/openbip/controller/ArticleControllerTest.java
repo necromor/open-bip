@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.constants.ViewNames;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,6 +27,8 @@ public class ArticleControllerTest {
 	private static final String CHILD_2_TITLE = "Dziecko nr 2";
 	private static final String CHILD_2_LINK = "dziecko-nr-2";
 	private static final String CHILD_2_CONTENT = "Artykuł dziecko 2 v1";
+	private static final String MAIN_PAGE_TITLE = "Witaj na stronie Open Bip";
+	private static final String MAIN_PAGE_CONTENT = "Treść strony głównej po edycji";
 
 	@Autowired
     private MockMvc mockMvc;
@@ -70,5 +73,18 @@ public class ArticleControllerTest {
 		
 		resultActions
 			.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	public void shouldDisplayMainPage() throws Exception {
+		ResultActions resultActions = mockMvc.perform(get("/"));
+		
+		resultActions
+			.andExpect(status().isOk())
+			.andExpect(view().name(ViewNames.SHOW_ARTICLE))
+			.andExpect(model().attribute("article", allOf(
+					hasProperty("title", is(MAIN_PAGE_TITLE)),
+					hasProperty("content", is(MAIN_PAGE_CONTENT))
+					)));
 	}
 }

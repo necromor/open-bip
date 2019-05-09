@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.service.ArticleService;
@@ -18,6 +19,13 @@ public class ArticleController {
 	
 	@Autowired
 	private ArticleService articleService;
+	
+	@GetMapping("/")
+	public String showMainPage(Model model) {
+		DisplaySingleArticleTO article = articleService.getArticleByLink(ApplicationProperties.MAIN_PAGE_LINK);
+		model.addAttribute("article", article);
+		return ViewNames.SHOW_ARTICLE;
+	}
 
 	@GetMapping("/artykul/{link}")
 	public String showArticle(@PathVariable String link, Model model) {
