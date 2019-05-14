@@ -1,0 +1,24 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Strona Główna</title>
+</head>
+<body>
+
+<article layout:fragment="content">
+	<header class="row jumbotron">
+		<h1 th:text="${article.title}" class="col-12" />
+		<div class="meta">
+			<p>Utworzony: <span th:text="${article.createdAt}" th:remove="tag"/></p>
+			<p>Autor: <span th:text="${article.editedBy}" th:remove="tag"/></p>
+		</div>
+	</header>
+	
+	<div th:utext="${article.content}" th:remove="tag" />
+	
+</article>
+
+
+</body>
+</html>
