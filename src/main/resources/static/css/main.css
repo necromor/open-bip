@@ -1,3 +1,18 @@
+body {
+	padding: 2em 0;
+}
+
+header p img {
+	height: 75px;
+	display:block;
+	margin: 0 auto;
+}
+
+h1 {
+	font-size: 1.6em;
+	text-align: center;
+}
+
 article header {
 	position: relative;
 }
