@@ -28,7 +28,9 @@ public class ArticleMapper {
 	private ContentHistoryMapper contentHistoryMapper;
 	
 	public DisplaySingleArticleTO mapToDisplaySingleArticle(ArticleEntity article) {
-		List<ContentHistoryEntity> contentHistory = article.getContentHistory().stream().collect(Collectors.toList());
+		List<ContentHistoryEntity> contentHistory = article.getContentHistory().stream()
+				.sorted(Comparator.comparing(ContentHistoryEntity::getCreatedAt))
+				.collect(Collectors.toList());
 		int lastElement = contentHistory.size() - 1;
 		
 		DisplaySingleArticleTO saTO = new DisplaySingleArticleTO.Builder()

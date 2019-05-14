@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="content_history")
-public class ContentHistoryEntity extends AbstractEntity{
+public class ContentHistoryEntity extends AbstractEntity {
 
 	@Column(name="content", nullable=false)
 	private String content;

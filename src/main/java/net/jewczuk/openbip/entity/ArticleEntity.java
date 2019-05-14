@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "article")
 public class ArticleEntity extends AbstractEntity {
 
-	public static final String FIND_SINGLE_ARTICLE_BY_LINK = "findSingleArticleByLinkEager";
+	public static final String FIND_SINGLE_ARTICLE_BY_LINK = "findSingleArticleByLink";
 
 	@Column(name = "title", nullable = false)
 	private String title;
