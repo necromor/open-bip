@@ -2,6 +2,10 @@ body {
 	padding: 2em 0;
 }
 
+header.row {
+	margin-bottom: 2em;
+}
+
 header p img {
 	height: 75px;
 	display:block;
@@ -28,3 +32,42 @@ article header {
 	font-size:0.9em;
 	font-style: italic;
 }
+
+nav {
+	margin-top: 0em;
+}
+nav a {
+	margin-bottom: 0.5em;
+}
+
+nav a:link, nav a:visited {
+	background-color: #e9ecef;
+	color: #000000;
+}
+
+nav a:hover, nav a:active {
+	background-color: #000000;
+	color: #ffffff;
+}
+
+footer {
+	background-color: #e9ecef;
+	margin-top: 3em;
+	padding: 0.5em 0;
+	border-radius: 0.3rem;
+}
+
+footer p {
+	margin-bottom:0;
+	font-size: 0.8em;
+}
+
+footer p a:link, footer p a:visited {
+	color: #000000;
+}
+
+footer p a:hover, footer p a:active {
+	color: #000000;
+	font-style: italic;
+}
+

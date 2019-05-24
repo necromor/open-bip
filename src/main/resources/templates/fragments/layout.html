@@ -13,8 +13,23 @@
 <body>
 
 <div class="container">
-<th:block th:replace="fragments/header :: header"/>
-<th:block layout:fragment="content"/>
+	<th:block th:replace="fragments/header :: header"/>
+	<div class="row">
+		<th:block layout:fragment="content"/>
+		<div class="col-md-3 offset-md-1">
+		<nav class="nav nav-pills flex-column">
+		<a class="nav-item nav-link" th:href="@{/}">Strona główna</a>
+		<a class="nav-item nav-link" th:href="@{/}">Lorem ipsum</a>
+		<a class="nav-item nav-link" th:href="@{/}">Vivamus suscipit cursus elit</a>
+		<a class="nav-item nav-link" th:href="@{/}">Nulla vel mi</a>
+		<a class="nav-item nav-link" th:href="@{/}">Ut lorem felis</a>
+		<a class="nav-item nav-link" th:href="@{/}">Phasellus</a>
+		<a class="nav-item nav-link" th:href="@{/}">Phasellus non sagittis magna, at venenatis orci</a>
+		<a class="nav-item nav-link" th:href="@{/redakcja-bip}">Redakcja BIP</a>
+		</nav>
+		</div>
+	</div>
+	<th:block th:replace="fragments/footer :: footer"/>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
