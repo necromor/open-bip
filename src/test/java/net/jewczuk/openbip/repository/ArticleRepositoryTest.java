@@ -35,6 +35,9 @@ public class ArticleRepositoryTest {
     public ExpectedException excE = ExpectedException.none();
 	
 	private static final String MAIN_PAGE_TITLE = "Witaj na stronie Open Bip";
+	private static final String MAIN_PAGE_LINK = "strona-glowna";
+	private static final String PARENT_LINK = "artykul-rodzic";
+	private static final String NO_CHILDREN_LINK = "artykul-bez-dzieci";
 	
 	@Test
 	public void shouldThrowEmptyResultDataAccessExceptionWhenGivenLinkIsInvalid() {
@@ -89,4 +92,13 @@ public class ArticleRepositoryTest {
 		assertThat(article.getContentHistory()).noneMatch(ch -> ch.getEditor().equals(editor3));
 	}
 
+	
+	@Test
+	public void shouldReturnOnlyMainMenuArticles() {
+		List<ArticleEntity> mainMenu = articleRepository.getMainMenu();
+		List<String> links = mainMenu.stream().map(a -> a.getLink()).collect(Collectors.toList());
+		
+		assertThat(mainMenu.size()).isEqualTo(3);
+		assertThat(links).containsExactly(MAIN_PAGE_LINK, NO_CHILDREN_LINK, PARENT_LINK);
+	}
 }
