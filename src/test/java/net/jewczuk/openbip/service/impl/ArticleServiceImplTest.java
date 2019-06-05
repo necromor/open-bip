@@ -28,7 +28,6 @@ import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 @Transactional
 public class ArticleServiceImplTest {
 	
-	private static final String ARTICLE_WITHOUT_CHILDREN = "artykul-bez-dzieci";
 	private static final String INVALID_LINK = "nie-ma-takiego-artykulu";
 	private static final String EDITOR_1 = "Michał Niewiadomy";
 	private static final String EDITOR_2 = "Ewelina Test";
@@ -40,6 +39,12 @@ public class ArticleServiceImplTest {
 	private static final String CHILD_2_TITLE = "Dziecko nr 2";
 	private static final String CHILD_2_LINK = "dziecko-nr-2";
 	private static final String CHILD_2_CONTENT = "Artykuł dziecko 2 v1";
+	private static final String MAIN_PAGE_LINK = "strona-glowna";
+	private static final String MAIN_PAGE_TITLE = "Witaj na stronie Open Bip";
+	private static final String PARENT_LINK = "artykul-rodzic";
+	private static final String PARENT_TITLE = "Artykuł Rodzic";
+	private static final String NO_CHILDREN_LINK = "artykul-bez-dzieci";
+	private static final String NO_CHILDREN_TITLE = "Artykuł bez dzieci";
 
 	@Autowired
 	private ArticleService articleService;
@@ -96,7 +101,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldReturnArticleWithContentHistoryFromDifferentEditors() {
-		DisplaySingleArticleTO article = articleService.getArticleByLink(ARTICLE_WITHOUT_CHILDREN);
+		DisplaySingleArticleTO article = articleService.getArticleByLink(NO_CHILDREN_LINK);
 		
 		assertThat(article.getTitle()).isEqualTo("Artykuł bez dzieci");
 		assertThat(article.getContent()).isEqualTo("Artykuł bez dzieci v3");
@@ -138,13 +143,23 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldReturnSortedAttachmentsHistory() {
-		DisplayArticleHistoryTO history = articleService.getHistoryByLink(ARTICLE_WITHOUT_CHILDREN);
+		DisplayArticleHistoryTO history = articleService.getHistoryByLink(NO_CHILDREN_LINK);
 		
 		assertThat(history.getAttachmentsHistory().size()).isEqualTo(5);
 		assertThat(history.getAttachmentsHistory().get(0).getCreatedBy()).isEqualTo(EDITOR_2);
 		assertThat(history.getAttachmentsHistory().get(4).getCreatedBy()).isEqualTo(EDITOR_1);
 		assertThat(history.getAttachmentsHistory().get(1).getLog()).isEqualTo("usunięto wniosek grupa B");
 		assertThat(history.getAttachmentsHistory().get(3).getLog()).isEqualTo("dodano wniosek grupa B");
+	}
+	
+	@Test
+	public void shouldReturnMainMenu() {
+		List<ArticleLinkTO> mainMenu = articleService.getMainMenu();
+		List<String> titles = mainMenu.stream().map(a -> a.getTitle()).collect(Collectors.toList());
+		List<String> links = mainMenu.stream().map(a -> a.getLink()).collect(Collectors.toList());
+		
+		assertThat(titles).containsExactly(MAIN_PAGE_TITLE, NO_CHILDREN_TITLE, PARENT_TITLE);
+		assertThat(links).containsExactly(MAIN_PAGE_LINK, NO_CHILDREN_LINK, PARENT_LINK);
 	}
 	
 }

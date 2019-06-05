@@ -89,4 +89,6 @@ public class ArticleControllerTest {
 					hasProperty("content", is(MAIN_PAGE_CONTENT))
 					)));
 	}
+	
+
 }
