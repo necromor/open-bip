@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import net.jewczuk.openbip.TestConstants;
 import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.entity.ArticleEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
@@ -34,41 +35,36 @@ public class ArticleRepositoryTest {
 	@Rule
     public ExpectedException excE = ExpectedException.none();
 	
-	private static final String MAIN_PAGE_TITLE = "Witaj na stronie Open Bip";
-	private static final String MAIN_PAGE_LINK = "strona-glowna";
-	private static final String PARENT_LINK = "artykul-rodzic";
-	private static final String NO_CHILDREN_LINK = "artykul-bez-dzieci";
-	
 	@Test
 	public void shouldThrowEmptyResultDataAccessExceptionWhenGivenLinkIsInvalid() {
 		
 		excE.expect(EmptyResultDataAccessException.class);
-		articleRepository.getArticleByLink("nie-ma-takiego-artykulu");
+		articleRepository.getArticleByLink(TestConstants.INVALID_LINK);
 	}
 	
 	@Test
 	public void shouldReturnMainPageArticle() {
 		ArticleEntity article = articleRepository.getArticleByLink(ApplicationProperties.MAIN_PAGE_LINK);
 		
-		assertThat(article.getTitle()).isEqualTo(MAIN_PAGE_TITLE);
+		assertThat(article.getTitle()).isEqualTo(TestConstants.MAIN_PAGE_TITLE);
 		assertThat(article.getAttachments()).isEmpty();
 		assertThat(article.getChildren()).isEmpty();
 	}
 	
 	@Test
 	public void shouldReturnArticleWithChildrenAndAttachments() {
-		ArticleEntity article = articleRepository.getArticleByLink("artykul-rodzic");
+		ArticleEntity article = articleRepository.getArticleByLink(TestConstants.PARENT_LINK);
 		List<String> childrenTitles = article.getChildren().stream().map(a -> a.getTitle()).collect(Collectors.toList());
 		List<String> attachmentsFiles = article.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
 		
 		assertThat(article.getChildren().size()).isEqualTo(2);
-		assertThat(childrenTitles).containsExactlyInAnyOrder("Dziecko nr 1", "Dziecko nr 2");
-		assertThat(attachmentsFiles).containsExactlyInAnyOrder("zal_nr_1.pdf", "zal_nr_2.pdf");
+		assertThat(childrenTitles).containsExactlyInAnyOrder(TestConstants.CHILD_1_TITLE, TestConstants.CHILD_2_TITLE);
+		assertThat(attachmentsFiles).containsExactlyInAnyOrder(TestConstants.ATTACHMENT_1_NAME, TestConstants.ATTACHMENT_2_NAME);
 	}
 	
 	@Test
 	public void shouldReturnContentChangesWithDiferentAuthors() {
-		ArticleEntity article = articleRepository.getArticleByLink("artykul-bez-dzieci");
+		ArticleEntity article = articleRepository.getArticleByLink(TestConstants.NO_CHILDREN_LINK);
 		EditorEntity editor1 = editorRepository.getOne(1L);
 		EditorEntity editor2 = editorRepository.getOne(2L);
 		EditorEntity editor3 = editorRepository.getOne(3L);
@@ -81,7 +77,7 @@ public class ArticleRepositoryTest {
 	
 	@Test
 	public void shouldReturnContentChangesWithOneAuthor() {
-		ArticleEntity article = articleRepository.getArticleByLink("dziecko-nr-1");
+		ArticleEntity article = articleRepository.getArticleByLink(TestConstants.CHILD_1_LINK);
 		EditorEntity editor1 = editorRepository.getOne(1L);
 		EditorEntity editor2 = editorRepository.getOne(2L);
 		EditorEntity editor3 = editorRepository.getOne(3L);
@@ -99,6 +95,6 @@ public class ArticleRepositoryTest {
 		List<String> links = mainMenu.stream().map(a -> a.getLink()).collect(Collectors.toList());
 		
 		assertThat(mainMenu.size()).isEqualTo(3);
-		assertThat(links).containsExactly(MAIN_PAGE_LINK, NO_CHILDREN_LINK, PARENT_LINK);
+		assertThat(links).containsExactly(TestConstants.MAIN_PAGE_LINK, TestConstants.NO_CHILDREN_LINK, TestConstants.PARENT_LINK);
 	}
 }

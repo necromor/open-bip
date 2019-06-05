@@ -18,39 +18,33 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import net.jewczuk.openbip.TestConstants;
 import net.jewczuk.openbip.constants.ViewNames;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ArticleControllerTest {
-	
-	private static final String INVALID_LINK = "nie-ma-takiego-artykulu";
-	private static final String CHILD_2_TITLE = "Dziecko nr 2";
-	private static final String CHILD_2_LINK = "dziecko-nr-2";
-	private static final String CHILD_2_CONTENT = "Artykuł dziecko 2 v1";
-	private static final String MAIN_PAGE_TITLE = "Witaj na stronie Open Bip";
-	private static final String MAIN_PAGE_CONTENT = "Treść strony głównej po edycji";
 
 	@Autowired
     private MockMvc mockMvc;
 	
 	@Test
 	public void shouldDisplaySingleArticle() throws Exception {
-		ResultActions resultActions = mockMvc.perform(get("/artykul/" + CHILD_2_LINK));
+		ResultActions resultActions = mockMvc.perform(get("/artykul/" + TestConstants.CHILD_2_LINK));
 		
 		resultActions
 			.andExpect(status().isOk())
 			.andExpect(view().name(ViewNames.SHOW_ARTICLE))
 			.andExpect(model().attribute("article", allOf(
-					hasProperty("title", is(CHILD_2_TITLE)),
-					hasProperty("content", is(CHILD_2_CONTENT))
+					hasProperty("title", is(TestConstants.CHILD_2_TITLE)),
+					hasProperty("content", is(TestConstants.CHILD_2_CONTENT))
 					)));
 	}
 	
 	@Test
 	public void shouldReturnError404WhenInvalidArticleLink() throws Exception {
-		ResultActions resultActions = mockMvc.perform(get("/artykul/" + INVALID_LINK));
+		ResultActions resultActions = mockMvc.perform(get("/artykul/" + TestConstants.INVALID_LINK));
 		
 		resultActions
 			.andExpect(status().isNotFound());
@@ -58,20 +52,20 @@ public class ArticleControllerTest {
 	
 	@Test
 	public void shouldDisplayArticleHistory() throws Exception {
-		ResultActions resultActions = mockMvc.perform(get("/historia/" + CHILD_2_LINK));
+		ResultActions resultActions = mockMvc.perform(get("/historia/" + TestConstants.CHILD_2_LINK));
 		
 		resultActions
 			.andExpect(status().isOk())
 			.andExpect(view().name(ViewNames.SHOW_HISTORY))
 			.andExpect(model().attribute("history", allOf(
-					hasProperty("title", is(CHILD_2_TITLE)),
+					hasProperty("title", is(TestConstants.CHILD_2_TITLE)),
 					hasProperty("contentHistory", hasSize(1))
 					)));
 	}
 	
 	@Test
 	public void shouldReturnError404WhenInvalidHistoryLink() throws Exception {
-		ResultActions resultActions = mockMvc.perform(get("/historia/" + INVALID_LINK));
+		ResultActions resultActions = mockMvc.perform(get("/historia/" + TestConstants.INVALID_LINK));
 		
 		resultActions
 			.andExpect(status().isNotFound());
@@ -85,8 +79,8 @@ public class ArticleControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(view().name(ViewNames.SHOW_ARTICLE))
 			.andExpect(model().attribute("article", allOf(
-					hasProperty("title", is(MAIN_PAGE_TITLE)),
-					hasProperty("content", is(MAIN_PAGE_CONTENT))
+					hasProperty("title", is(TestConstants.MAIN_PAGE_TITLE)),
+					hasProperty("content", is(TestConstants.MAIN_PAGE_CONTENT))
 					)));
 	}
 	
