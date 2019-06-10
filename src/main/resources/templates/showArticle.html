@@ -14,11 +14,18 @@
 			<p>Autor: <span th:text="${article.editedBy}" th:remove="tag"/></p>
 		</div>
 	</header>
-	
+
+	<nav aria-label="breadcrumb" th:unless="${article.link == 'strona-glowna'}">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a th:href="@{/}">Strona główna</a></li>
+			<li class="breadcrumb-item active" aria-current="page" th:text="${article.title}"></li>
+		</ol>
+	</nav>
+
 	<nav class="article-children" th:if="${article.children.size() > 0}">
-	<th:block th:each="child : ${article.children}">
-	<a class="nav-item nav-link" th:href="@{'/artykul/' +${child.link}}" th:text="${child.title}"></a>
-	</th:block>
+		<th:block th:each="child : ${article.children}">
+		<a class="nav-item nav-link" th:href="@{'/artykul/' +${child.link}}" th:text="${child.title}"></a>
+		</th:block>
 	</nav>
 	
 	<div th:utext="${article.content}" th:remove="tag" />
