@@ -3,7 +3,7 @@ package net.jewczuk.openbip.to;
 public class ArticleLinkTO {
 
 	private String link;
-	private String Title;
+	private String title;
 
 	public ArticleLinkTO() {
 
@@ -12,7 +12,7 @@ public class ArticleLinkTO {
 	public ArticleLinkTO(String link, String title) {
 		super();
 		this.link = link;
-		Title = title;
+		this.title = title;
 	}
 
 	public String getLink() {
@@ -24,18 +24,18 @@ public class ArticleLinkTO {
 	}
 
 	public String getTitle() {
-		return Title;
+		return title;
 	}
 
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Title == null) ? 0 : Title.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((link == null) ? 0 : link.hashCode());
 		return result;
 	}
@@ -49,10 +49,10 @@ public class ArticleLinkTO {
 		if (getClass() != obj.getClass())
 			return false;
 		ArticleLinkTO other = (ArticleLinkTO) obj;
-		if (Title == null) {
-			if (other.Title != null)
+		if (title == null) {
+			if (other.title != null)
 				return false;
-		} else if (!Title.equals(other.Title))
+		} else if (!title.equals(other.title))
 			return false;
 		if (link == null) {
 			if (other.link != null)
