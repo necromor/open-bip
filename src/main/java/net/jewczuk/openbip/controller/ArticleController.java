@@ -1,5 +1,7 @@
 package net.jewczuk.openbip.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.service.ArticleService;
+import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 
@@ -23,7 +26,9 @@ public class ArticleController {
 	@GetMapping("/")
 	public String showMainPage(Model model) {
 		DisplaySingleArticleTO article = articleService.getArticleByLink(ApplicationProperties.MAIN_PAGE_LINK);
+		List<ArticleLinkTO> menu = articleService.getMainMenu();
 		model.addAttribute("article", article);
+		model.addAttribute("mainMenu", menu);
 		return ViewNames.SHOW_ARTICLE;
 	}
 
@@ -33,7 +38,9 @@ public class ArticleController {
 		String template = ViewNames.SHOW_ARTICLE;
 		try {
 			DisplaySingleArticleTO article = articleService.getArticleByLink(link);
+			List<ArticleLinkTO> menu = articleService.getMainMenu();
 			model.addAttribute("article", article);
+			model.addAttribute("mainMenu", menu);
 		} catch (EmptyResultDataAccessException empty) {
 			throw new ResourceNotFoundException();
 		}
@@ -47,7 +54,9 @@ public class ArticleController {
 		String template = ViewNames.SHOW_HISTORY;;
 		try {
 			DisplayArticleHistoryTO history = articleService.getHistoryByLink(link);
+			List<ArticleLinkTO> menu = articleService.getMainMenu();
 			model.addAttribute("history", history);
+			model.addAttribute("mainMenu", menu);
 		} catch (EmptyResultDataAccessException empty) {
 			throw new ResourceNotFoundException();
 		}
