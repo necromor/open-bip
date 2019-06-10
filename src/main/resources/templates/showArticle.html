@@ -15,6 +15,12 @@
 		</div>
 	</header>
 	
+	<nav class="article-children" th:if="${article.children.size() > 0}">
+	<th:block th:each="child : ${article.children}">
+	<a class="nav-item nav-link" th:href="@{'/artykul/' +${child.link}}" th:text="${child.title}"></a>
+	</th:block>
+	</nav>
+	
 	<div th:utext="${article.content}" th:remove="tag" />
 	
 </article>
