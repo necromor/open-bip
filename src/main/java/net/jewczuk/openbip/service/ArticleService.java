@@ -13,5 +13,7 @@ public interface ArticleService {
 	DisplayArticleHistoryTO getHistoryByLink(String link);
 	
 	List<ArticleLinkTO> getMainMenu();
+	
+	List<ArticleLinkTO> getBreadcrumbs(String link);
 
 }

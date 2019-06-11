@@ -44,13 +44,13 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldReturnArticleWithoutAttachmentsNoChildrenAndNoHistory() {
-		DisplaySingleArticleTO article = articleService.getArticleByLink(TestConstants.CHILD_2_LINK);
+		DisplaySingleArticleTO article = articleService.getArticleByLink(TestConstants.CHILD_2_1_LINK);
 		
-		assertThat(article.getTitle()).isEqualTo(TestConstants.CHILD_2_TITLE);
+		assertThat(article.getTitle()).isEqualTo(TestConstants.CHILD_2_1_TITLE);
 		assertThat(article.getAttachments()).isEmpty();
 		assertThat(article.getChildren()).isEmpty();
-		assertThat(article.getCreatedBy()).isEqualTo(TestConstants.EDITOR_3);
-		assertThat(article.getEditedBy()).isEqualTo(TestConstants.EDITOR_3);
+		assertThat(article.getCreatedBy()).isEqualTo(TestConstants.EDITOR_2);
+		assertThat(article.getEditedBy()).isEqualTo(TestConstants.EDITOR_2);
 		assertThat(article.getCreatedAt()).isEqualTo(article.getEditedAt());
 		assertThat(article.getContentChangesNumber()).isEqualTo(0);
 	}
@@ -143,6 +143,30 @@ public class ArticleServiceImplTest {
 		
 		assertThat(titles).containsExactly(TestConstants.MAIN_PAGE_TITLE, TestConstants.NO_CHILDREN_TITLE, TestConstants.PARENT_TITLE);
 		assertThat(links).containsExactly(TestConstants.MAIN_PAGE_LINK, TestConstants.NO_CHILDREN_LINK, TestConstants.PARENT_LINK);
+	}
+	
+	@Test
+	public void shouldReturnEmptyListWhenArticleIsOnLevel1() {
+		List<ArticleLinkTO> breadCrumbs = articleService.getBreadcrumbs(TestConstants.NO_CHILDREN_LINK);
+		
+		assertThat(breadCrumbs).isEmpty();
+	}
+	
+	@Test
+	public void shouldReturnOneElementWhenArticleIsOnLevel2() {
+		List<ArticleLinkTO> breadCrumbs = articleService.getBreadcrumbs(TestConstants.CHILD_2_LINK);
+		
+		assertThat(breadCrumbs.size()).isEqualTo(1);
+		assertThat(breadCrumbs.get(0).getLink()).isEqualTo(TestConstants.PARENT_LINK);
+	}
+	
+	@Test
+	public void shouldReturnTwoElementsWhenArticleIsOnLevel3() {
+		List<ArticleLinkTO> breadCrumbs = articleService.getBreadcrumbs(TestConstants.CHILD_2_1_LINK);
+		
+		assertThat(breadCrumbs.size()).isEqualTo(2);
+		assertThat(breadCrumbs.get(0).getLink()).isEqualTo(TestConstants.CHILD_2_LINK);
+		assertThat(breadCrumbs.get(1).getLink()).isEqualTo(TestConstants.PARENT_LINK);
 	}
 	
 }

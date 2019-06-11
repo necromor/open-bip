@@ -14,6 +14,7 @@ public class TestConstants {
 	public static final String CHILD_2_LINK = "dziecko-nr-2";
 	public static final String CHILD_2_CONTENT = "Artykuł dziecko 2 v1";
 	public static final String CHILD_2_1_LINK = "dziecko-nr-2-1";
+	public static final String CHILD_2_1_TITLE = "Dziecko nr 2_1";
 	public static final String MAIN_PAGE_LINK = "strona-glowna";
 	public static final String MAIN_PAGE_TITLE = "Witaj na stronie Open Bip";
 	public static final String PARENT_LINK = "artykul-rodzic";

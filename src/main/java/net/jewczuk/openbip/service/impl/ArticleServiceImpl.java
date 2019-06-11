@@ -39,4 +39,11 @@ public class ArticleServiceImpl implements ArticleService {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public List<ArticleLinkTO> getBreadcrumbs(String link) {
+		return articleRepository.getBreadcrumbs(link).stream()
+				.map(a -> articleMapper.mapToLink(a))
+				.collect(Collectors.toList());
+	}
+
 }
