@@ -9,5 +9,9 @@ public interface CustomArticleRepository {
 	ArticleEntity getArticleByLink(String link);
 	
 	List<ArticleEntity> getMainMenu();
+	
+	List<ArticleEntity> getBreadcrumbs(String link);
+	
+	ArticleEntity getParentArticle(String link);
 
 }

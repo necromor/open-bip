@@ -97,4 +97,41 @@ public class ArticleRepositoryTest {
 		assertThat(mainMenu.size()).isEqualTo(3);
 		assertThat(links).containsExactly(TestConstants.MAIN_PAGE_LINK, TestConstants.NO_CHILDREN_LINK, TestConstants.PARENT_LINK);
 	}
+	
+	@Test
+	public void shouldThrowExceptionWhenArticleHasNoParent() {
+		ArticleEntity article = articleRepository.getParentArticle(TestConstants.MAIN_PAGE_LINK);
+		
+		assertThat(article).isNull();
+	}
+	
+	@Test
+	public void shouldReturnParent() {
+		ArticleEntity article = articleRepository.getParentArticle(TestConstants.CHILD_1_LINK);
+		
+		assertThat(article.getLink()).isEqualTo(TestConstants.PARENT_LINK);
+	}
+	
+	@Test
+	public void shouldReturnEmptyBreadCrumbsWhenArticlehasNoParent() {
+		List<ArticleEntity> breadCrumbs = articleRepository.getBreadcrumbs(TestConstants.MAIN_PAGE_LINK);
+		
+		assertThat(breadCrumbs).isEmpty();
+	}
+	
+	@Test
+	public void shouldReturnOneElementWhenArticleIsInLevel2() {
+		List<ArticleEntity> breadCrumbs = articleRepository.getBreadcrumbs(TestConstants.CHILD_1_LINK);
+		
+		assertThat(breadCrumbs.size()).isEqualTo(1);
+		assertThat(breadCrumbs.get(0).getTitle()).isEqualTo(TestConstants.PARENT_TITLE);
+	}
+	
+	@Test
+	public void shouldReturnTwoElementsInCorrectOrderWhenArticleIsInLevel3() {
+		List<ArticleEntity> breadCrumbs = articleRepository.getBreadcrumbs(TestConstants.CHILD_2_1_LINK);
+		List<String> links = breadCrumbs.stream().map(a -> a.getLink()).collect(Collectors.toList());
+		
+		assertThat(links).contains(TestConstants.CHILD_2_LINK, TestConstants.PARENT_LINK);
+	}
 }

@@ -16,13 +16,16 @@ import javax.persistence.Table;
 	@NamedQuery(name = ArticleEntity.FIND_SINGLE_ARTICLE_BY_LINK, query = "SELECT article FROM ArticleEntity article "
 			+ " WHERE article.link = :link"),
 	@NamedQuery(name = ArticleEntity.FIND_MAIN_MENU, query = "SELECT article FROM ArticleEntity article WHERE article.mainMenu = true "
-			+ "ORDER BY article.displayPosition ASC")})
+			+ "ORDER BY article.displayPosition ASC"),
+	@NamedQuery(name = ArticleEntity.FIND_PARENT, query = "SELECT article FROM ArticleEntity article JOIN article.children children"
+			+ " WHERE (SELECT a FROM ArticleEntity a WHERE a.link = :link) IN children")})
 @Entity
 @Table(name = "article")
 public class ArticleEntity extends AbstractEntity {
 
 	public static final String FIND_SINGLE_ARTICLE_BY_LINK = "findSingleArticleByLink";
 	public static final String FIND_MAIN_MENU = "findMainMenu";
+	public static final String FIND_PARENT = "findParent";
 
 	@Column(name = "title", nullable = false)
 	private String title;

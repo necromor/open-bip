@@ -15,6 +15,8 @@ INSERT INTO article(id, title, link, display_position, main_menu, parent_id, ver
 	VALUES(4, 'Dziecko nr 2', 'dziecko-nr-2', 1, false, 2, 1, now(), default);
 INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
 	VALUES(5, 'Artykuł bez dzieci', 'artykul-bez-dzieci', 2, true, null, 1, now(), default);
+INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
+	VALUES(6, 'Dziecko nr 2_1', 'dziecko-nr-2-1', 1, false, 4, 1, now(), default);
 	
 INSERT INTO content_history(id, article_id, content, editor_id, version, created_at, updated_at)
 	VALUES(1, 1, 'Treść strony głównej', 1, 1, now(), default);
@@ -34,6 +36,8 @@ INSERT INTO content_history(id, article_id, content, editor_id, version, created
 	VALUES(8, 5, 'Artykuł bez dzieci v2', 3, 1, now(), default);	
 INSERT INTO content_history(id, article_id, content, editor_id, version, created_at, updated_at)
 	VALUES(9, 5, 'Artykuł bez dzieci v3', 1, 1, now(), default);
+INSERT INTO content_history(id, article_id, content, editor_id, version, created_at, updated_at)
+	VALUES(10, 6, 'Artykuł dziecko 2_1 v1', 2, 1, now(), default);
 	
 INSERT INTO attachment(id, article_id, file_name, display_name, extension, size, display_position, added_by, version, created_at, updated_at)
 	VALUES(1, 2, 'zal_nr_1.pdf', 'zał nr 1', 'pdf', 321, 2, 1, 1, now(), default);
