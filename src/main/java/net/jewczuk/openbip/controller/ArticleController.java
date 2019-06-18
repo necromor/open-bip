@@ -1,5 +1,6 @@
 package net.jewczuk.openbip.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,11 @@ public class ArticleController {
 		try {
 			DisplaySingleArticleTO article = articleService.getArticleByLink(link);
 			List<ArticleLinkTO> menu = articleService.getMainMenu();
+			List<ArticleLinkTO> breadcrumbs = articleService.getBreadcrumbs(link);
+			Collections.reverse(breadcrumbs);
 			model.addAttribute("article", article);
 			model.addAttribute("mainMenu", menu);
+			model.addAttribute("breadcrumbs", breadcrumbs);
 		} catch (EmptyResultDataAccessException empty) {
 			throw new ResourceNotFoundException();
 		}

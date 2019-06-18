@@ -18,6 +18,9 @@
 	<nav aria-label="breadcrumb" th:unless="${article.link == 'strona-glowna'}">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a th:href="@{/}">Strona główna</a></li>
+			<th:block th:each="crumb : ${breadcrumbs}">
+			<li class="breadcrumb-item"><a th:href="@{'/artykul/' +${crumb.link}}" th:text="${crumb.title}"></a></li>
+			</th:block>
 			<li class="breadcrumb-item active" aria-current="page" th:text="${article.title}"></li>
 		</ol>
 	</nav>
