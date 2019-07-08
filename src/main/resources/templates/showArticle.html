@@ -10,7 +10,7 @@
 	<header class="row jumbotron">
 		<h2 th:text="${article.title}" class="col-12" />
 		<div class="meta">
-			<p>Utworzony: <span th:text="${article.createdAt}" th:remove="tag"/></p>
+			<p>Utworzony: <span th:text="${#temporals.format(article.createdAt, 'dd-MM-yyyy HH:mm')}" th:remove="tag"/></p>
 			<p>Autor: <span th:text="${article.editedBy}" th:remove="tag"/></p>
 		</div>
 	</header>
@@ -32,6 +32,20 @@
 	</nav>
 	
 	<div th:utext="${article.content}" th:remove="tag" />
+	
+	<th:block th:if="${article.attachments.size() > 0}">
+	<h3>Załączniki:</h3>
+	<ol class="list-group">
+		<li class="list-group-item" th:each="attachment : ${article.attachments}">
+		<a th:href="@{'/zalaczniki/' +${attachment.fileName}}" th:text="${attachment.displayName}"></a>
+			[<span th:text=". +${attachment.extension}" th:remove="tag"></span>; 
+			<span th:text="${attachment.size}" th:remove="tag"></span>]
+			<span class="editor-details">dodany przez: <span th:text="${attachment.addedBy}" th:remove="tag"></span>, 
+			<span th:text="${#temporals.format(attachment.addedAt, 'dd-MM-yyyy HH:mm')}" th:remove="tag"></span>
+			</span>
+		</li>
+	</ol>
+	</th:block>
 	
 </article>
 
