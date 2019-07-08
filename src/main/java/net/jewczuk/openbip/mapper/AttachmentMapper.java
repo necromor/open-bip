@@ -14,7 +14,7 @@ public class AttachmentMapper {
 				.displayName(attachment.getDisplayName())
 				.size(attachment.getSize())
 				.extension(attachment.getExtension())
-				.addedBy(attachment.getAddedBy().getFirstName())
+				.addedBy(attachment.getAddedBy().getFullName())
 				.addedAt(attachment.getCreatedAt())
 				.build();
 	}
