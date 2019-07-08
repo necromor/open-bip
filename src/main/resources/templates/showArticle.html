@@ -39,7 +39,7 @@
 		<li class="list-group-item" th:each="attachment : ${article.attachments}">
 		<a th:href="@{'/zalaczniki/' +${attachment.fileName}}" th:text="${attachment.displayName}"></a>
 			[<span th:text=". +${attachment.extension}" th:remove="tag"></span>; 
-			<span th:text="${attachment.size}" th:remove="tag"></span>]
+			<span th:text="${T(net.jewczuk.openbip.utils.DisplayUtils).formatSize(attachment.size)}" th:remove="tag"></span>]
 			<span class="editor-details">dodany przez: <span th:text="${attachment.addedBy}" th:remove="tag"></span>, 
 			<span th:text="${#temporals.format(attachment.addedAt, 'dd-MM-yyyy HH:mm')}" th:remove="tag"></span>
 			</span>
