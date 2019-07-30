@@ -1,5 +1,6 @@
 package net.jewczuk.openbip.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,13 +18,14 @@ import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.RedactorTO;
 
 @Controller
 public class ArticleController {
-	
+
 	@Autowired
 	private ArticleService articleService;
-	
+
 	@GetMapping("/")
 	public String showMainPage(Model model) {
 		DisplaySingleArticleTO article = articleService.getArticleByLink(ApplicationProperties.MAIN_PAGE_LINK);
@@ -35,7 +37,7 @@ public class ArticleController {
 
 	@GetMapping("/artykul/{link}")
 	public String showArticle(@PathVariable String link, Model model) {
-		
+
 		String template = ViewNames.SHOW_ARTICLE;
 		try {
 			DisplaySingleArticleTO article = articleService.getArticleByLink(link);
@@ -48,14 +50,14 @@ public class ArticleController {
 		} catch (EmptyResultDataAccessException empty) {
 			throw new ResourceNotFoundException();
 		}
-		
+
 		return template;
 	}
-	
+
 	@GetMapping("/historia/{link}")
 	public String showHistory(@PathVariable String link, Model model) {
-		
-		String template = ViewNames.SHOW_HISTORY;;
+
+		String template = ViewNames.SHOW_HISTORY;
 		try {
 			DisplayArticleHistoryTO history = articleService.getHistoryByLink(link);
 			List<ArticleLinkTO> menu = articleService.getMainMenu();
@@ -64,7 +66,16 @@ public class ArticleController {
 		} catch (EmptyResultDataAccessException empty) {
 			throw new ResourceNotFoundException();
 		}
-		
+
+		return template;
+	}
+
+	@GetMapping("/redakcja-bip")
+	public String showRedactors(Model model) {
+		String template = ViewNames.SHOW_REDACTORS;
+		List<RedactorTO> redactors = new ArrayList<>();
+		model.addAllAttributes(redactors);
+
 		return template;
 	}
 }

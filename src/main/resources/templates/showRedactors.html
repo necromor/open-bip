@@ -1,0 +1,25 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Redakcja BIP</title>
+</head>
+<body>
+
+<article layout:fragment="content" class="col-md-8">
+	<header class="row jumbotron">
+		<h2> Redakcja BIP</h2>
+		<div class="meta">
+			<p>Tworzony automatycznie przy każdym wyświetleniu</p>
+		</div>
+	</header>
+	
+	<ol class="list-group">
+	<li class="list-group-item" th:each="red : ${redactors}">
+	</li>
+	</ol>
+	
+</article>
+
+</body>
+</html>
