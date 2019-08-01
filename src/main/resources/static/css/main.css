@@ -127,3 +127,8 @@ nav.article-children a:hover, nav.article-children a:focus {
 	padding: 2%;
 	background-color: #ffffff;
 }
+
+article footer {
+	padding: 0.7em 1em;
+	font-size:1.2em;
+}

@@ -15,6 +15,16 @@
 		</div>
 	</header>
 	
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a th:href="@{/}">Strona główna</a></li>
+			<th:block th:unless="${history.link == 'strona-glowna'}">
+			<li class="breadcrumb-item"><a th:href="@{'/artykul/' +${history.link}}" th:text="${history.title}"></a></li>
+			</th:block>	
+			<li class="breadcrumb-item active" aria-current="page">historia zmian treści</li>
+		</ol>
+	</nav>
+	
 	<section th:each="single : ${history.contentHistory}" class="history-section">
 		<header>
 		<h3 th:text="'Autor zmian: ' + ${single.createdBy}" />
