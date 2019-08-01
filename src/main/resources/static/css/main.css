@@ -101,3 +101,29 @@ nav.article-children a:hover, nav.article-children a:focus {
 	display: block;
 	font-weight: bold;
 }
+
+.history-section {
+	padding: 3%;
+	background-color: #e9ecef;
+	margin-bottom: 2em;
+	border-radius: 0.3rem;
+}
+
+.history-section header h3 {
+	margin-top: 0;
+	margin-bottom: 0.5em;
+}
+
+.history-section header h4 {
+	margin-top: 0;
+	margin-bottom: 1em;
+	font-size: 0.9em;
+	text-align:right;
+}
+
+.history-content {
+	border: 1px solid #000000;
+	border-radius: 0.3rem;
+	padding: 2%;
+	background-color: #ffffff;
+}
