@@ -96,3 +96,8 @@ nav.article-children a:hover, nav.article-children a:focus {
 	font-size: 0.9em;
 	font-style: italic;
 }
+
+.editor-name {
+	display: block;
+	font-weight: bold;
+}
