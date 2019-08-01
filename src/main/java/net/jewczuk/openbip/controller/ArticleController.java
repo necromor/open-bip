@@ -1,6 +1,5 @@
 package net.jewczuk.openbip.controller;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +14,7 @@ import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.service.ArticleService;
+import net.jewczuk.openbip.service.EditorService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
@@ -25,6 +25,9 @@ public class ArticleController {
 
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private EditorService editorService;
 
 	@GetMapping("/")
 	public String showMainPage(Model model) {
@@ -73,8 +76,11 @@ public class ArticleController {
 	@GetMapping("/redakcja-bip")
 	public String showRedactors(Model model) {
 		String template = ViewNames.SHOW_REDACTORS;
-		List<RedactorTO> redactors = new ArrayList<>();
-		model.addAllAttributes(redactors);
+
+		List<RedactorTO> redactors = editorService.getAllRedactors();
+		List<ArticleLinkTO> menu = articleService.getMainMenu();
+		model.addAttribute("redactors", redactors);
+		model.addAttribute("mainMenu", menu);
 
 		return template;
 	}

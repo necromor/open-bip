@@ -4,6 +4,8 @@ INSERT INTO editor(id, first_name, last_name, email, password, role, phone, acti
 	VALUES(2, 'Ewelina', 'Test', 'etest@test.pl', 'test', 'EDITOR', '', true, 1, now(), default);
 INSERT INTO editor(id, first_name, last_name, email, password, role, phone, active, version, created_at, updated_at) 
 	VALUES(3, 'Aaron', 'Rodgers', 'rodgers@packers.com', 'test', 'EDITOR', '', true, 1, now(), default);
+INSERT INTO editor(id, first_name, last_name, email, password, role, phone, active, version, created_at, updated_at) 
+	VALUES(4, 'admin', 'Michal', 'admin@test.pl', 'test', 'ADMIN', '', true, 1, now(), default);
 	
 INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
 	VALUES(1, 'Lorem ipsum dolor sit amet', 'strona-glowna', 1, true, null, 1, now(), default);
