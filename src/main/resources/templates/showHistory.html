@@ -11,7 +11,6 @@
 		<h2 th:text="${history.title} + ' - historia zmian'" class="col-12" />
 		<div class="meta">
 			<p>Tworzony automatycznie przy każdym wyświetleniu</p>
-			<p th:text="'Liczba wersji: ' + ${history.contentHistory.size()}"></p>
 		</div>
 	</header>
 	
@@ -25,15 +24,26 @@
 		</ol>
 	</nav>
 	
+	<h3 id="tresc" th:text="'Historia zmian treści - liczba wersji: ' + ${history.contentHistory.size()}"></h3>
+	
 	<section th:each="single : ${history.contentHistory}" class="history-section">
 		<header>
-		<h3 th:text="'Autor zmian: ' + ${single.createdBy}" />
-		<h4 th:text="'Data zmian: ' + ${#temporals.format(single.createdAt, 'dd-MM-yyyy HH:mm')}" />
-			<!-- <h3 th:text="'Utworzony dnia: ' + ${#temporals.format(single.createdAt, 'dd-MM-yyyy HH:mm')} + ', przez: ' + ${single.createdBy}" /> -->
+			<h4 th:text="'Autor zmian: ' + ${single.createdBy}" />
+			<h5 th:text="'Data zmian: ' + ${#temporals.format(single.createdAt, 'dd-MM-yyyy HH:mm')}" />
 		</header>
 		
 		<div th:utext="${single.content}" class="history-content"/>
 	</section>
+	
+	<h3 id="zalaczniki">Historia zmian załączników</h3>
+	<p th:if="${history.attachmentsHistory.size() == 0}">Do artykułu nie zostały dodane żadne załączniki.</p>
+	<ol class="list-group">
+		<li class="list-group-item" th:each="attachment : ${history.attachmentsHistory}">
+			<span th:text="${#temporals.format(attachment.createdAt, 'dd-MM-yyyy HH:mm')}" th:remove="tag" />
+			<span th:text="' / ' + ${attachment.createdBy}" th:remove="tag" />
+			<span th:text="' / ' + ${attachment.log}" th:remove="tag" />
+		</li>
+	</ol>
 	
 </article>
 

@@ -48,7 +48,7 @@
 	</th:block>
 	
 	<footer>
-		<p>Zobacz historię zmian: <a th:href="@{'/historia/' +${article.link}}">treści</a> / <a href="">załączników</a></p>
+		<p>Zobacz historię zmian: <a th:href="@{'/historia/' + ${article.link} + '#tresc'}">treści</a> / <a th:href="@{'/historia/' + ${article.link} + '#zalaczniki'}">załączników</a></p>
 	</footer>
 	
 </article>
