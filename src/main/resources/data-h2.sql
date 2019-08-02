@@ -19,6 +19,10 @@ INSERT INTO article(id, title, link, display_position, main_menu, parent_id, ver
 	VALUES(5, 'Artykuł bez dzieci', 'artykul-bez-dzieci', 2, true, null, 1, now(), default);
 INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
 	VALUES(6, 'Dziecko nr 2_1', 'dziecko-nr-2-1', 1, false, 4, 1, now(), default);
+INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
+	VALUES(7, 'Polityka prywatności', 'polityka-prywatnosci', 99, false, null, 1, now(), default);
+INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
+	VALUES(8, 'Polityka cookies', 'polityka-cookies', 100, false, null, 1, now(), default);
 	
 INSERT INTO content_history(id, article_id, content, editor_id, version, created_at, updated_at)
 	VALUES(1, 1, 'Treść strony głównej', 1, 1, now(), default);
@@ -40,6 +44,10 @@ INSERT INTO content_history(id, article_id, content, editor_id, version, created
 	VALUES(9, 5, 'Artykuł bez dzieci v3', 1, 1, now(), default);
 INSERT INTO content_history(id, article_id, content, editor_id, version, created_at, updated_at)
 	VALUES(10, 6, 'Artykuł dziecko 2_1 v1', 2, 1, now(), default);
+INSERT INTO content_history(id, article_id, content, editor_id, version, created_at, updated_at)
+	VALUES(12, 7, '<p>Standardowa formuła polityki prywatności.</p>', 1, 1, '2019-08-02T10:53:55.124', default);
+INSERT INTO content_history(id, article_id, content, editor_id, version, created_at, updated_at)
+	VALUES(13, 8, '<p>Standardowa formuła polityki cookies.</p>', 1, 1, '2019-08-02T10:54:11.124', default);
 	
 INSERT INTO attachment(id, article_id, file_name, display_name, extension, size, display_position, added_by, version, created_at, updated_at)
 	VALUES(1, 2, 'zal_nr_1.pdf', 'zał nr 1', 'pdf', 321, 2, 1, 1, now(), default);
