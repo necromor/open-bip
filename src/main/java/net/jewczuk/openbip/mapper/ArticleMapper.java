@@ -42,6 +42,7 @@ public class ArticleMapper {
 				.createdBy(contentHistory.get(0).getEditor().getFullName())
 				.editedBy(contentHistory.get(lastElement).getEditor().getFullName())
 				.contentChangesNumber(lastElement)
+				.mainMenu(article.isMainMenu())
 				.children(article.getChildren().stream()
 						.sorted(Comparator.comparing(ArticleEntity::getDisplayPosition))
 						.map(a -> mapToLink(a))

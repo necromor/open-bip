@@ -15,6 +15,7 @@ public class DisplaySingleArticleTO {
 	private String editedBy;
 	private List<AttachmentTO> attachments;
 	private int contentChangesNumber;
+	private boolean mainMenu;
 
 	public static class Builder {
 		private String link;
@@ -27,6 +28,7 @@ public class DisplaySingleArticleTO {
 		private String editedBy;
 		private List<AttachmentTO> attachments;
 		private int contentChangesNumber;
+		private boolean mainMenu;
 
 		public Builder() {
 
@@ -81,6 +83,11 @@ public class DisplaySingleArticleTO {
 			this.contentChangesNumber = contentChangesNumber;
 			return this;
 		}
+		
+		public Builder mainMenu(boolean mainMenu) {
+			this.mainMenu = mainMenu;
+			return this;
+		}
 
 		public DisplaySingleArticleTO build() {
 			return new DisplaySingleArticleTO(this);
@@ -98,6 +105,7 @@ public class DisplaySingleArticleTO {
 		editedBy = builder.editedBy;
 		attachments = builder.attachments;
 		contentChangesNumber = builder.contentChangesNumber;
+		mainMenu = builder.mainMenu;
 	}
 
 	public DisplaySingleArticleTO() {
@@ -182,6 +190,14 @@ public class DisplaySingleArticleTO {
 
 	public void setContentChangesNumber(int contentChangesNumber) {
 		this.contentChangesNumber = contentChangesNumber;
+	}
+
+	public boolean isMainMenu() {
+		return mainMenu;
+	}
+
+	public void setMainMenu(boolean mainMenu) {
+		this.mainMenu = mainMenu;
 	}
 
 }
