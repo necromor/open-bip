@@ -1,0 +1,27 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/panel_layout}">
+<head>
+    <title th:text="${article.title} + ' - zarządzaj artykułem - panel redaktora'"></title>
+</head>
+<body>
+
+<article layout:fragment="panel_content" class="col-md-8">
+
+<h2 th:text="${article.title} + ' - zarządzaj artykułem'"></h2>
+
+<h3>Informacje podstawowe</h3>
+<p>Przypisany do menu głównego: </p>
+<p>Utworzony dnia: / Ostatnia edycja dnia: </p>
+<p>Utworzony przez: / Ostatnia edycja przez: </p>
+
+<h3>Treść artykułu</h3>
+
+<h3>Artykuły przypisane</h3>
+
+<h3>Załączniki</h3>
+
+</article>
+
+</body>
+</html>
