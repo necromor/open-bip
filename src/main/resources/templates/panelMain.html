@@ -14,8 +14,9 @@
 Lista nie zawiera artykułu tworzonego automatycznie czyli <em>Redakcja BIP</em>.</p>
 
 	<ol class="list-group">
-		<li class="list-group-item" th:each="article : ${mainMenuArticles}">
+		<li class="list-group-item article-list-element" th:each="article : ${mainMenuArticles}">
 			<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" title="Zarządzaj artykułem"></a>
+			<a href="#" title="Odepnij artykuł z głównego menu" class="badge badge-info delete-button">odepnij</a>
 		</li>
 	</ol>
 </article>

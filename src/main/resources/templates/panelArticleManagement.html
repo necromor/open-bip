@@ -11,15 +11,45 @@
 <h2 th:text="${article.title} + ' - zarządzaj artykułem'"></h2>
 
 <h3>Informacje podstawowe</h3>
-<p>Przypisany do menu głównego: </p>
-<p>Utworzony dnia: / Ostatnia edycja dnia: </p>
-<p>Utworzony przez: / Ostatnia edycja przez: </p>
+<div class="row">
+	<p class="col-md-12">Przypisany do menu głównego: <span class="badge badge-primary" th:text="${article.mainMenu} ? 'TAK' : 'NIE'" /></p>
+	<p class="col-md-6">Utworzony dnia: <span class="badge badge-dark" th:text="${#temporals.format(article.createdAt, 'dd-MM-yyyy HH:mm')}" /></p>
+	<p class="col-md-6">Ostatnia edycja dnia: <span class="badge badge-dark" th:text="${#temporals.format(article.editedAt, 'dd-MM-yyyy HH:mm')}" /></p>
+	<p class="col-md-6">Utworzony przez: <span class="badge badge-dark" th:text="${article.createdBy}" /></p>
+	<p class="col-md-6">Ostatnia edycja przez: <span class="badge badge-dark" th:text="${article.editedBy}" /></p>
+</div>
 
 <h3>Treść artykułu</h3>
+<div class="article-content" th:utext="${article.content}"></div>
+<p class="button-middle"><a href="#" title="Edytuj treść artykułu" class="btn btn-success">Edytuj treść</a></p>
 
 <h3>Artykuły przypisane</h3>
+	<p class="article-info">Przeciągnij artykuły aby zmienić ich kolejność wyświetlania.</p>
+	<p th:unless="${article.children.size() != 0}">Do artułu nie przypisano żadnych innych artykułów.</p>
+	
+	<ol class="list-group">
+		<li class="list-group-item article-list-element" th:each="child : ${article.children}">
+		<a th:href="@{'/panel/zarzadzaj/' +${child.link}}" th:text="${child.title}" title="Zarządzaj artykułem"></a>
+		<a href="#" title="Usuń artykuł z listy" class="badge badge-danger delete-button">X</a>
+		</li>
+	</ol>
+
+<p class="button-middle"><a href="#" title="Przypisz nowy artykuł" class="btn btn-success">Przypisz nowy artykuł</a></p>
 
 <h3>Załączniki</h3>
+	<p class="article-info">Przeciągnij załączniki aby zmienić ich kolejność wyświetlania.</p>
+	<p th:unless="${article.attachments.size() != 0}">Do artułu nie przypisano żadnych załączników.</p>
+
+	<ol class="list-group">
+		<li class="list-group-item" th:each="attachment : ${article.attachments}">
+			<a th:href="@{'/zalaczniki/' +${attachment.fileName}}" th:text="${attachment.displayName}"></a>
+			[<span th:text=". +${attachment.extension}" th:remove="tag"></span>; 
+			<span th:text="${T(net.jewczuk.openbip.utils.DisplayUtils).formatSize(attachment.size)}" th:remove="tag"></span>]
+			<a href="#" title="Usuń załącznik" class="badge badge-danger delete-button">X</a>
+		</li>
+	</ol>
+
+<p class="button-middle"><a href="#" title="Dodaj nowy załącznik" class="btn btn-success">Dodaj nowy załącznik</a></p>
 
 </article>
 
