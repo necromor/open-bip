@@ -8,12 +8,16 @@
 
 <article layout:fragment="panel_content" class="col-md-8">
 
-<h2>Vivamus suscipit cursus elit</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus suscipit cursus elit, quis rhoncus massa ornare id. Sed pellentesque purus nisi, eget convallis mi pellentesque vel. Integer erat mauris, suscipit quis sapien a, facilisis vehicula ligula. Sed purus lacus, volutpat at mollis id, sagittis ac ante.</p> <p>Nulla vel mi fermentum, euismod libero quis, eleifend turpis. Donec tincidunt porttitor sapien, sed rhoncus leo facilisis vitae. Ut lorem felis, eleifend eget elit vel, eleifend bibendum tortor. Duis vel lorem nisl. Praesent a pretium lorem. Phasellus fermentum arcu ac erat hendrerit, eu ullamcorper neque blandit. Nunc ut ante in leo molestie egestas. Nam mattis, lectus vel venenatis tempor, mauris tortor elementum nisi, tincidunt fringilla quam mauris et dui. Donec commodo dui feugiat, tempor nisl ac, laoreet enim. Donec interdum risus eu dui vestibulum, vitae tincidunt nibh hendrerit. Aenean ullamcorper sagittis urna ut semper.</p>
-<h3>Sed venenatis ligula</h3>
-<p>Phasellus non sagittis magna, at venenatis orci. Nunc molestie sagittis erat a aliquet. Sed venenatis ligula sed nunc laoreet, vitae vestibulum turpis lacinia. Nam at sodales dolor. Sed velit dolor, condimentum vel urna quis, egestas euismod eros. Nulla convallis dignissim nulla ultricies posuere. Curabitur accumsan orci ac eleifend dapibus. Donec ultrices libero non mauris euismod, eget vehicula metus mattis. Sed lobortis accumsan pellentesque. Vestibulum tempor mi molestie, auctor mauris sit amet, posuere lectus. Donec egestas eu arcu eget consectetur.</p>
-<p>Integer vitae lorem est. In auctor, enim ut vehicula ornare, arcu dolor efficitur metus, ac maximus risus arcu id risus. Etiam vitae lacus eu ex egestas venenatis. Curabitur pharetra sapien et erat feugiat lobortis. Fusce malesuada libero nec magna pharetra consequat. Morbi pellentesque ornare tempus. Praesent odio sapien, ultrices at lacinia sed, consequat in erat. Cras iaculis mattis dui, vitae sollicitudin leo accumsan non. Praesent maximus urna nec lectus malesuada blandit. Duis efficitur pretium justo ac pharetra. Maecenas dignissim efficitur blandit. Pellentesque sit amet facilisis justo. Curabitur bibendum sodales lectus, eget luctus turpis finibus sit amet. Quisque consectetur vestibulum maximus.</p>
-	
+<h2>Artykuły przypisane do menu głównego</h2>
+
+<p class="article-info">Artykuł strony głównej opatrzony jest tytułem, jaki jest wyświetlany po wejściu na stronę główną serwisu. <br>
+Lista nie zawiera artykułu tworzonego automatycznie czyli <em>Redakcja BIP</em>.</p>
+
+	<ol class="list-group">
+		<li class="list-group-item" th:each="article : ${mainMenuArticles}">
+			<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" title="Zarządzaj artykułem"></a>
+		</li>
+	</ol>
 </article>
 
 </body>
