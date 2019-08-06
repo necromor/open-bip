@@ -1,0 +1,22 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/panel_layout}">
+<head>
+    <title>Lista artykułów</title>
+</head>
+<body>
+
+<article layout:fragment="panel_content" class="col-md-8">
+
+<h2>Lista wszystkich artykułów</h2>
+
+	<ol class="list-group">
+		<li class="list-group-item article-list-element" th:each="article : ${allArticles}">
+		<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" title="Zarządzaj artykułem"></a>
+		</li>
+	</ol>
+
+</article>
+
+</body>
+</html>

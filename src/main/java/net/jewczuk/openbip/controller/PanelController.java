@@ -36,6 +36,15 @@ public class PanelController {
 		return ViewNames.PANEL_MAIN;
 	}
 	
+	@GetMapping("/lista-artykulow")
+	public String showArticleList(Model model) {
+		
+		List<ArticleLinkTO> allArticles = articleService.getAllArticles();
+		model.addAttribute("allArticles", allArticles);
+		
+		return ViewNames.ARTICLE_LIST;
+	}
+	
 	@GetMapping("/zarzadzaj/{link}")
 	public String showArticleManagmentPage(@PathVariable String link, Model model) {
 		
