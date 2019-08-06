@@ -45,5 +45,12 @@ public class ArticleServiceImpl implements ArticleService {
 				.map(a -> articleMapper.mapToLink(a))
 				.collect(Collectors.toList());
 	}
+	
+	@Override
+	public List<ArticleLinkTO> getAllArticles() {
+		return articleRepository.findAllByOrderByTitleAsc().stream()
+				.map(a -> articleMapper.mapToLink(a))
+				.collect(Collectors.toList());
+	}
 
 }

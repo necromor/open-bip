@@ -15,5 +15,7 @@ public interface ArticleService {
 	List<ArticleLinkTO> getMainMenu();
 	
 	List<ArticleLinkTO> getBreadcrumbs(String link);
+	
+	List<ArticleLinkTO> getAllArticles();
 
 }

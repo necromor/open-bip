@@ -169,5 +169,14 @@ public class ArticleServiceImplTest {
 		assertThat(breadCrumbs.get(1).getLink()).isEqualTo(TestConstants.PARENT_LINK);
 	}
 	
+	@Test
+	public void shouldReturnAllArticlesLinksSortedByTitleASC() {
+		List<ArticleLinkTO> articles = articleService.getAllArticles();
+		
+		assertThat(articles.size()).isEqualTo(8);
+		assertThat(articles.get(1).getTitle()).isEqualTo(TestConstants.NO_CHILDREN_TITLE);
+		assertThat(articles.get(5).getLink()).isEqualTo(TestConstants.MAIN_PAGE_LINK);
+	}
+	
 }
  

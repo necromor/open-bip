@@ -134,4 +134,14 @@ public class ArticleRepositoryTest {
 		
 		assertThat(links).contains(TestConstants.CHILD_2_LINK, TestConstants.PARENT_LINK);
 	}
+	
+	@Test
+	public void shouldReturnAllArticlesOrderdByTitleAsc() {
+		List<ArticleEntity> articles = articleRepository.findAllByOrderByTitleAsc();
+		List<String> titles = articles.stream().map(a -> a.getTitle()).collect(Collectors.toList());
+		
+		assertThat(articles.size()).isEqualTo(8);
+		assertThat(titles.get(0)).isEqualTo(TestConstants.PARENT_TITLE);
+		assertThat(titles.get(7)).isEqualTo(TestConstants.PRIVACY_POLICY_TITLE);
+	}
 }
