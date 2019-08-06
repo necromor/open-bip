@@ -57,6 +57,10 @@ article .article-info {
 	border-bottom: 1px dotted #000000;
 }
 
+article .article-info ul {
+	list-style: none;
+}
+
 article .button-middle {
 	text-align:center;
 	margin: 1em 0 0 0;
