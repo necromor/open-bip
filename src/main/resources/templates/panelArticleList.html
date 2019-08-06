@@ -10,11 +10,15 @@
 
 <h2>Lista wszystkich artykułów</h2>
 
+	<p class="button-middle"><a href="/panel/dodaj-artykul" title="Dodaj nowy artykuł" class="btn btn-success">Dodaj nowy artykuł</a></p>
+
 	<ol class="list-group">
 		<li class="list-group-item article-list-element" th:each="article : ${allArticles}">
 		<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" title="Zarządzaj artykułem"></a>
 		</li>
 	</ol>
+
+	<p class="button-middle"><a href="/panel/dodaj-artykul" title="Dodaj nowy artykuł" class="btn btn-success">Dodaj nowy artykuł</a></p>
 
 </article>
 

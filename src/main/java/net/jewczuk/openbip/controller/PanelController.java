@@ -59,5 +59,11 @@ public class PanelController {
 
 		return template;
 	}
+	
+	@GetMapping("/dodaj-artykul")
+	public String showAddArticle() {
+		
+		return ViewNames.ARTICLE_ADD;
+	}
 
 }

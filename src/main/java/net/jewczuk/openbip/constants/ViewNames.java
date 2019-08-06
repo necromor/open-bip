@@ -9,6 +9,7 @@ public class ViewNames {
 	public static final String PANEL_MAIN = "panelMain";
 	public static final String ARTICLE_LIST = "panelArticleList";
 	public static final String ARTICLE_MANAGEMENT = "panelArticleManagement";
+	public static final String ARTICLE_ADD = "panelArticleAdd";
 
 	public static final String ERROR_404 = "404";
 }
