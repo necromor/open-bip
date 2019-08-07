@@ -1,7 +1,7 @@
 package net.jewczuk.openbip.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -88,6 +88,9 @@ public class ArticleEntity extends AbstractEntity {
 	}
 
 	public Collection<ArticleEntity> getChildren() {
+		if (this.children == null) {
+			this.children = new ArrayList<ArticleEntity>();
+		}
 		return children;
 	}
 
@@ -97,7 +100,7 @@ public class ArticleEntity extends AbstractEntity {
 
 	public Collection<ContentHistoryEntity> getContentHistory() {
 		if (this.contentHistory == null) {
-			this.contentHistory = new HashSet<ContentHistoryEntity>();
+			this.contentHistory = new ArrayList<ContentHistoryEntity>();
 		}
 		return contentHistory;
 	}
@@ -108,7 +111,7 @@ public class ArticleEntity extends AbstractEntity {
 
 	public Collection<AttachmentEntity> getAttachments() {
 		if (this.attachments == null) {
-			this.attachments = new HashSet<AttachmentEntity>();
+			this.attachments = new ArrayList<AttachmentEntity>();
 		}
 		return attachments;
 	}
@@ -119,7 +122,7 @@ public class ArticleEntity extends AbstractEntity {
 
 	public Collection<AttachmentHistoryEntity> getAttachmentsHistory() {
 		if (this.attachmentsHistory == null) {
-			this.attachmentsHistory = new HashSet<AttachmentHistoryEntity>();
+			this.attachmentsHistory = new ArrayList<AttachmentHistoryEntity>();
 		}
 		return attachmentsHistory;
 	}

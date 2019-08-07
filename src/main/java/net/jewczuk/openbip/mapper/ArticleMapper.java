@@ -36,11 +36,11 @@ public class ArticleMapper {
 		DisplaySingleArticleTO saTO = new DisplaySingleArticleTO.Builder()
 				.title(article.getTitle())
 				.link(article.getLink())
-				.content(contentHistory.get(lastElement).getContent())
-				.createdAt(contentHistory.get(0).getCreatedAt())
-				.editedAt(contentHistory.get(lastElement).getCreatedAt())
-				.createdBy(contentHistory.get(0).getEditor().getFullName())
-				.editedBy(contentHistory.get(lastElement).getEditor().getFullName())
+				.content(lastElement == -1 ? null : contentHistory.get(lastElement).getContent())
+				.createdAt(lastElement == -1 ? null : contentHistory.get(0).getCreatedAt())
+				.editedAt(lastElement == -1 ? null : contentHistory.get(lastElement).getCreatedAt())
+				.createdBy(lastElement == -1 ? null : contentHistory.get(0).getEditor().getFullName())
+				.editedBy(lastElement == -1 ? null : contentHistory.get(lastElement).getEditor().getFullName())
 				.contentChangesNumber(lastElement)
 				.mainMenu(article.isMainMenu())
 				.children(article.getChildren().stream()
@@ -73,6 +73,14 @@ public class ArticleMapper {
 	
 	public ArticleLinkTO mapToLink(ArticleEntity article) {
 		return new ArticleLinkTO(article.getLink(), article.getTitle());
+	}
+	
+	public ArticleEntity map2NewAE(DisplaySingleArticleTO aTO) {
+		ArticleEntity entity = new ArticleEntity();
+		entity.setTitle(aTO.getTitle());
+		entity.setLink(aTO.getLink());
+		
+		return entity;
 	}
 
 }
