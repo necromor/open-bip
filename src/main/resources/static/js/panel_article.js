@@ -14,7 +14,16 @@ let panel_article = (function () {
 	}
 	
 	function crateLinkFromTitle(title) {
-		return "aaa";
+		const special = [' ', 'ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż', '#'];
+	    const plain = ['-', 'a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z', ''];
+	    
+	    let str = title.toLowerCase();
+
+        special.forEach((value, i) =>
+            str = str.replace(new RegExp(special[i], 'g'), plain[i])
+        );
+
+        return str;
 	}
 	
 	return {
