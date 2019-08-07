@@ -6,6 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.jewczuk.openbip.constants.ExceptionsMessages;
+import net.jewczuk.openbip.entity.ArticleEntity;
+import net.jewczuk.openbip.exceptions.ArticleException;
+import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.mapper.ArticleMapper;
 import net.jewczuk.openbip.repository.ArticleRepository;
 import net.jewczuk.openbip.service.ArticleService;
@@ -51,6 +55,21 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleRepository.findAllByOrderByTitleAsc().stream()
 				.map(a -> articleMapper.mapToLink(a))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article) throws BusinessException {
+		
+		ArticleEntity entity = new ArticleEntity();
+		
+		try {
+			entity = articleRepository.save(articleMapper.map2NewAE(article));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ArticleException(ExceptionsMessages.LINK_EXISTS);
+		}
+
+		return articleMapper.mapToDisplaySingleArticle(entity);
 	}
 
 }

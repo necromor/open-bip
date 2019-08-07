@@ -19,6 +19,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import net.jewczuk.openbip.TestConstants;
+import net.jewczuk.openbip.constants.ExceptionsMessages;
+import net.jewczuk.openbip.exceptions.ArticleException;
+import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
@@ -178,5 +181,34 @@ public class ArticleServiceImplTest {
 		assertThat(articles.get(5).getLink()).isEqualTo(TestConstants.MAIN_PAGE_LINK);
 	}
 	
+	@Test
+	public void shouldSuccessfullyAddNewArticle() throws BusinessException {
+		final String TITLE = "Testing title";
+		final String LINK = "testing-title";
+		DisplaySingleArticleTO newArticle = new DisplaySingleArticleTO.Builder().title(TITLE).link(LINK).build();
+		List<ArticleLinkTO> articlesBefore = articleService.getAllArticles();
+		
+		DisplaySingleArticleTO savedArticle = articleService.saveArticle(newArticle);
+		List<ArticleLinkTO> articlesAfter = articleService.getAllArticles();
+		List<String> titlesAfter = articlesAfter.stream().map(a -> a.getTitle()).collect(Collectors.toList());
+		
+		assertThat(articlesAfter.size() - articlesBefore.size()).isEqualTo(1);
+		assertThat(savedArticle.getLink()).isEqualTo(LINK);
+		assertThat(titlesAfter).contains(TITLE);
+	}
+	
+	
+	@Test
+	public void shouldThrowArticleExceptionWhenAddingAlreadyExistingLink() throws BusinessException {
+		final String TITLE = "New Title";
+		final String LINK = "new-title";
+		DisplaySingleArticleTO newArticle = new DisplaySingleArticleTO.Builder().title(TITLE).link(LINK).build();
+		
+		articleService.saveArticle(newArticle);
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.LINK_EXISTS);
+		articleService.saveArticle(newArticle);
+	}
 }
  

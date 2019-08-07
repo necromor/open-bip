@@ -2,6 +2,7 @@ package net.jewczuk.openbip.service;
 
 import java.util.List;
 
+import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
@@ -18,4 +19,5 @@ public interface ArticleService {
 	
 	List<ArticleLinkTO> getAllArticles();
 
+	DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article) throws BusinessException;
 }
