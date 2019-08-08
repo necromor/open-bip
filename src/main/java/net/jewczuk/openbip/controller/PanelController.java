@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import net.jewczuk.openbip.constants.CustomErrorMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
@@ -85,7 +84,7 @@ public class PanelController {
 			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();
 		} catch (BusinessException e) {
 			
-			model.addAttribute("error", CustomErrorMessages.LINK_EXISTS);
+			model.addAttribute("error", e.getMessage());
 			model.addAttribute("newArticle", newArticle);
 			return ViewNames.ARTICLE_ADD;
 		}	

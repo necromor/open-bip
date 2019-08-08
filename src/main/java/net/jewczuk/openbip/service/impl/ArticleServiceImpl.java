@@ -16,6 +16,7 @@ import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.validators.ArticleValidator;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -25,6 +26,9 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Autowired
 	private ArticleRepository articleRepository;
+	
+	@Autowired
+	private ArticleValidator articleValidator;
 
 	@Override
 	public DisplaySingleArticleTO getArticleByLink(String link) {
@@ -63,7 +67,10 @@ public class ArticleServiceImpl implements ArticleService {
 		ArticleEntity entity = new ArticleEntity();
 		
 		try {
+			articleValidator.validateAddArticle(article);
 			entity = articleRepository.save(articleMapper.map2NewAE(article));
+		} catch (BusinessException be) {
+			throw new ArticleException(be.getMessage());
 		} catch (Exception e) {
 			throw new ArticleException(ExceptionsMessages.LINK_EXISTS);
 		}
