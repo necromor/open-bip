@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import net.jewczuk.openbip.constants.CustomErrorMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
@@ -73,15 +75,17 @@ public class PanelController {
 	}
 	
 	@PostMapping("/dodaj-artykul.do")
-	public String addArticle(Model model, DisplaySingleArticleTO newArticle) {
+	public String addArticle(Model model, DisplaySingleArticleTO newArticle, RedirectAttributes attributes) {
 		
 		newArticle.setLink(TransformUtils.createLinkFromTitle(newArticle.getTitle()));
 		DisplaySingleArticleTO savedArticle;
 		try {
 			savedArticle = articleService.saveArticle(newArticle);
+			//attributes.addFlashAttribute("flashLinkExists", ExceptionsMessages.LINK_EXISTS);
 			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();
 		} catch (BusinessException e) {
 			
+			model.addAttribute("error", CustomErrorMessages.LINK_EXISTS);
 			model.addAttribute("newArticle", newArticle);
 			return ViewNames.ARTICLE_ADD;
 		}	

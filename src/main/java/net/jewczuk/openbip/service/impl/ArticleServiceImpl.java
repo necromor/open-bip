@@ -65,7 +65,6 @@ public class ArticleServiceImpl implements ArticleService {
 		try {
 			entity = articleRepository.save(articleMapper.map2NewAE(article));
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new ArticleException(ExceptionsMessages.LINK_EXISTS);
 		}
 
