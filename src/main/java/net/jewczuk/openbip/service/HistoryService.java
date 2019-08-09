@@ -7,7 +7,7 @@ import net.jewczuk.openbip.to.HistoryTO;
 
 public interface HistoryService {
 
-	HistoryTO saveLogEntry(HistoryTO entry, Long editorID) throws BusinessException;
+	void createLogEntry(String message, Long editorID) throws BusinessException;
 	
 	List<HistoryTO> getAllLogEntriesByEditor(Long editorID);
 	

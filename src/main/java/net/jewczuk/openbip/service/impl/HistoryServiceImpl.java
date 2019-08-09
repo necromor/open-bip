@@ -30,8 +30,21 @@ public class HistoryServiceImpl implements HistoryService {
 	@Autowired
 	EditorRepository editorRepository;
 
+
 	@Override
-	public HistoryTO saveLogEntry(HistoryTO entry, Long editorID) throws BusinessException {
+	public List<HistoryTO> getAllLogEntriesByEditor(Long editorID) {
+		return historyRepository.getAllLogEntriesByEditor(editorID).stream()
+				.map(he -> historyMapper.map2TO(he))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public void createLogEntry(String message, Long editorID) throws BusinessException {
+		HistoryTO hto = new HistoryTO.Builder().action(message).build();
+		saveLogEntry(hto, editorID);
+	}
+	
+	private HistoryTO saveLogEntry(HistoryTO entry, Long editorID) throws BusinessException {
 		
 		if (editorID == null) {
 			throw new EditorException(ExceptionsMessages.INVALID_EDITOR_ID);
@@ -45,13 +58,6 @@ public class HistoryServiceImpl implements HistoryService {
 		} else {
 			throw new EditorException(ExceptionsMessages.INVALID_EDITOR_ID);
 		}
-	}
-
-	@Override
-	public List<HistoryTO> getAllLogEntriesByEditor(Long editorID) {
-		return historyRepository.getAllLogEntriesByEditor(editorID).stream()
-				.map(he -> historyMapper.map2TO(he))
-				.collect(Collectors.toList());
 	}
 
 }

@@ -60,32 +60,26 @@ public class HistoryServiceImplTest {
 	public void shouldSuccessfullySaveNewLogEntry() throws BusinessException {
 		Long editorID = 3L;
 		List<HistoryTO> historyBefore = historyService.getAllLogEntriesByEditor(editorID);
-		HistoryTO entry = new HistoryTO.Builder().action(TestConstants.LOG_ENTRY_4).build();
 		
-		HistoryTO savedEntry = historyService.saveLogEntry(entry, editorID);
+		historyService.createLogEntry(TestConstants.LOG_ENTRY_4, editorID);
 		List<HistoryTO> historyAfter = historyService.getAllLogEntriesByEditor(editorID);
 		
 		assertThat(historyAfter.size() - historyBefore.size()).isEqualTo(1);
 		assertThat(historyAfter.get(0).getAction()).isEqualTo(TestConstants.LOG_ENTRY_4);
-		assertThat(savedEntry.getCreatedBy()).isEqualTo(TestConstants.EDITOR_3);
 	}
 	
 	@Test
-	public void shouldThrowExceptionWhenSavingAndEditorDoesNotExist() throws BusinessException {
-		HistoryTO entry = new HistoryTO.Builder().action(TestConstants.LOG_ENTRY_4).build();
-		
+	public void shouldThrowExceptionWhenSavingAndEditorDoesNotExist() throws BusinessException {		
 		excE.expect(EditorException.class);
 		excE.expectMessage(ExceptionsMessages.INVALID_EDITOR_ID);
-		historyService.saveLogEntry(entry, 121L);
+		historyService.createLogEntry(TestConstants.LOG_ENTRY_4, 121L);
 	}
 	
 	@Test
-	public void shouldThrowExceptionWhenSavingAndEditorIsNull() throws BusinessException {
-		HistoryTO entry = new HistoryTO.Builder().action(TestConstants.LOG_ENTRY_4).build();
-		
+	public void shouldThrowExceptionWhenSavingAndEditorIsNull() throws BusinessException {		
 		excE.expect(EditorException.class);
 		excE.expectMessage(ExceptionsMessages.INVALID_EDITOR_ID);
-		historyService.saveLogEntry(entry, null);
+		historyService.createLogEntry(TestConstants.LOG_ENTRY_4, null);
 	}
 	
 	
