@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.jewczuk.openbip.constants.ExceptionsMessages;
+import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
@@ -73,7 +74,7 @@ public class ArticleServiceImpl implements ArticleService {
 		try {
 			articleValidator.validateAddArticle(article);
 			entity = articleRepository.save(articleMapper.map2NewAE(article));
-			//historyService.saveLogEntry(entry, editorID)
+			historyService.createLogEntry(LogMessages.ARTICLE_ADDED + article.getTitle(), editorID);
 		} catch (BusinessException be) {
 			throw new ArticleException(be.getMessage());
 		} catch (Exception e) {

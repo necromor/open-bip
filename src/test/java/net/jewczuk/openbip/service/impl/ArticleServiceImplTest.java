@@ -20,12 +20,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import net.jewczuk.openbip.TestConstants;
 import net.jewczuk.openbip.constants.ExceptionsMessages;
+import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.ArticleService;
+import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.HistoryTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,6 +37,9 @@ public class ArticleServiceImplTest {
 
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private HistoryService historyService;
 	
 	@Rule
     public ExpectedException excE = ExpectedException.none();
@@ -188,14 +194,18 @@ public class ArticleServiceImplTest {
 		final String LINK = "testing-title";
 		DisplaySingleArticleTO newArticle = new DisplaySingleArticleTO.Builder().title(TITLE).link(LINK).build();
 		List<ArticleLinkTO> articlesBefore = articleService.getAllArticles();
+		List<HistoryTO> historyBefore = historyService.getAllLogEntriesByEditor(editorID);
 		
 		DisplaySingleArticleTO savedArticle = articleService.saveArticle(newArticle, editorID);
 		List<ArticleLinkTO> articlesAfter = articleService.getAllArticles();
 		List<String> titlesAfter = articlesAfter.stream().map(a -> a.getTitle()).collect(Collectors.toList());
+		List<HistoryTO> historyAfter = historyService.getAllLogEntriesByEditor(editorID);
 		
 		assertThat(articlesAfter.size() - articlesBefore.size()).isEqualTo(1);
 		assertThat(savedArticle.getLink()).isEqualTo(LINK);
 		assertThat(titlesAfter).contains(TITLE);
+		assertThat(historyAfter.size() - historyBefore.size()).isEqualTo(1);
+		assertThat(historyAfter.get(0).getAction()).isEqualTo(LogMessages.ARTICLE_ADDED + TITLE);
 	}
 	
 	
