@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import net.jewczuk.openbip.constants.UIMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
@@ -81,7 +82,7 @@ public class PanelController {
 		Long editorID = 1L;
 		try {
 			savedArticle = articleService.saveArticle(newArticle, editorID);
-			//attributes.addFlashAttribute("flashLinkExists", ExceptionsMessages.LINK_EXISTS);
+			attributes.addFlashAttribute("articleSuccess", UIMessages.ADD_ARTICLE_SUCCESS);
 			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();
 		} catch (BusinessException e) {
 			

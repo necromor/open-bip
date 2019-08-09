@@ -10,6 +10,10 @@
 
 <h2 th:text="${article.title} + ' - zarządzaj artykułem'"></h2>
 
+<div class="row">
+	<p class="alert alert-success text-center col-md-10 offset-md-1" th:if="${articleSuccess}" th:text="${articleSuccess}"></p>
+</div>
+
 <h3>Informacje podstawowe</h3>
 <div class="row">
 	<p class="col-md-12">Przypisany do menu głównego: <span class="badge badge-primary" th:text="${article.mainMenu} ? 'TAK' : 'NIE'" /></p>
