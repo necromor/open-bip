@@ -27,6 +27,10 @@ public class TestConstants {
 	public static final String ATTACHMENT_2_NAME = "zal_nr_2.pdf";
 	public static final String EMPTY_CONTENT = "";
 	public static final String PRIVACY_POLICY_TITLE = "Polityka prywatności";
+	public static final String LOG_ENTRY_1 = "dodano artykuł 1";
+	public static final String LOG_ENTRY_2 = "dodano artykuł 2";
+	public static final String LOG_ENTRY_3 = "dodano artykuł 3";
+	public static final String LOG_ENTRY_4 = "dodano artykuł 4";
 	
 	public static final String LOG_2_TEXT = "dodano wniosek grupa B";
 	public static final String LOG_3_TEXT = "usunięto wniosek grupa B";

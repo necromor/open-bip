@@ -71,5 +71,11 @@ INSERT INTO attachment_history(id, article_id, editor_id, log, version, created_
 INSERT INTO attachment_history(id, article_id, editor_id, log, version, created_at, updated_at)
 	VALUES(5, 5, 1, 'dodano wniosek grupa C', 1, '2019-04-26T07:16:59.124', default);
 	
+INSERT INTO history(id, editor_id, action, version, created_at, updated_at)
+	VALUES(1, 2, 'dodano artykuł 1', 1, '2019-07-26T07:16:55.124', default);	
+INSERT INTO history(id, editor_id, action, version, created_at, updated_at)
+	VALUES(2, 2, 'dodano artykuł 2', 1, now(), default);	
+INSERT INTO history(id, editor_id, action, version, created_at, updated_at)
+	VALUES(3, 3, 'dodano artykuł 3', 1, now(), default);
 	
 	

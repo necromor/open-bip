@@ -4,11 +4,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
+@NamedQueries({
+	@NamedQuery(name = HistoryEntity.FIND_ALL_LOG_ENTRIES_BY_EDITOR_ID, query = "SELECT history FROM HistoryEntity history "
+			+ " WHERE history.editor.id = :id ORDER BY history.createdAt DESC")})
 @Entity
 @Table(name="history")
 public class HistoryEntity extends AbstractEntity {
+	
+	public static final String FIND_ALL_LOG_ENTRIES_BY_EDITOR_ID = "findAllLogEntriesByEditorId";
 
 	@ManyToOne
 	@JoinColumn(name="editor_id")
