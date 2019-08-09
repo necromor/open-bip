@@ -13,6 +13,7 @@ import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.mapper.ArticleMapper;
 import net.jewczuk.openbip.repository.ArticleRepository;
 import net.jewczuk.openbip.service.ArticleService;
+import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
@@ -29,6 +30,9 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Autowired
 	private ArticleValidator articleValidator;
+	
+	@Autowired
+	private HistoryService historyService;
 
 	@Override
 	public DisplaySingleArticleTO getArticleByLink(String link) {
@@ -62,13 +66,14 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article) throws BusinessException {
+	public DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article, Long editorID) throws BusinessException {
 		
 		ArticleEntity entity = new ArticleEntity();
 		
 		try {
 			articleValidator.validateAddArticle(article);
 			entity = articleRepository.save(articleMapper.map2NewAE(article));
+			//historyService.saveLogEntry(entry, editorID)
 		} catch (BusinessException be) {
 			throw new ArticleException(be.getMessage());
 		} catch (Exception e) {

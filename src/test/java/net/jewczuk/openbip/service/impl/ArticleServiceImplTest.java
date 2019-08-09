@@ -183,12 +183,13 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldSuccessfullyAddNewArticle() throws BusinessException {
+		Long editorID = 1L;
 		final String TITLE = "Testing title";
 		final String LINK = "testing-title";
 		DisplaySingleArticleTO newArticle = new DisplaySingleArticleTO.Builder().title(TITLE).link(LINK).build();
 		List<ArticleLinkTO> articlesBefore = articleService.getAllArticles();
 		
-		DisplaySingleArticleTO savedArticle = articleService.saveArticle(newArticle);
+		DisplaySingleArticleTO savedArticle = articleService.saveArticle(newArticle, editorID);
 		List<ArticleLinkTO> articlesAfter = articleService.getAllArticles();
 		List<String> titlesAfter = articlesAfter.stream().map(a -> a.getTitle()).collect(Collectors.toList());
 		
@@ -200,15 +201,16 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldThrowArticleExceptionWhenAddingAlreadyExistingLink() throws BusinessException {
+		Long editorID = 1L;
 		final String TITLE = "New Title";
 		final String LINK = "new-title";
 		DisplaySingleArticleTO newArticle = new DisplaySingleArticleTO.Builder().title(TITLE).link(LINK).build();
 		
-		articleService.saveArticle(newArticle);
+		articleService.saveArticle(newArticle, editorID);
 		
 		excE.expect(ArticleException.class);
 		excE.expectMessage(ExceptionsMessages.LINK_EXISTS);
-		articleService.saveArticle(newArticle);
+		articleService.saveArticle(newArticle, editorID);
 	}
 }
  

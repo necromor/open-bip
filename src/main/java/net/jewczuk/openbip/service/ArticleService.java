@@ -19,5 +19,5 @@ public interface ArticleService {
 	
 	List<ArticleLinkTO> getAllArticles();
 
-	DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article) throws BusinessException;
+	DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article, Long editorID) throws BusinessException;
 }

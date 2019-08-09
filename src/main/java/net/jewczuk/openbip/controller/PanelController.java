@@ -78,8 +78,9 @@ public class PanelController {
 		
 		newArticle.setLink(TransformUtils.createLinkFromTitle(newArticle.getTitle()));
 		DisplaySingleArticleTO savedArticle;
+		Long editorID = 1L;
 		try {
-			savedArticle = articleService.saveArticle(newArticle);
+			savedArticle = articleService.saveArticle(newArticle, editorID);
 			//attributes.addFlashAttribute("flashLinkExists", ExceptionsMessages.LINK_EXISTS);
 			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();
 		} catch (BusinessException e) {
