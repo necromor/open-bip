@@ -17,8 +17,10 @@ import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.service.ArticleService;
+import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.HistoryTO;
 import net.jewczuk.openbip.utils.TransformUtils;
 
 @Controller
@@ -26,7 +28,10 @@ import net.jewczuk.openbip.utils.TransformUtils;
 public class PanelController {
 	
 	@Autowired
-	ArticleService articleService;
+	private ArticleService articleService;
+	
+	@Autowired
+	private HistoryService historyService;
 	
 	@GetMapping("")
 	public String redirectToMainPanelPage() {	
@@ -90,6 +95,15 @@ public class PanelController {
 			model.addAttribute("newArticle", newArticle);
 			return ViewNames.ARTICLE_ADD;
 		}	
+	}
+	
+	@GetMapping("/twoja-aktywnosc")
+	public String showEditorHistory(Model model) {
+		Long editorID = 1L;
+		List<HistoryTO> history = historyService.getAllLogEntriesByEditor(editorID);
+		
+		model.addAttribute("history", history);
+		return ViewNames.LOG_LIST;
 	}
 
 }

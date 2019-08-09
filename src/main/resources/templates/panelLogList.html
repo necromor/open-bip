@@ -1,0 +1,32 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/panel_layout}">
+<head>
+    <title>Historia Twojej aktywności - panel redaktora</title>
+</head>
+<body>
+
+<article layout:fragment="panel_content" class="col-md-8">
+
+<h2>Historia Twojej aktywności</h2>
+
+	<table class="table table-striped">
+		<caption>Zestawienie aktywności zalogowanego redaktora uszeregowane od najnowszej.</caption>
+		<thead class="thead-dark">
+			<tr>
+				<th>Data czynności</th>
+				<th>Opis czynności</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="log : ${history}">
+				<td th:text="${#temporals.format(log.createdAt, 'dd-MM-yyyy HH:mm')}"></td>
+				<td th:text="${log.action}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+</article>
+
+</body>
+</html>
