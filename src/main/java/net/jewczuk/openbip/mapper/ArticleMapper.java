@@ -14,6 +14,7 @@ import net.jewczuk.openbip.entity.ContentHistoryEntity;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.EditArticleTO;
 
 @Component
 public class ArticleMapper {
@@ -81,6 +82,14 @@ public class ArticleMapper {
 		entity.setLink(aTO.getLink());
 		
 		return entity;
+	}
+	
+	public EditArticleTO map2EditArticle(ArticleEntity article) {
+		return new EditArticleTO.Builder()
+				.link(article.getLink())
+				.title(article.getTitle())
+				.oldLink(article.getLink())
+				.build();
 	}
 
 }
