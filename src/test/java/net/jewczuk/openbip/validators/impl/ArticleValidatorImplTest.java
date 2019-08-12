@@ -15,6 +15,7 @@ import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.EditArticleTO;
 import net.jewczuk.openbip.validators.ArticleValidator;
 
 @RunWith(SpringRunner.class)
@@ -28,10 +29,12 @@ public class ArticleValidatorImplTest {
     public ExpectedException excE = ExpectedException.none();
 	
 	DisplaySingleArticleTO article;
+	EditArticleTO edit;
 	
 	@Before
 	public void setUp() {
 		article = new DisplaySingleArticleTO();
+		edit = new EditArticleTO();
 	}
 	
 	@Test
@@ -80,6 +83,56 @@ public class ArticleValidatorImplTest {
 		article.setLink(TestConstants.PARENT_LINK);
 		
 		boolean result = articleValidator.validateAddArticle(article);
+		
+		assertThat(result).isTrue();		
+	}
+	
+	@Test
+	public void shouldThrowArticleExceptionWhenEditedTitleIsNull() throws BusinessException {
+		edit.setTitle(null);
+		edit.setLink(null);
+		 
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.NO_TITLE);
+		articleValidator.validateEditTitle(edit);
+	}
+	
+	@Test
+	public void shouldThrowArticleExceptionWhenEditedTitleIsEmptyString() throws BusinessException {
+		edit.setTitle("");
+		edit.setLink(null);
+		 
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.NO_TITLE);
+		articleValidator.validateEditTitle(edit);
+	}
+	
+	@Test
+	public void shouldThrowArticleExceptionWhenEditedLinkIsNull() throws BusinessException {
+		edit.setTitle(TestConstants.PARENT_TITLE);
+		edit.setLink(null);
+		 
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.LINK_MIN_LENGTH);
+		articleValidator.validateEditTitle(edit);
+	}
+
+	@Test
+	public void shouldThrowArticleExceptionWhenEditedLinkIsToShort() throws BusinessException {
+		edit.setTitle(TestConstants.PARENT_TITLE);
+		edit.setLink("aa");
+		 
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.LINK_MIN_LENGTH);
+		articleValidator.validateEditTitle(edit);
+	}
+	
+	@Test
+	public void shouldReturnTrueWhenEditedTitleExistsAndEditedLinkLenghtIsOk() throws BusinessException {
+		edit.setTitle(TestConstants.PARENT_TITLE);
+		edit.setLink(TestConstants.PARENT_LINK);
+		
+		boolean result = articleValidator.validateEditTitle(edit);
 		
 		assertThat(result).isTrue();		
 	}
