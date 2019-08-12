@@ -9,9 +9,12 @@
 <article layout:fragment="content" class="col-md-8">
 	<header class="row jumbotron">
 		<h2 th:text="${article.title}" class="col-12" />
-		<div class="meta">
+		<div class="meta" th:unless="${article.createdAt == null}">
 			<p>Utworzony: <span th:text="${#temporals.format(article.createdAt, 'dd-MM-yyyy HH:mm')}" th:remove="tag"/></p>
 			<p>Autor: <span th:text="${article.editedBy}" th:remove="tag"/></p>
+		</div>
+		<div class="meta" th:unless="${article.createdAt != null}">
+			<p>Od momentu utworzenia do artykułu nie dodano żadnej treści</p>
 		</div>
 	</header>
 
