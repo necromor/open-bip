@@ -28,6 +28,7 @@ import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.EditArticleTO;
 import net.jewczuk.openbip.to.HistoryTO;
 
 @RunWith(SpringRunner.class)
@@ -222,5 +223,48 @@ public class ArticleServiceImplTest {
 		excE.expectMessage(ExceptionsMessages.LINK_EXISTS);
 		articleService.saveArticle(newArticle, editorID);
 	}
+	
+	@Test
+	public void shouldThrowEmptyResultDataAccessExceptionWhenEditedArticleLinkIsInvalid() {
+		
+		excE.expect(EmptyResultDataAccessException.class);
+		articleService.getArticleByLinkToEdit(TestConstants.INVALID_LINK);
+	}
+	
+	@Test
+	public void shouldReturnArticleToEditWhenLinkExists() {
+		EditArticleTO edit = articleService.getArticleByLinkToEdit(TestConstants.CHILD_2_1_LINK);
+		
+		assertThat(edit.getTitle()).isEqualTo(TestConstants.CHILD_2_1_TITLE);
+		assertThat(edit.getOldLink()).isEqualTo(edit.getLink());
+	}
+	
+	@Test
+	public void shouldSuccessfullyEditTitle() throws BusinessException {
+		EditArticleTO tbe = new EditArticleTO.Builder()
+				.title(TestConstants.EDITED_TITLE)
+				.link(TestConstants.EDITED_LINK)
+				.oldLink(TestConstants.CHILD_1_LINK)
+				.build();
+		
+		EditArticleTO edited = articleService.editTitle(tbe, 1L);
+		
+		assertThat(edited.getLink()).isEqualTo(TestConstants.EDITED_LINK);
+		assertThat(edited.getOldLink()).isEqualTo(edited.getLink());
+	}
+	
+	@Test
+	public void shouldThrowLinkExistsExceptionWhenAnotherArticleHasThatLinkAleardy() throws BusinessException {
+		EditArticleTO tbe = new EditArticleTO.Builder()
+				.title(TestConstants.EDITED_TITLE)
+				.link(TestConstants.CHILD_1_LINK)
+				.oldLink(TestConstants.CHILD_2_1_LINK)
+				.build();
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.LINK_EXISTS);
+		articleService.editTitle(tbe, 1L);
+	}
+	
 }
  

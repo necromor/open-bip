@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import net.jewczuk.openbip.constants.ExceptionsMessages;
@@ -11,6 +12,7 @@ import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
+import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.mapper.ArticleMapper;
 import net.jewczuk.openbip.repository.ArticleRepository;
 import net.jewczuk.openbip.service.ArticleService;
@@ -18,6 +20,7 @@ import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.EditArticleTO;
 import net.jewczuk.openbip.validators.ArticleValidator;
 
 @Service
@@ -82,6 +85,43 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 
 		return articleMapper.mapToDisplaySingleArticle(entity);
+	}
+
+	@Override
+	public EditArticleTO getArticleByLinkToEdit(String link) {
+		DisplaySingleArticleTO aTO = getArticleByLink(link);
+		return new EditArticleTO.Builder()
+				.link(aTO.getLink())
+				.title(aTO.getTitle())
+				.oldLink(aTO.getLink())
+				.build();
+	}
+
+	@Override
+	public EditArticleTO editTitle(EditArticleTO article, Long editorID) throws BusinessException {
+	
+		ArticleEntity entity;
+		
+		try {
+			entity = articleRepository.getArticleByLink(article.getOldLink());
+		} catch (EmptyResultDataAccessException empty) {
+			throw new ResourceNotFoundException();
+		}
+		
+		entity.setTitle(article.getTitle());
+		entity.setLink(article.getLink());
+		
+		try {
+			articleValidator.validateEditTitle(article);
+			entity = articleRepository.saveAndFlush(entity);
+			historyService.createLogEntry(LogMessages.ARTICLE_TITLE_EDITED + article.getTitle(), editorID);
+		} catch (BusinessException be) {
+			throw new ArticleException(be.getMessage());
+		} catch (Exception e) {
+			throw new ArticleException(ExceptionsMessages.LINK_EXISTS);
+		}
+		
+		return articleMapper.map2EditArticle(entity);
 	}
 
 }

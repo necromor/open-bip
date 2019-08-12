@@ -6,6 +6,7 @@ import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.EditArticleTO;
 
 public interface ArticleService {
 	
@@ -20,4 +21,9 @@ public interface ArticleService {
 	List<ArticleLinkTO> getAllArticles();
 
 	DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article, Long editorID) throws BusinessException;
+	
+	EditArticleTO getArticleByLinkToEdit(String link);
+
+	EditArticleTO editTitle(EditArticleTO article, Long editorID) throws BusinessException;
+
 }
