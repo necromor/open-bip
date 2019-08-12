@@ -22,6 +22,7 @@
 	<p class="col-md-6">Utworzony przez: <span class="badge badge-dark" th:text="${article.createdBy}" /></p>
 	<p class="col-md-6">Ostatnia edycja przez: <span class="badge badge-dark" th:text="${article.editedBy}" /></p>
 </div>
+<p class="button-middle"><a th:href="@{'/panel/edytuj-tytul/' +${article.link}}" title="Edytuj tytuł artykułu" class="btn btn-success">Edytuj tytuł artykułu</a></p>
 
 <h3>Treść artykułu</h3>
 	<div class="article-content" th:utext="${article.content}"></div>

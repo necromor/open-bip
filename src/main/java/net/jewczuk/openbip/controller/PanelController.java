@@ -20,6 +20,7 @@ import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.EditArticleTO;
 import net.jewczuk.openbip.to.HistoryTO;
 import net.jewczuk.openbip.utils.TransformUtils;
 
@@ -88,13 +89,45 @@ public class PanelController {
 		try {
 			savedArticle = articleService.saveArticle(newArticle, editorID);
 			attributes.addFlashAttribute("articleSuccess", UIMessages.ADD_ARTICLE_SUCCESS);
-			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();
-		} catch (BusinessException e) {
-			
+			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();		
+		} catch (BusinessException e) {	
 			model.addAttribute("error", e.getMessage());
 			model.addAttribute("newArticle", newArticle);
 			return ViewNames.ARTICLE_ADD;
 		}	
+	}
+	
+	@GetMapping("/edytuj-tytul/{link}")
+	public String showFormEditTitle(@PathVariable String link, Model model) {
+		
+		String template = ViewNames.ARTICLE_EDIT_TITLE;
+		try {
+			EditArticleTO newArticle = articleService.getArticleByLinkToEdit(link);
+
+			model.addAttribute("newArticle", newArticle);
+		} catch (EmptyResultDataAccessException empty) {
+			throw new ResourceNotFoundException();
+		}
+
+		return template;
+	}
+	
+	@PostMapping("/edytuj-tytul/{link}.do")
+	public String editTitle(@PathVariable String link, Model model, EditArticleTO editedArticle, RedirectAttributes attributes) {
+		
+		editedArticle.setLink(TransformUtils.createLinkFromTitle(editedArticle.getTitle()));
+		
+		EditArticleTO savedArticle;
+		Long editorID = 1L;
+		try {
+			savedArticle = articleService.editTitle(editedArticle, editorID);
+			attributes.addFlashAttribute("articleSuccess", UIMessages.EDIT_TITLE_SUCCESS);
+			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();		
+		} catch (BusinessException e) {		
+			model.addAttribute("error", e.getMessage());
+			model.addAttribute("newArticle", editedArticle);
+			return ViewNames.ARTICLE_EDIT_TITLE;
+		}
 	}
 	
 	@GetMapping("/twoja-aktywnosc")

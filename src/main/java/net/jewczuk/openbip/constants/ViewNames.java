@@ -10,7 +10,10 @@ public class ViewNames {
 	public static final String ARTICLE_LIST = "panelArticleList";
 	public static final String ARTICLE_MANAGEMENT = "panelArticleManagement";
 	public static final String ARTICLE_ADD = "panelArticleAdd";
+	public static final String ARTICLE_EDIT_TITLE = "panelArticleEditTitle";
+	
 	public static final String LOG_LIST = "panelLogList";
 
 	public static final String ERROR_404 = "404";
+	
 }

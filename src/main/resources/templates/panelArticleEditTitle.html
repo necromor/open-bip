@@ -1,0 +1,40 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/panel_layout}">
+<head>
+    <title>Zmień tytuł artykułu - panel redaktora</title>
+</head>
+<body>
+
+<article layout:fragment="panel_content" class="col-md-8">
+
+<h2>Zmień tytuł artykułu</h2>
+
+<form action="#" th:action="@{'/panel/edytuj-tytul/' + ${newArticle.oldLink} + '.do'}" th:object="${newArticle}" method="post">
+	<fieldset>
+		<legend>Podaj nowy tytuł artykułu</legend>
+		
+		<div class="form-group row" th:if="${error}">
+			<p class="alert alert-danger text-center col-md-10 offset-md-1" th:text="${error}"></p>
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-md-3" for="title">Nowy tytuł:</label>
+			<input class="col-md-9 form-control" type="text" id="title" th:field="*{title}">
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-md-3" for="link">Nowy link:</label>
+			<input class="col-md-9 form-control" type="text" id="link" readonly="readonly">
+		</div>
+		
+		<input type="hidden" id="oldLink" th:field="*{oldLink}">
+		
+		<p class="button-middle"><button type="submit" class="btn btn-primary">Zmień tytuł</button></p>
+	</fieldset>
+</form>
+
+</article>
+
+</body>
+</html>
