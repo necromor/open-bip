@@ -1,5 +1,6 @@
 package net.jewczuk.openbip.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.jewczuk.openbip.constants.UIMessages;
@@ -137,6 +139,42 @@ public class PanelController {
 		
 		model.addAttribute("history", history);
 		return ViewNames.LOG_LIST;
+	}
+	
+	@GetMapping("/dodaj-menu-glowne")
+	public String showListOfUnatachtedArticles(Model model) {
+		List<ArticleLinkTO> articles = articleService.getAllUnpinnedArticles();
+		
+		model.addAttribute("selectedArticles", new ArrayList<String>());
+		model.addAttribute("articles", articles);
+		return ViewNames.ARTICLE_PIN_MAIN_MENU;
+	}
+	
+	@PostMapping("/dodaj-menu-glowne.do")
+	public String pinSelectedToMainMenu(@RequestParam(required = false) List<String> selectedArticles, RedirectAttributes attributes) {
+		Long editorID = 1L;
+		
+		if (selectedArticles == null) {
+			attributes.addFlashAttribute("mainMenuFailure", UIMessages.ARTICLE_PINNED_FAILURE);
+			return "redirect:/panel/";
+		}
+		
+		for (String art : selectedArticles) {
+			articleService.managePinningToMainMenu(art, editorID, true);
+		}
+		
+		attributes.addFlashAttribute("mainMenuSuccess", UIMessages.ARTICLE_PINNED_SUCCESS);
+		return "redirect:/panel/";
+	}
+	
+	@GetMapping("/odepnij/{link}")
+	public String unpinSelectedFromMainMenu(@PathVariable String link, RedirectAttributes attributes) {
+		
+		Long editorID = 1L;		
+		articleService.managePinningToMainMenu(link, editorID, false);
+		attributes.addFlashAttribute("mainMenuSuccess", UIMessages.ARTICLE_UNPINNED_SUCCESS);
+		
+		return "redirect:/panel/";
 	}
 
 }

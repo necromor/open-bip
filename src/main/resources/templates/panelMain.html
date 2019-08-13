@@ -10,15 +10,25 @@
 
 <h2>Artykuły przypisane do menu głównego</h2>
 
+<div class="row">
+	<p class="alert alert-success text-center col-md-10 offset-md-1" th:if="${mainMenuSuccess}" th:text="${mainMenuSuccess}"></p>
+</div>
+<div class="row">
+	<p class="alert alert-danger text-center col-md-10 offset-md-1" th:if="${mainMenuFailure}" th:text="${mainMenuFailure}"></p>
+</div>
+
 <p class="article-info">Artykuł strony głównej opatrzony jest tytułem, jaki jest wyświetlany po wejściu na stronę główną serwisu. <br>
 Lista nie zawiera artykułu tworzonego automatycznie czyli <em>Redakcja BIP</em>.</p>
 
 	<ol class="list-group">
 		<li class="list-group-item article-list-element" th:each="article : ${mainMenuArticles}">
 			<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" title="Zarządzaj artykułem"></a>
-			<a href="#" title="Odepnij artykuł z głównego menu" class="badge badge-info delete-button">odepnij</a>
+			<a th:href="@{'/panel/odepnij/' +${article.link}}" title="Odepnij artykuł z głównego menu" class="badge badge-info delete-button">odepnij</a>
 		</li>
 	</ol>
+	
+	<p class="button-middle"><a th:href="@{/panel/dodaj-menu-glowne}" title="Dopisz artykuł do menu głównego" class="btn btn-success">Dopisz artykuł do menu głównego</a></p>
+	
 </article>
 
 </body>
