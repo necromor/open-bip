@@ -274,5 +274,89 @@ public class ArticleServiceImplTest {
 		assertThat(titles).containsExactly(TestConstants.COOKIES_POLICY_LINK, TestConstants.PRIVACY_POLICY_LINK);
 	}
 	
+	@Test
+	public void shouldSuccessfullyPinToMainMenu() {
+		String link = TestConstants.PRIVACY_POLICY_LINK;
+		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
+		
+		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 1L, true);
+		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
+		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
+		
+		assertThat(menuAfter.size() - menuBefore.size()).isEqualTo(1);
+		assertThat(changed.isMainMenu()).isTrue();
+		assertThat(menuAfter).contains(articleLink);
+	}
+	
+	@Test
+	public void shouldSuccessfullyPinToMainMenuWhenUserIDInvalid() {
+		String link = TestConstants.PRIVACY_POLICY_LINK;
+		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
+		
+		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 100L, true);
+		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
+		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
+		
+		assertThat(menuAfter.size() - menuBefore.size()).isEqualTo(1);
+		assertThat(changed.isMainMenu()).isTrue();
+		assertThat(menuAfter).contains(articleLink);
+	}
+	
+	@Test
+	public void shouldNotPinAnotherWhenAlradyPinned() {
+		String link = TestConstants.MAIN_PAGE_LINK;
+		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
+		
+		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 1L, true);
+		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
+		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
+		
+		assertThat(menuAfter.size() - menuBefore.size()).isEqualTo(0);
+		assertThat(changed.isMainMenu()).isTrue();
+		assertThat(menuAfter).contains(articleLink);
+	}
+	
+	@Test
+	public void shouldSuccessfullyUnPinFromMainMenu() {
+		String link = TestConstants.MAIN_PAGE_LINK;
+		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
+		
+		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 1L, false);
+		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
+		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
+		
+		assertThat(menuBefore.size() - menuAfter.size()).isEqualTo(1);
+		assertThat(changed.isMainMenu()).isFalse();
+		assertThat(menuAfter).doesNotContain(articleLink);
+	}
+	
+	@Test
+	public void shouldSuccessfullyUnPinFromMainMenuWhenUserIDInvalid() {
+		String link = TestConstants.MAIN_PAGE_LINK;
+		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
+		
+		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 101L, false);
+		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
+		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
+		
+		assertThat(menuBefore.size() - menuAfter.size()).isEqualTo(1);
+		assertThat(changed.isMainMenu()).isFalse();
+		assertThat(menuAfter).doesNotContain(articleLink);
+	}
+	
+	@Test
+	public void shouldNotUnpinnWhenAlreadyUnpinned() {
+		String link = TestConstants.PRIVACY_POLICY_LINK;
+		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
+		
+		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 1L, false);
+		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
+		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
+		
+		assertThat(menuBefore.size() - menuAfter.size()).isEqualTo(0);
+		assertThat(changed.isMainMenu()).isFalse();
+		assertThat(menuAfter).doesNotContain(articleLink);
+	}
+	
 }
  

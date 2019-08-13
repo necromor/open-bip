@@ -131,4 +131,33 @@ public class ArticleServiceImpl implements ArticleService {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status) {
+		ArticleEntity entity;
+		
+		try {
+			entity = articleRepository.getArticleByLink(link);
+		} catch (EmptyResultDataAccessException empty) {
+			throw new ResourceNotFoundException();
+		}
+		
+		try {
+			entity.setMainMenu(status);
+			entity.setDisplayPosition(returnNewDisplayPosition(status));
+			entity = articleRepository.saveAndFlush(entity);
+			
+			String logMessage = status ? LogMessages.ARTICLE_PINNED_TO_MAIN_MENU : LogMessages.ARTICLE_UNPINNED_TO_MAIN_MENU;
+			historyService.createLogEntry(logMessage + entity.getTitle(), editorID);
+		} catch (BusinessException e) {
+			//omitting invalid editorID exception that can be created during logging
+		}
+		
+		return articleMapper.mapToLink(entity);
+	}
+	
+	private int returnNewDisplayPosition(boolean status) {
+		
+		return status ? getMainMenu().size() + 1 : 0;
+	}
+
 }
