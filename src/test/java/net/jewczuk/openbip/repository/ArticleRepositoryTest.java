@@ -144,4 +144,12 @@ public class ArticleRepositoryTest {
 		assertThat(titles.get(0)).isEqualTo(TestConstants.PARENT_TITLE);
 		assertThat(titles.get(7)).isEqualTo(TestConstants.PRIVACY_POLICY_TITLE);
 	}
+	
+	@Test
+	public void shouldReturnAllUnpinnedArticles() {
+		List<ArticleEntity> articles = articleRepository.getUnpinnedArticles();
+		List<String> titles = articles.stream().map(a -> a.getTitle()).collect(Collectors.toList());
+		
+		assertThat(titles).containsExactly(TestConstants.COOKIES_POLICY_TITLE, TestConstants.PRIVACY_POLICY_TITLE);
+	}
 }

@@ -13,5 +13,7 @@ public interface CustomArticleRepository {
 	List<ArticleEntity> getBreadcrumbs(String link);
 	
 	ArticleEntity getParentArticle(String link);
+	
+	List<ArticleEntity> getUnpinnedArticles();
 
 }

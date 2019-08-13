@@ -124,4 +124,11 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleMapper.map2EditArticle(entity);
 	}
 
+	@Override
+	public List<ArticleLinkTO> getAllUnpinnedArticles() {
+		return articleRepository.getUnpinnedArticles().stream()
+				.map(a -> articleMapper.mapToLink(a))
+				.collect(Collectors.toList());
+	}
+
 }

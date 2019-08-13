@@ -25,5 +25,7 @@ public interface ArticleService {
 	EditArticleTO getArticleByLinkToEdit(String link);
 
 	EditArticleTO editTitle(EditArticleTO article, Long editorID) throws BusinessException;
+	
+	List<ArticleLinkTO> getAllUnpinnedArticles();
 
 }

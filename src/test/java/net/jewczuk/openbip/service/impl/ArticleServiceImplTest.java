@@ -266,5 +266,13 @@ public class ArticleServiceImplTest {
 		articleService.editTitle(tbe, 1L);
 	}
 	
+	@Test
+	public void shouldReturnAllUnpinnedArticlesSortedByTitleAsc() {
+		List<ArticleLinkTO> links = articleService.getAllUnpinnedArticles();
+		List<String> titles = links.stream().map(l -> l.getLink()).collect(Collectors.toList());
+		
+		assertThat(titles).containsExactly(TestConstants.COOKIES_POLICY_LINK, TestConstants.PRIVACY_POLICY_LINK);
+	}
+	
 }
  

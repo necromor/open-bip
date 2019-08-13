@@ -54,4 +54,10 @@ public class CustomArticleRepositoryImpl
 		return article;
 	}
 
+	@Override
+	public List<ArticleEntity> getUnpinnedArticles() {
+		return entityManager.createNamedQuery(ArticleEntity.FIND_UNPINNED_ARTICLES, ArticleEntity.class)
+				.getResultList();
+	}
+
 }
