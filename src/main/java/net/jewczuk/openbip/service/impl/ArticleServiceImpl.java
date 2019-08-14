@@ -2,7 +2,6 @@ package net.jewczuk.openbip.service.impl;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import net.jewczuk.openbip.entity.ContentHistoryEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
-import net.jewczuk.openbip.exceptions.EditorException;
 import net.jewczuk.openbip.mapper.ArticleMapper;
 import net.jewczuk.openbip.repository.ArticleRepository;
 import net.jewczuk.openbip.repository.EditorRepository;
@@ -133,56 +131,39 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status) {
-
+	public ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status) throws BusinessException {
 		ArticleEntity entity = articleRepository.getArticleByLink(link);
 
-		try {
-			entity.setMainMenu(status);
-			entity.setDisplayPosition(returnNewDisplayPosition(status));
-			entity = articleRepository.saveAndFlush(entity);
+		entity.setMainMenu(status);
+		entity.setDisplayPosition(returnNewDisplayPosition(status));
+		entity = articleRepository.saveAndFlush(entity);
 			
-			String logMessage = status ? LogMessages.ARTICLE_PINNED_TO_MAIN_MENU : LogMessages.ARTICLE_UNPINNED_TO_MAIN_MENU;
-			historyService.createLogEntry(logMessage + entity.getTitle(), editorID);
-		} catch (BusinessException e) {
-			//omitting invalid editorID exception that can be created during logging
-		}
+		String logMessage = status ? LogMessages.ARTICLE_PINNED_TO_MAIN_MENU : LogMessages.ARTICLE_UNPINNED_TO_MAIN_MENU;
+		historyService.createLogEntry(logMessage + entity.getTitle(), editorID);
 		
 		return articleMapper.mapToLink(entity);
 	}
 	
-	private int returnNewDisplayPosition(boolean status) {
-		
+	private int returnNewDisplayPosition(boolean status) {	
 		return status ? getMainMenu().size() + 1 : 0;
 	}
 
 	@Override
 	public DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) throws BusinessException {
-	
 		ArticleEntity entity = articleRepository.getArticleByLink(article.getLink());
 		
 		ContentHistoryEntity contentEntity = new ContentHistoryEntity();
+		EditorEntity editor = editorRepository.getEditorById(editorID);
 		contentEntity.setContent(article.getContent());
-		
-		Optional<EditorEntity> editorO = editorRepository.findById(editorID);
-		if (editorO.isPresent()) {
-			contentEntity.setEditor(editorO.get());
-		} else {
-			throw new EditorException(ExceptionsMessages.INVALID_EDITOR_ID);
-		}
+		contentEntity.setEditor(editor);
 		
 		Collection<ContentHistoryEntity> history = entity.getContentHistory();
 		history.add(contentEntity);
 		entity.setContentHistory(history);
-		
-		try {
-			entity = articleRepository.saveAndFlush(entity);
+
+		entity = articleRepository.saveAndFlush(entity);
 			
-			historyService.createLogEntry(LogMessages.ARTICLE_CONTENT_EDITED + entity.getTitle(), editorID);
-		} catch (BusinessException e) {
-			// omitting invalid editorID exception that can be created during logging
-			// editor is valid
-		}
+		historyService.createLogEntry(LogMessages.ARTICLE_CONTENT_EDITED + entity.getTitle(), editorID);
 		
 		return articleMapper.mapToDisplaySingleArticle(entity);
 	}

@@ -276,7 +276,7 @@ public class ArticleServiceImplTest {
 	}
 	
 	@Test
-	public void shouldSuccessfullyPinToMainMenu() {
+	public void shouldSuccessfullyPinToMainMenu() throws BusinessException {
 		String link = TestConstants.PRIVACY_POLICY_LINK;
 		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
 		
@@ -290,21 +290,16 @@ public class ArticleServiceImplTest {
 	}
 	
 	@Test
-	public void shouldSuccessfullyPinToMainMenuWhenUserIDInvalid() {
+	public void shouldThrowExceptionWhenUnpinningAndUserIDInvalid() throws BusinessException {
 		String link = TestConstants.PRIVACY_POLICY_LINK;
-		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
 		
-		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 100L, true);
-		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
-		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
-		
-		assertThat(menuAfter.size() - menuBefore.size()).isEqualTo(1);
-		assertThat(changed.isMainMenu()).isTrue();
-		assertThat(menuAfter).contains(articleLink);
+		excE.expect(EditorException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_EDITOR_ID);
+		articleService.managePinningToMainMenu(link, 100L, true);
 	}
 	
 	@Test
-	public void shouldNotPinAnotherWhenAlradyPinned() {
+	public void shouldNotPinAnotherWhenAlradyPinned() throws BusinessException {
 		String link = TestConstants.MAIN_PAGE_LINK;
 		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
 		
@@ -318,7 +313,7 @@ public class ArticleServiceImplTest {
 	}
 	
 	@Test
-	public void shouldSuccessfullyUnPinFromMainMenu() {
+	public void shouldSuccessfullyUnPinFromMainMenu() throws BusinessException {
 		String link = TestConstants.MAIN_PAGE_LINK;
 		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
 		
@@ -332,21 +327,16 @@ public class ArticleServiceImplTest {
 	}
 	
 	@Test
-	public void shouldSuccessfullyUnPinFromMainMenuWhenUserIDInvalid() {
+	public void shouldThrowExceptionWhenPinningAndUserIDInvalid() throws BusinessException {
 		String link = TestConstants.MAIN_PAGE_LINK;
-		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
 		
-		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 101L, false);
-		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
-		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
-		
-		assertThat(menuBefore.size() - menuAfter.size()).isEqualTo(1);
-		assertThat(changed.isMainMenu()).isFalse();
-		assertThat(menuAfter).doesNotContain(articleLink);
+		excE.expect(EditorException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_EDITOR_ID);
+		articleService.managePinningToMainMenu(link, 101L, false);
 	}
 	
 	@Test
-	public void shouldNotUnpinnWhenAlreadyUnpinned() {
+	public void shouldNotUnpinnWhenAlreadyUnpinned() throws BusinessException {
 		String link = TestConstants.PRIVACY_POLICY_LINK;
 		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
 		

@@ -28,7 +28,7 @@ public interface ArticleService {
 	
 	List<ArticleLinkTO> getAllUnpinnedArticles();
 	
-	ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status);
+	ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status) throws BusinessException;
 
 	DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) throws BusinessException;
 
