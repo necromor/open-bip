@@ -23,6 +23,8 @@ import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
+import net.jewczuk.openbip.exceptions.EditorException;
+import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
@@ -356,6 +358,45 @@ public class ArticleServiceImplTest {
 		assertThat(menuBefore.size() - menuAfter.size()).isEqualTo(0);
 		assertThat(changed.isMainMenu()).isFalse();
 		assertThat(menuAfter).doesNotContain(articleLink);
+	}
+	
+	@Test
+	public void shouldSuccessfullyAddNewContent() throws BusinessException {
+		DisplaySingleArticleTO articleBefore = articleService.getArticleByLink(TestConstants.CHILD_1_LINK);
+		DisplaySingleArticleTO changed = new DisplaySingleArticleTO.Builder()
+				.link(TestConstants.CHILD_1_LINK)
+				.content(TestConstants.MAIN_PAGE_CONTENT)
+				.build();
+		
+		DisplaySingleArticleTO articleAfter = articleService.editContent(changed, 2L);
+		
+		assertThat(articleAfter.getContent()).isEqualTo(TestConstants.MAIN_PAGE_CONTENT);
+		assertThat(articleAfter.getContentChangesNumber() - articleBefore.getContentChangesNumber()).isEqualTo(1);
+		assertThat(articleAfter.getEditedBy()).isEqualTo(TestConstants.EDITOR_2);
+		assertThat(articleAfter.getContent()).isNotEqualTo(articleBefore.getContent());
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenChangingContentForInvalidLink() throws BusinessException {
+		DisplaySingleArticleTO changed = new DisplaySingleArticleTO.Builder()
+				.link(TestConstants.INVALID_LINK)
+				.content(TestConstants.MAIN_PAGE_CONTENT)
+				.build();
+		
+		excE.expect(ResourceNotFoundException.class);
+		articleService.editContent(changed, 2L);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenChangingContentForInvalidEditor() throws BusinessException {
+		DisplaySingleArticleTO changed = new DisplaySingleArticleTO.Builder()
+				.link(TestConstants.CHILD_1_LINK)
+				.content(TestConstants.MAIN_PAGE_CONTENT)
+				.build();
+		
+		excE.expect(EditorException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_EDITOR_ID);
+		articleService.editContent(changed, 2008L);
 	}
 	
 }

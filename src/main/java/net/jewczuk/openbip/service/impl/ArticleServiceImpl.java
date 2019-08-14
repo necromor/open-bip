@@ -1,6 +1,8 @@
 package net.jewczuk.openbip.service.impl;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,15 @@ import org.springframework.stereotype.Service;
 import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
+import net.jewczuk.openbip.entity.ContentHistoryEntity;
+import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
+import net.jewczuk.openbip.exceptions.EditorException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.mapper.ArticleMapper;
 import net.jewczuk.openbip.repository.ArticleRepository;
+import net.jewczuk.openbip.repository.EditorRepository;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
@@ -37,6 +43,9 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Autowired
 	private HistoryService historyService;
+	
+	@Autowired
+	private EditorRepository editorRepository;
 
 	@Override
 	public DisplaySingleArticleTO getArticleByLink(String link) {
@@ -158,6 +167,42 @@ public class ArticleServiceImpl implements ArticleService {
 	private int returnNewDisplayPosition(boolean status) {
 		
 		return status ? getMainMenu().size() + 1 : 0;
+	}
+
+	@Override
+	public DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) throws BusinessException {
+		ArticleEntity entity;
+		
+		try {
+			entity = articleRepository.getArticleByLink(article.getLink());
+		} catch (EmptyResultDataAccessException empty) {
+			throw new ResourceNotFoundException();
+		}
+		
+		ContentHistoryEntity contentEntity = new ContentHistoryEntity();
+		contentEntity.setContent(article.getContent());
+		
+		Optional<EditorEntity> editorO = editorRepository.findById(editorID);
+		if (editorO.isPresent()) {
+			contentEntity.setEditor(editorO.get());
+		} else {
+			throw new EditorException(ExceptionsMessages.INVALID_EDITOR_ID);
+		}
+		
+		Collection<ContentHistoryEntity> history = entity.getContentHistory();
+		history.add(contentEntity);
+		entity.setContentHistory(history);
+		
+		try {
+			entity = articleRepository.saveAndFlush(entity);
+			
+			historyService.createLogEntry(LogMessages.ARTICLE_CONTENT_EDITED + entity.getTitle(), editorID);
+		} catch (BusinessException e) {
+			// omitting invalid editorID exception that can be created during logging
+			// editor is valid
+		}
+		
+		return articleMapper.mapToDisplaySingleArticle(entity);
 	}
 
 }

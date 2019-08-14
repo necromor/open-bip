@@ -30,4 +30,6 @@ public interface ArticleService {
 	
 	ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status);
 
+	DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) throws BusinessException;
+
 }
