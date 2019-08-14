@@ -176,5 +176,36 @@ public class PanelController {
 		
 		return "redirect:/panel/";
 	}
+	
+	@GetMapping("/edytuj-tresc/{link}")
+	public String showFormEditContent(@PathVariable String link, Model model) {
+		
+		String template = ViewNames.ARTICLE_EDIT_CONTENT;
+		try {
+			DisplaySingleArticleTO article = articleService.getArticleByLink(link);
+
+			model.addAttribute("article", article);
+		} catch (EmptyResultDataAccessException empty) {
+			throw new ResourceNotFoundException();
+		}
+
+		return template;
+	}
+	
+	@PostMapping("/edytuj-tresc/{link}.do")
+	public String editContent(@PathVariable String link, Model model, DisplaySingleArticleTO article, RedirectAttributes attributes) {
+		
+		DisplaySingleArticleTO savedArticle;
+		Long editorID = 1L;
+		try {
+			savedArticle = articleService.editContent(article, editorID);
+			attributes.addFlashAttribute("articleSuccess", UIMessages.EDIT_CONTENT_SUCCESS);
+			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();		
+		} catch (BusinessException e) {		
+			model.addAttribute("error", e.getMessage());
+			model.addAttribute("article", article);
+			return ViewNames.ARTICLE_EDIT_CONTENT;
+		}
+	}
 
 }
