@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import net.jewczuk.openbip.constants.ExceptionsMessages;
@@ -17,7 +16,6 @@ import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.EditorException;
-import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.mapper.ArticleMapper;
 import net.jewczuk.openbip.repository.ArticleRepository;
 import net.jewczuk.openbip.repository.EditorRepository;
@@ -108,15 +106,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public EditArticleTO editTitle(EditArticleTO article, Long editorID) throws BusinessException {
-	
-		ArticleEntity entity;
-		
-		try {
-			entity = articleRepository.getArticleByLink(article.getOldLink());
-		} catch (EmptyResultDataAccessException empty) {
-			throw new ResourceNotFoundException();
-		}
-		
+
+		ArticleEntity entity = articleRepository.getArticleByLink(article.getOldLink());
+
 		entity.setTitle(article.getTitle());
 		entity.setLink(article.getLink());
 		
@@ -142,14 +134,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status) {
-		ArticleEntity entity;
-		
-		try {
-			entity = articleRepository.getArticleByLink(link);
-		} catch (EmptyResultDataAccessException empty) {
-			throw new ResourceNotFoundException();
-		}
-		
+
+		ArticleEntity entity = articleRepository.getArticleByLink(link);
+
 		try {
 			entity.setMainMenu(status);
 			entity.setDisplayPosition(returnNewDisplayPosition(status));
@@ -171,13 +158,8 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) throws BusinessException {
-		ArticleEntity entity;
-		
-		try {
-			entity = articleRepository.getArticleByLink(article.getLink());
-		} catch (EmptyResultDataAccessException empty) {
-			throw new ResourceNotFoundException();
-		}
+	
+		ArticleEntity entity = articleRepository.getArticleByLink(article.getLink());
 		
 		ContentHistoryEntity contentEntity = new ContentHistoryEntity();
 		contentEntity.setContent(article.getContent());

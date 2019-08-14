@@ -13,13 +13,13 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import net.jewczuk.openbip.TestConstants;
 import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.entity.ArticleEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
+import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,7 +38,7 @@ public class ArticleRepositoryTest {
 	@Test
 	public void shouldThrowEmptyResultDataAccessExceptionWhenGivenLinkIsInvalid() {
 		
-		excE.expect(EmptyResultDataAccessException.class);
+		excE.expect(ResourceNotFoundException.class);
 		articleRepository.getArticleByLink(TestConstants.INVALID_LINK);
 	}
 	

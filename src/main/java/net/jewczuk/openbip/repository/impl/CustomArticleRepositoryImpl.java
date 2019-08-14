@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import net.jewczuk.openbip.entity.ArticleEntity;
+import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.repository.CustomArticleRepository;
 
 public class CustomArticleRepositoryImpl 
@@ -17,9 +18,17 @@ public class CustomArticleRepositoryImpl
 
 	@Override
 	public ArticleEntity getArticleByLink(String link) {
-		return entityManager.createNamedQuery(ArticleEntity.FIND_SINGLE_ARTICLE_BY_LINK, ArticleEntity.class)
-				.setParameter("link", link)
-				.getSingleResult();
+		
+		ArticleEntity entity;
+		try {
+			entity = entityManager.createNamedQuery(ArticleEntity.FIND_SINGLE_ARTICLE_BY_LINK, ArticleEntity.class)
+					.setParameter("link", link)
+					.getSingleResult();
+		} catch (Exception empty) {
+			throw new ResourceNotFoundException();
+		}
+		
+		return entity;
 	}
 
 	@Override

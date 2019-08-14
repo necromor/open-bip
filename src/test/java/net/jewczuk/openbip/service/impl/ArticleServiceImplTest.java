@@ -15,7 +15,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import net.jewczuk.openbip.TestConstants;
@@ -50,7 +49,7 @@ public class ArticleServiceImplTest {
 	@Test
 	public void shouldThrowEmptyResultDataAccessExceptionWhenArticleLinkIsInvalid() {
 		
-		excE.expect(EmptyResultDataAccessException.class);
+		excE.expect(ResourceNotFoundException.class);
 		articleService.getArticleByLink(TestConstants.INVALID_LINK);
 	}
 	
@@ -110,7 +109,7 @@ public class ArticleServiceImplTest {
 	@Test
 	public void shouldThrowEmptyResultDataAccessExceptionWhenHistoryLinkIsInvalid() {
 		
-		excE.expect(EmptyResultDataAccessException.class);
+		excE.expect(ResourceNotFoundException.class);
 		articleService.getHistoryByLink(TestConstants.INVALID_LINK);
 	}
 	
@@ -229,7 +228,7 @@ public class ArticleServiceImplTest {
 	@Test
 	public void shouldThrowEmptyResultDataAccessExceptionWhenEditedArticleLinkIsInvalid() {
 		
-		excE.expect(EmptyResultDataAccessException.class);
+		excE.expect(ResourceNotFoundException.class);
 		articleService.getArticleByLinkToEdit(TestConstants.INVALID_LINK);
 	}
 	
