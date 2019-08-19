@@ -130,20 +130,12 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status) throws BusinessException {
-		ArticleEntity entity = articleRepository.getArticleByLink(link);
-
-		entity.setMainMenu(status);
-		entity.setDisplayPosition(returnNewDisplayPosition(status));
-		entity = articleRepository.saveAndFlush(entity);
+		ArticleEntity entity = articleRepository.managePinningToMainMenu(link, status);
 			
 		String logMessage = status ? LogMessages.ARTICLE_PINNED_TO_MAIN_MENU : LogMessages.ARTICLE_UNPINNED_TO_MAIN_MENU;
 		historyService.createLogEntry(logMessage + entity.getTitle(), editorID);
 		
 		return articleMapper.mapToLink(entity);
-	}
-	
-	private int returnNewDisplayPosition(boolean status) {	
-		return status ? getMainMenu().size() + 1 : 0;
 	}
 
 	@Override

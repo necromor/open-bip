@@ -239,4 +239,32 @@ public class ArticleRepositoryTest {
 		articleRepository.addContent(changed, editor);
 	}
 	
+	@Test
+	public void shouldPinnToMainMenu() {
+		ArticleEntity article = articleRepository.managePinningToMainMenu(TestConstants.COOKIES_POLICY_LINK, true);
+		
+		assertThat(article.isMainMenu()).isTrue();
+	}
+	
+	@Test
+	public void shouldUnpinnFromMainMenu() {
+		ArticleEntity article = articleRepository.managePinningToMainMenu(TestConstants.NO_CHILDREN_LINK, false);
+		
+		assertThat(article.isMainMenu()).isFalse();
+	}
+	
+	@Test
+	public void shouldPinnToMainMenuEvenIfAlreadyPinned() {
+		ArticleEntity article = articleRepository.managePinningToMainMenu(TestConstants.NO_CHILDREN_LINK, true);
+		
+		assertThat(article.isMainMenu()).isTrue();
+	}
+	
+	@Test
+	public void shouldUnpinnFromMainMenuEvenIfAlreadyUnpinned() {
+		ArticleEntity article = articleRepository.managePinningToMainMenu(TestConstants.COOKIES_POLICY_LINK, false);
+		
+		assertThat(article.isMainMenu()).isFalse();
+	}
+	
 }

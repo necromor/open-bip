@@ -22,5 +22,7 @@ public interface CustomArticleRepository {
 	List<ArticleEntity> managePinningChild(String parent, String child) throws BusinessException;
 	
 	ArticleEntity addContent(DisplaySingleArticleTO article, EditorEntity editor);
+	
+	ArticleEntity managePinningToMainMenu(String link, boolean status);
 
 }
