@@ -10,7 +10,7 @@
 
 <h2>Zmień treść artykułu</h2>
 
-<form action="#" th:action="@{'/panel/edytuj-tresc/' + ${article.link} + '.do'}" th:object="${article}" method="post">
+<form th:action="@{'/panel/edytuj/tresc/' + ${article.link} + '.do'}" th:object="${article}" method="post">
 	<fieldset>
 		
 		<div class="form-group row" th:if="${error}">

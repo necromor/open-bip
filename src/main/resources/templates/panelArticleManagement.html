@@ -23,11 +23,11 @@
 	<p class="col-md-6">Utworzony przez: <span class="badge badge-dark" th:text="${article.createdBy}" /></p>
 	<p class="col-md-6">Ostatnia edycja przez: <span class="badge badge-dark" th:text="${article.editedBy}" /></p>
 </div>
-<p class="button-middle"><a th:href="@{'/panel/edytuj-tytul/' +${article.link}}" title="Zmień tytuł artykułu" class="btn btn-success">Zmień tytuł artykułu</a></p>
+<p class="button-middle"><a th:href="@{'/panel/edytuj/tytul/' +${article.link}}" title="Zmień tytuł artykułu" class="btn btn-success">Zmień tytuł artykułu</a></p>
 
 <h3>Treść artykułu</h3>
 	<div class="article-content" th:utext="${article.content}"></div>
-	<p class="button-middle"><a th:href="@{'/panel/edytuj-tresc/' +${article.link}}" title="Zmień treść artykułu" class="btn btn-success">Zmień treść</a></p>
+	<p class="button-middle"><a th:href="@{'/panel/edytuj/tresc/' + ${article.link}}" title="Zmień treść artykułu" class="btn btn-success">Zmień treść</a></p>
 
 <h3>Artykuły przypisane</h3>
 	<p class="article-info">Przeciągnij artykuły aby zmienić ich kolejność wyświetlania.</p>

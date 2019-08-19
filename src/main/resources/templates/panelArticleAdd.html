@@ -16,7 +16,7 @@
 	<p>Dodanie treści, przypisanie do menu głównego lub innego artykułu, dodanie załączników możliwe będzie w sekcji zarządzania artykułem, do której zostaniesz przeniesiony po pomyślnym dodaniu artykułu.</p>
 </section>
 
-<form action="#" th:action="@{/panel/dodaj-artykul.do}" th:object="${newArticle}" method="post">
+<form th:action="@{/panel/dodaj/artykul.do}" th:object="${newArticle}" method="post">
 	<fieldset>
 		<legend>Podaj tytuł artykułu</legend>
 		

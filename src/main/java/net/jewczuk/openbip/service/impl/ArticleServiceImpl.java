@@ -3,6 +3,8 @@ package net.jewczuk.openbip.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -129,6 +131,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@Transactional
 	public ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status) throws BusinessException {
 		ArticleEntity entity = articleRepository.managePinningToMainMenu(link, status);
 			
@@ -139,6 +142,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@Transactional
 	public DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) throws BusinessException {
 		
 		EditorEntity editor = editorRepository.getEditorById(editorID);
@@ -150,6 +154,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@Transactional
 	public DisplaySingleArticleTO managePinningChildren(String parent, String child, Long editorID, boolean status)
 			throws BusinessException {
 		

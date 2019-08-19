@@ -10,7 +10,7 @@
 
 <h2>Lista artykułów możliwych do przypięcia do menu głównego</h2>
 
-<form action="#" th:action="@{/panel/dodaj-menu-glowne.do}" method="post">
+<form action="#" th:action="@{/panel/przypnij.do}" method="post">
 
 	<div class="form-check" th:each="article : ${articles}">
 		<input class="form-check-input" type="checkbox" th:value="${article.link}" th:id="${article.link}" name="selectedArticles">

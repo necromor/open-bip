@@ -20,9 +20,7 @@ import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
-import net.jewczuk.openbip.to.EditArticleTO;
 import net.jewczuk.openbip.to.HistoryTO;
-import net.jewczuk.openbip.utils.TransformUtils;
 
 @Controller
 @RequestMapping("/panel")
@@ -47,15 +45,6 @@ public class PanelController {
 		return ViewNames.PANEL_MAIN;
 	}
 	
-	@GetMapping("/lista-artykulow")
-	public String showArticleList(Model model) {
-		
-		List<ArticleLinkTO> allArticles = articleService.getAllArticles();
-		model.addAttribute("allArticles", allArticles);
-		
-		return ViewNames.ARTICLE_LIST;
-	}
-	
 	@GetMapping("/zarzadzaj/{link}")
 	public String showArticleManagmentPage(@PathVariable String link, Model model) {
 		DisplaySingleArticleTO article = articleService.getArticleByLink(link);
@@ -64,56 +53,13 @@ public class PanelController {
 		return ViewNames.ARTICLE_MANAGEMENT;
 	}
 	
-	@GetMapping("/dodaj-artykul")
-	public String showAddArticle(Model model) {
+	@GetMapping("/lista-artykulow")
+	public String showArticleList(Model model) {
 		
-		DisplaySingleArticleTO article = (DisplaySingleArticleTO) model.asMap().getOrDefault("newArticle", new DisplaySingleArticleTO());
-		model.addAttribute("newArticle", article);
+		List<ArticleLinkTO> allArticles = articleService.getAllArticles();
+		model.addAttribute("allArticles", allArticles);
 		
-		return ViewNames.ARTICLE_ADD;
-	}
-	
-	@PostMapping("/dodaj-artykul.do")
-	public String addArticle(Model model, DisplaySingleArticleTO newArticle, RedirectAttributes attributes) {
-		
-		newArticle.setLink(TransformUtils.createLinkFromTitle(newArticle.getTitle()));
-		DisplaySingleArticleTO savedArticle;
-		Long editorID = 1L;
-		try {
-			savedArticle = articleService.saveArticle(newArticle, editorID);
-			attributes.addFlashAttribute("articleSuccess", UIMessages.ADD_ARTICLE_SUCCESS);
-			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();		
-		} catch (BusinessException e) {	
-			model.addAttribute("error", e.getMessage());
-			model.addAttribute("newArticle", newArticle);
-			return ViewNames.ARTICLE_ADD;
-		}	
-	}
-	
-	@GetMapping("/edytuj-tytul/{link}")
-	public String showFormEditTitle(@PathVariable String link, Model model) {
-		EditArticleTO newArticle = articleService.getArticleByLinkToEdit(link);
-		model.addAttribute("newArticle", newArticle);
-
-		return ViewNames.ARTICLE_EDIT_TITLE;
-	}
-	
-	@PostMapping("/edytuj-tytul/{link}.do")
-	public String editTitle(@PathVariable String link, Model model, EditArticleTO editedArticle, RedirectAttributes attributes) {
-		
-		editedArticle.setLink(TransformUtils.createLinkFromTitle(editedArticle.getTitle()));
-		
-		EditArticleTO savedArticle;
-		Long editorID = 1L;
-		try {
-			savedArticle = articleService.editTitle(editedArticle, editorID);
-			attributes.addFlashAttribute("articleSuccess", UIMessages.EDIT_TITLE_SUCCESS);
-			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();		
-		} catch (BusinessException e) {		
-			model.addAttribute("error", e.getMessage());
-			model.addAttribute("newArticle", editedArticle);
-			return ViewNames.ARTICLE_EDIT_TITLE;
-		}
+		return ViewNames.ARTICLE_LIST;
 	}
 	
 	@GetMapping("/twoja-aktywnosc")
@@ -125,7 +71,7 @@ public class PanelController {
 		return ViewNames.LOG_LIST;
 	}
 	
-	@GetMapping("/dodaj-menu-glowne")
+	@GetMapping("/przypnij")
 	public String showListOfUnatachtedArticles(Model model) {
 		List<ArticleLinkTO> articles = articleService.getAllUnpinnedArticles();
 		
@@ -134,7 +80,7 @@ public class PanelController {
 		return ViewNames.ARTICLE_PIN_MAIN_MENU;
 	}
 	
-	@PostMapping("/dodaj-menu-glowne.do")
+	@PostMapping("/przypnij.do")
 	public String pinSelectedToMainMenu(@RequestParam(required = false) List<String> selectedArticles, RedirectAttributes attributes) {
 		Long editorID = 1L;
 		
@@ -168,29 +114,6 @@ public class PanelController {
 		}
 
 		return "redirect:/panel/";
-	}
-	
-	@GetMapping("/edytuj-tresc/{link}")
-	public String showFormEditContent(@PathVariable String link, Model model) {
-		DisplaySingleArticleTO article = articleService.getArticleByLink(link);
-		model.addAttribute("article", article);
-
-		return ViewNames.ARTICLE_EDIT_CONTENT;
-	}
-	
-	@PostMapping("/edytuj-tresc/{link}.do")
-	public String editContent(@PathVariable String link, Model model, DisplaySingleArticleTO article, RedirectAttributes attributes) {
-		
-		DisplaySingleArticleTO savedArticle;
-		Long editorID = 1L;
-		try {
-			savedArticle = articleService.editContent(article, editorID);
-			attributes.addFlashAttribute("articleSuccess", UIMessages.EDIT_CONTENT_SUCCESS);
-			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();		
-		} catch (BusinessException e) {		
-			attributes.addFlashAttribute("articleFailure", UIMessages.EDIT_CONTENT_FAILURE);
-			return "redirect:/panel/zarzadzaj/" + article.getLink();
-		}
 	}
 	
 	@GetMapping("/przypnij-dziecko/{link}")
