@@ -20,9 +20,9 @@ INSERT INTO article(id, title, link, display_position, main_menu, parent_id, ver
 INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
 	VALUES(6, 'Dziecko nr 2_1', 'dziecko-nr-2-1', 1, false, 4, 1, now(), default);
 INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
-	VALUES(7, 'Polityka prywatności', 'polityka-prywatnosci', 99, false, null, 1, now(), default);
+	VALUES(7, 'Polityka prywatności', 'polityka-prywatnosci', 0, false, null, 1, now(), default);
 INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
-	VALUES(8, 'Polityka cookies', 'polityka-cookies', 100, false, null, 1, now(), default);
+	VALUES(8, 'Polityka cookies', 'polityka-cookies', 0, false, null, 1, now(), default);
 	
 INSERT INTO content_history(id, article_id, content, editor_id, version, created_at, updated_at)
 	VALUES(1, 1, 'Treść strony głównej', 1, 1, now(), default);

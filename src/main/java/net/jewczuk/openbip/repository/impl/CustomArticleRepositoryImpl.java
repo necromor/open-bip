@@ -145,8 +145,12 @@ public class CustomArticleRepositoryImpl
 	@Override
 	public ArticleEntity managePinningToMainMenu(String link, boolean status) {
 		ArticleEntity entity = getArticleByLink(link);
-		entity.setMainMenu(status);
+		if (entity.isMainMenu() == status) {
+			return entity;
+		}
+		
 		entity.setDisplayPosition(returnNewDisplayPosition(status));
+		entity.setMainMenu(status);
 		entityManager.persist(entity);
 		return entity;
 	}

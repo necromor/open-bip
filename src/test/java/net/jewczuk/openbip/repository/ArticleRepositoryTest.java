@@ -244,6 +244,7 @@ public class ArticleRepositoryTest {
 		ArticleEntity article = articleRepository.managePinningToMainMenu(TestConstants.COOKIES_POLICY_LINK, true);
 		
 		assertThat(article.isMainMenu()).isTrue();
+		assertThat(article.getDisplayPosition()).isEqualTo(articleRepository.getMainMenu().size());
 	}
 	
 	@Test
@@ -251,6 +252,7 @@ public class ArticleRepositoryTest {
 		ArticleEntity article = articleRepository.managePinningToMainMenu(TestConstants.NO_CHILDREN_LINK, false);
 		
 		assertThat(article.isMainMenu()).isFalse();
+		assertThat(article.getDisplayPosition()).isEqualTo(0);
 	}
 	
 	@Test
@@ -265,6 +267,7 @@ public class ArticleRepositoryTest {
 		ArticleEntity article = articleRepository.managePinningToMainMenu(TestConstants.COOKIES_POLICY_LINK, false);
 		
 		assertThat(article.isMainMenu()).isFalse();
+		assertThat(article.getDisplayPosition()).isEqualTo(0);
 	}
 	
 }
