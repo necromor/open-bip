@@ -3,7 +3,9 @@ package net.jewczuk.openbip.repository;
 import java.util.List;
 
 import net.jewczuk.openbip.entity.ArticleEntity;
+import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.BusinessException;
+import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 
 public interface CustomArticleRepository {
 	
@@ -18,5 +20,7 @@ public interface CustomArticleRepository {
 	List<ArticleEntity> getUnpinnedArticles();
 	
 	List<ArticleEntity> managePinningChild(String parent, String child) throws BusinessException;
+	
+	ArticleEntity addContent(DisplaySingleArticleTO article, EditorEntity editor);
 
 }

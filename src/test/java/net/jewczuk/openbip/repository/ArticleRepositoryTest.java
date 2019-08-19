@@ -23,6 +23,7 @@ import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
+import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -209,6 +210,33 @@ public class ArticleRepositoryTest {
 		excE.expect(ArticleException.class);
 		excE.expectMessage(ExceptionsMessages.PINNED_TO_ANOTHER);
 		articleRepository.managePinningChild(parentLink, childLink);
+	}
+	
+	@Test
+	public void shouldSuccessfullyCreateNewContent() throws BusinessException {
+		DisplaySingleArticleTO changed = new DisplaySingleArticleTO.Builder()
+				.link(TestConstants.CHILD_2_LINK)
+				.content(TestConstants.MAIN_PAGE_CONTENT)
+				.build();
+		EditorEntity editor = editorRepository.getEditorById(2L);
+		
+		ArticleEntity articleAfter = articleRepository.addContent(changed, editor);
+		List<String> contents = articleAfter.getContentHistory().stream().map(c -> c.getContent()).collect(Collectors.toList());
+		
+		assertThat(contents).contains(TestConstants.MAIN_PAGE_CONTENT);
+		assertThat(contents).doesNotHaveDuplicates();
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenAddingContentToInvalidLink() throws BusinessException {
+		DisplaySingleArticleTO changed = new DisplaySingleArticleTO.Builder()
+				.link(TestConstants.INVALID_LINK)
+				.content(TestConstants.MAIN_PAGE_CONTENT)
+				.build();
+		EditorEntity editor = editorRepository.getEditorById(2L);	
+		
+		excE.expect(ResourceNotFoundException.class);
+		articleRepository.addContent(changed, editor);
 	}
 	
 }

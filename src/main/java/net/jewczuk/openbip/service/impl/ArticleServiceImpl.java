@@ -1,6 +1,5 @@
 package net.jewczuk.openbip.service.impl;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
-import net.jewczuk.openbip.entity.ContentHistoryEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
@@ -150,18 +148,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) throws BusinessException {
-		ArticleEntity entity = articleRepository.getArticleByLink(article.getLink());
 		
-		ContentHistoryEntity contentEntity = new ContentHistoryEntity();
 		EditorEntity editor = editorRepository.getEditorById(editorID);
-		contentEntity.setContent(article.getContent());
-		contentEntity.setEditor(editor);
-		
-		Collection<ContentHistoryEntity> history = entity.getContentHistory();
-		history.add(contentEntity);
-		entity.setContentHistory(history);
-
-		entity = articleRepository.saveAndFlush(entity);
+		ArticleEntity entity = articleRepository.addContent(article, editor);
 			
 		historyService.createLogEntry(LogMessages.ARTICLE_CONTENT_EDITED + entity.getTitle(), editorID);
 		

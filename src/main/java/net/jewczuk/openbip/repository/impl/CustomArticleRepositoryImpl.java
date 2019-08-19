@@ -9,10 +9,13 @@ import javax.persistence.PersistenceContext;
 
 import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
+import net.jewczuk.openbip.entity.ContentHistoryEntity;
+import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.repository.CustomArticleRepository;
+import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 
 public class CustomArticleRepositoryImpl 
 	implements CustomArticleRepository {
@@ -91,6 +94,8 @@ public class CustomArticleRepositoryImpl
 			parentEntity.getChildren().add(childEntity);
 		}
 		
+		entityManager.persist(parentEntity);
+		
 		List<ArticleEntity> result = new ArrayList<>();
 		result.add(parentEntity);
 		result.add(childEntity);
@@ -121,6 +126,20 @@ public class CustomArticleRepositoryImpl
 				child.setDisplayPosition(oldPos - 1);
 			}
 		}	
+	}
+
+	@Override
+	public ArticleEntity addContent(DisplaySingleArticleTO article, EditorEntity editor) {
+		ArticleEntity entity = getArticleByLink(article.getLink());
+		
+		ContentHistoryEntity contentEntity = new ContentHistoryEntity();
+		contentEntity.setContent(article.getContent());
+		contentEntity.setEditor(editor);
+		
+		entity.getContentHistory().add(contentEntity);
+		entityManager.persist(entity);
+		
+		return entity;
 	}
 
 }
