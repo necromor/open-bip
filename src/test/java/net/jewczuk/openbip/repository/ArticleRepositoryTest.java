@@ -17,8 +17,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import net.jewczuk.openbip.TestConstants;
 import net.jewczuk.openbip.constants.ApplicationProperties;
+import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
+import net.jewczuk.openbip.exceptions.ArticleException;
+import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 
 @RunWith(SpringRunner.class)
@@ -152,4 +155,60 @@ public class ArticleRepositoryTest {
 		
 		assertThat(titles).containsExactly(TestConstants.COOKIES_POLICY_TITLE, TestConstants.PRIVACY_POLICY_TITLE);
 	}
+	
+	@Test
+	public void shouldSuccessfullyPinnChild() throws BusinessException {
+		String parentLink = TestConstants.PARENT_LINK;
+		String childLink = TestConstants.COOKIES_POLICY_LINK;
+		ArticleEntity parent = articleRepository.getArticleByLink(parentLink);
+		ArticleEntity child = articleRepository.getArticleByLink(parentLink);
+		
+		List<ArticleEntity> articles = articleRepository.managePinningChild(parentLink, childLink);
+		
+		assertThat(parent.getChildren()).doesNotContain(child);
+		assertThat(articles.get(0).getChildren()).contains(articles.get(1));
+		assertThat(articles.get(1).getDisplayPosition()).isEqualTo(articles.get(0).getChildren().size());
+	}
+	
+	@Test
+	public void shouldSuccessfullyUnpinnChild() throws BusinessException {
+		String parentLink = TestConstants.PARENT_LINK;
+		String childLink = TestConstants.CHILD_1_LINK;
+		
+		List<ArticleEntity> articles = articleRepository.managePinningChild(parentLink, childLink);
+		
+		assertThat(articles.get(0).getChildren()).doesNotContain(articles.get(1));
+		assertThat(articles.get(1).getDisplayPosition()).isEqualTo(0);
+	}	
+	
+	@Test
+	public void shouldThrowExceptionWhenPinningToSelf() throws BusinessException {
+		String parentLink = TestConstants.PARENT_LINK;
+		String childLink = TestConstants.PARENT_LINK;
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.PINNING_TO_SELF);
+		articleRepository.managePinningChild(parentLink, childLink);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenPinningArticleFromMainMenu() throws BusinessException {
+		String parentLink = TestConstants.PARENT_LINK;
+		String childLink = TestConstants.NO_CHILDREN_LINK;
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.PINNED_TO_ANOTHER);
+		articleRepository.managePinningChild(parentLink, childLink);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenPinningArticleThatHasAnotherParent() throws BusinessException {
+		String parentLink = TestConstants.PARENT_LINK;
+		String childLink = TestConstants.CHILD_2_1_LINK;
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.PINNED_TO_ANOTHER);
+		articleRepository.managePinningChild(parentLink, childLink);
+	}
+	
 }
