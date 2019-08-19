@@ -168,4 +168,19 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleMapper.mapToDisplaySingleArticle(entity);
 	}
 
+	@Override
+	public DisplaySingleArticleTO managePinningChildren(String parent, String child, Long editorID, boolean status)
+			throws BusinessException {
+		
+		List<ArticleEntity> entities = articleRepository.managePinningChild(parent, child);
+		
+		String logMessage = entities.get(0).getTitle();
+		logMessage += status ? LogMessages.ARTICLE_PINNED_CHILD : LogMessages.ARTICLE_UNPINNED_CHILD;
+		logMessage += entities.get(1).getTitle();
+		
+		historyService.createLogEntry(logMessage, editorID);
+		
+		return articleMapper.mapToDisplaySingleArticle(entities.get(0));
+	}
+
 }

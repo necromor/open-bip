@@ -32,4 +32,5 @@ public interface ArticleService {
 
 	DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) throws BusinessException;
 
+	DisplaySingleArticleTO managePinningChildren(String parent, String child, Long editorID, boolean status) throws BusinessException;
 }

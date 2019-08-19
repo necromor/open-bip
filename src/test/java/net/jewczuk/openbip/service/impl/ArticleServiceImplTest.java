@@ -388,5 +388,63 @@ public class ArticleServiceImplTest {
 		articleService.editContent(changed, 2008L);
 	}
 	
+	@Test
+	public void shouldSuccessfullyPinChild() throws BusinessException {
+		String parentLink = TestConstants.PARENT_LINK;
+		String childLink = TestConstants.PRIVACY_POLICY_LINK;
+		Long editorID = 1L;
+		
+		DisplaySingleArticleTO result = articleService.managePinningChildren(parentLink, childLink, editorID, true);
+		List<String> childrenTitles = result.getChildren().stream().map(c -> c.getTitle()).collect(Collectors.toList());
+		
+		assertThat(childrenTitles).contains(TestConstants.PRIVACY_POLICY_TITLE);
+		assertThat(result.getChildren().get(0).getLink()).isNotEqualTo(childLink);
+	}
+	
+	@Test
+	public void shouldSuccessfullyUnpinChild() throws BusinessException {
+		String parentLink = TestConstants.PARENT_LINK;
+		String childLink = TestConstants.CHILD_1_LINK;
+		Long editorID = 1L;
+		
+		DisplaySingleArticleTO result = articleService.managePinningChildren(parentLink, childLink, editorID, false);
+		List<String> childrenTitles = result.getChildren().stream().map(c -> c.getTitle()).collect(Collectors.toList());
+		
+		assertThat(childrenTitles).doesNotContain(TestConstants.CHILD_1_TITLE);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenPinningToSelf() throws BusinessException {
+		String parentLink = TestConstants.PARENT_LINK;
+		String childLink = TestConstants.PARENT_LINK;
+		Long editorID = 1L;
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.PINNING_TO_SELF);
+		articleService.managePinningChildren(parentLink, childLink, editorID, true);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenArticlePinnedToAnother() throws BusinessException {
+		String parentLink = TestConstants.PARENT_LINK;
+		String childLink = TestConstants.CHILD_2_1_LINK;
+		Long editorID = 1L;
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.PINNED_TO_ANOTHER);
+		articleService.managePinningChildren(parentLink, childLink, editorID, true);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenArticlePinnedToMainMenu() throws BusinessException {
+		String parentLink = TestConstants.PARENT_LINK;
+		String childLink = TestConstants.MAIN_PAGE_LINK;
+		Long editorID = 1L;
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.PINNED_TO_ANOTHER);
+		articleService.managePinningChildren(parentLink, childLink, editorID, true);
+	}
+	
 }
  
