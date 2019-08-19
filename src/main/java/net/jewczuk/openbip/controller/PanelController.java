@@ -192,5 +192,53 @@ public class PanelController {
 			return "redirect:/panel/zarzadzaj/" + article.getLink();
 		}
 	}
+	
+	@GetMapping("/przypnij-dziecko/{link}")
+	public String showFormPinChildren(@PathVariable String link, Model model) {
+		DisplaySingleArticleTO newArticle = articleService.getArticleByLink(link);
+		List<ArticleLinkTO> articles = articleService.getAllUnpinnedArticles();
+		
+		model.addAttribute("parent", newArticle);
+		model.addAttribute("selectedArticles", new ArrayList<String>());
+		model.addAttribute("articles", articles);
 
+		return ViewNames.ARTICLE_PIN_CHILD;
+	}
+	
+	@PostMapping("/przypnij-dziecko.do")
+	public String pinSelectedAsChildren(@RequestParam(required = false) List<String> selectedArticles, 
+										@RequestParam String parentLink, RedirectAttributes attributes) {
+		Long editorID = 1L;
+		
+		if (selectedArticles == null) {
+			attributes.addFlashAttribute("articleFailure", UIMessages.ARTICLE_PINNED_FAILURE);
+			return "redirect:/panel/zarzadzaj/" + parentLink;
+		}
+		
+		for (String art : selectedArticles) {
+			try {
+				articleService.managePinningChildren(parentLink, art, editorID, true);
+			} catch (BusinessException e) {
+				attributes.addFlashAttribute("articleFailure", UIMessages.ARTICLE_PINNED_FAILURE);
+				return "redirect:/panel/zarzadzaj/" + parentLink;
+			}
+		}
+		
+		attributes.addFlashAttribute("articleSuccess", UIMessages.ARTICLE_PINNED_SUCCESS);
+		return "redirect:/panel/zarzadzaj/" + parentLink;
+	}
+	
+	@GetMapping("/odepnij-dziecko/{parent}/{child}")
+	public String unpinSelectedChild(@PathVariable String parent, @PathVariable String child, RedirectAttributes attributes) {
+		
+		Long editorID = 1L;		
+		try {
+			articleService.managePinningChildren(parent, child, editorID, false);
+			attributes.addFlashAttribute("articleSuccess", UIMessages.ARTICLE_UNPINNED_SUCCESS);
+		} catch (BusinessException e) {
+			attributes.addFlashAttribute("articleFailure", UIMessages.ARTICLE_UNPINNED_FAILURE);
+		}
+
+		return "redirect:/panel/zarzadzaj/" + parent;
+	}
 }

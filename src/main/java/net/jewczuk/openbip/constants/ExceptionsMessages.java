@@ -8,5 +8,8 @@ public class ExceptionsMessages {
 													+ ApplicationProperties.MIN_LINK_LENGHT + " znaki!";
 	
 	public static final String INVALID_EDITOR_ID = "Podany redaktor nie istnieje!";
-
+	
+	public static final String PINNING_TO_SELF = "Nie można przypiąć artykułu do siebie!";
+	public static final String PINNED_TO_ANOTHER = "Artykuł jest już przypięty!";
+	
 }

@@ -35,12 +35,12 @@
 	
 	<ol class="list-group">
 		<li class="list-group-item article-list-element" th:each="child : ${article.children}">
-		<a th:href="@{'/panel/zarzadzaj/' +${child.link}}" th:text="${child.title}" title="Zarządzaj artykułem"></a>
-		<a href="#" title="Usuń artykuł z listy" class="badge badge-danger delete-button">X</a>
+		<a th:href="@{'/panel/zarzadzaj/' + ${child.link}}" th:text="${child.title}" title="Zarządzaj artykułem"></a>
+		<a th:href="@{'/panel/odepnij-dziecko/' + ${article.link} + '/' + ${child.link}}" title="Usuń artykuł z listy" class="badge badge-danger delete-button">X</a>
 		</li>
 	</ol>
 
-	<p class="button-middle"><a href="#" title="Przypisz nowy artykuł" class="btn btn-success">Przypisz nowy artykuł</a></p>
+	<p class="button-middle"><a th:href="@{'/panel/przypnij-dziecko/' +${article.link}}" title="Przypisz nowy artykuł" class="btn btn-success">Przypisz nowy artykuł</a></p>
 
 <h3>Załączniki</h3>
 	<p class="article-info">Przeciągnij załączniki aby zmienić ich kolejność wyświetlania.</p>
