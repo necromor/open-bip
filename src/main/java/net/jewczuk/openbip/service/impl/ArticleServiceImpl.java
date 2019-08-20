@@ -11,15 +11,18 @@ import org.springframework.stereotype.Service;
 import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
+import net.jewczuk.openbip.entity.AttachmentEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.mapper.ArticleMapper;
+import net.jewczuk.openbip.mapper.AttachmentMapper;
 import net.jewczuk.openbip.repository.ArticleRepository;
 import net.jewczuk.openbip.repository.EditorRepository;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
+import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.EditArticleTO;
@@ -42,6 +45,9 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Autowired
 	private EditorRepository editorRepository;
+	
+	@Autowired
+	private AttachmentMapper attachmentMapper;
 
 	@Override
 	public DisplaySingleArticleTO getArticleByLink(String link) {
@@ -167,6 +173,21 @@ public class ArticleServiceImpl implements ArticleService {
 		historyService.createLogEntry(logMessage, editorID);
 		
 		return articleMapper.mapToDisplaySingleArticle(entities.get(0));
+	}
+
+	@Override
+	@Transactional
+	public DisplaySingleArticleTO addAttachment(String link, AttachmentTO attachment, Long editorID)
+			throws BusinessException {
+		
+		AttachmentEntity attEntity = attachmentMapper.mapToNewEntity(attachment);
+		EditorEntity editor = editorRepository.getEditorById(editorID);
+		ArticleEntity article = articleRepository.addAttachment(link, attEntity, editor);
+		
+		String logMessage = article.getTitle() + LogMessages.ARTICLE_ADD_ATTACHMENT + attEntity.getFileName();
+		historyService.createLogEntry(logMessage, editorID);	
+		
+		return articleMapper.mapToDisplaySingleArticle(article);
 	}
 
 }

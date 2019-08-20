@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.to.ArticleLinkTO;
+import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.EditArticleTO;
@@ -33,4 +34,6 @@ public interface ArticleService {
 	DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) throws BusinessException;
 
 	DisplaySingleArticleTO managePinningChildren(String parent, String child, Long editorID, boolean status) throws BusinessException;
+	
+	DisplaySingleArticleTO addAttachment(String link, AttachmentTO attachment, Long editorID) throws BusinessException;
 }

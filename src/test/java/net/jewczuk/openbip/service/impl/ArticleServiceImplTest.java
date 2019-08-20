@@ -21,12 +21,14 @@ import net.jewczuk.openbip.TestConstants;
 import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.exceptions.ArticleException;
+import net.jewczuk.openbip.exceptions.AttachmentException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.EditorException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
+import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.EditArticleTO;
@@ -446,5 +448,35 @@ public class ArticleServiceImplTest {
 		articleService.managePinningChildren(parentLink, childLink, editorID, true);
 	}
 	
+	@Test
+	public void shouldSuccessfullyAddNewAttachment() throws BusinessException {
+		AttachmentTO ato = new AttachmentTO.Builder()
+				.displayName(TestConstants.ATTACHMENT_3_TITLE)
+				.fileName(TestConstants.ATTACHMENT_3_NAME)
+				.extension(TestConstants.ATTACHMENT_ODT)
+				.size(0L)
+				.build();
+		
+		DisplaySingleArticleTO article = articleService.addAttachment(TestConstants.PARENT_LINK, ato, 2L);
+		int last = article.getAttachments().size() - 1;
+		
+		assertThat(article.getAttachments().size()).isGreaterThan(0);
+		assertThat(article.getAttachments().get(last).getAddedBy()).isEqualTo(TestConstants.EDITOR_2);
+		assertThat(article.getAttachments().get(last).getFileName()).isEqualTo(TestConstants.ATTACHMENT_3_NAME);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenAttachmentAlreadyInDB() throws BusinessException {
+		AttachmentTO ato = new AttachmentTO.Builder()
+				.displayName(TestConstants.ATTACHMENT_3_TITLE)
+				.fileName(TestConstants.ATTACHMENT_2_NAME)
+				.extension(TestConstants.ATTACHMENT_ODT)
+				.size(0L)
+				.build();
+		
+		excE.expect(AttachmentException.class);
+		excE.expectMessage(ExceptionsMessages.ATTACHMENT_EXISTS);
+		articleService.addAttachment(TestConstants.PARENT_LINK, ato, 2L);
+	}
 }
  
