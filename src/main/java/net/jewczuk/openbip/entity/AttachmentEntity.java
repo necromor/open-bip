@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Table(name = "attachment")
 public class AttachmentEntity extends AbstractEntity {
 
-	@Column(name = "file_name", nullable = false)
+	@Column(name = "file_name", nullable = false, unique = true)
 	private String fileName;
 
 	@Column(name = "display_name", nullable = false)

@@ -25,6 +25,9 @@ public class TestConstants {
 	public static final String MAIN_PAGE_CONTENT = "Treść strony głównej po edycji";
 	public static final String ATTACHMENT_1_NAME = "zal_nr_1.pdf";
 	public static final String ATTACHMENT_2_NAME = "zal_nr_2.pdf";
+	public static final String ATTACHMENT_3_NAME = "zal_nr_3.pdf";
+	public static final String ATTACHMENT_3_TITLE = "Nowy załącznik";
+	public static final String ATTACHMENT_ODT = "odt";
 	public static final String EMPTY_CONTENT = "";
 	public static final String PRIVACY_POLICY_TITLE = "Polityka prywatności";
 	public static final String PRIVACY_POLICY_LINK = "polityka-prywatnosci";

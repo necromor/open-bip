@@ -9,9 +9,11 @@ import javax.persistence.PersistenceContext;
 
 import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
+import net.jewczuk.openbip.entity.AttachmentEntity;
 import net.jewczuk.openbip.entity.ContentHistoryEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
+import net.jewczuk.openbip.exceptions.AttachmentException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.repository.CustomArticleRepository;
@@ -155,10 +157,26 @@ public class CustomArticleRepositoryImpl
 		return entity;
 	}
 
-	
+	@Override
+	public ArticleEntity addAttachment(String link, AttachmentEntity attEntity, EditorEntity editor) throws BusinessException {
+		ArticleEntity entity = getArticleByLink(link);
+		attEntity.setAddedBy(editor);
+		attEntity.setDisplayPosition(entity.getAttachments().size() + 1);
+		entity.getAttachments().add(attEntity);
+		try {
+			entityManager.persist(entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new AttachmentException(ExceptionsMessages.ATTACHMENT_EXISTS);
+		}
+		
+		return entity;
+	}
 	
 	
 	private int returnNewDisplayPosition(boolean status) {	
 		return status ? getMainMenu().size() + 1 : 0;
 	}
+
+
 }

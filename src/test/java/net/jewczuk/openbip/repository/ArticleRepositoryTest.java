@@ -2,6 +2,7 @@ package net.jewczuk.openbip.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,8 +20,10 @@ import net.jewczuk.openbip.TestConstants;
 import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
+import net.jewczuk.openbip.entity.AttachmentEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
+import net.jewczuk.openbip.exceptions.AttachmentException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
@@ -268,6 +271,44 @@ public class ArticleRepositoryTest {
 		
 		assertThat(article.isMainMenu()).isFalse();
 		assertThat(article.getDisplayPosition()).isEqualTo(0);
+	}
+	
+	@Test
+	public void shouldSuccessfullyAddNewAttachment() throws BusinessException {
+		EditorEntity editor = editorRepository.getEditorById(3L);
+		AttachmentEntity attachment = new AttachmentEntity();
+		attachment.setDisplayName(TestConstants.ATTACHMENT_3_TITLE);
+		attachment.setFileName(TestConstants.ATTACHMENT_3_NAME);
+		attachment.setSize(32L);
+		attachment.setExtension(TestConstants.ATTACHMENT_ODT);
+		
+		ArticleEntity article = articleRepository.addAttachment(TestConstants.PARENT_LINK, attachment, editor);
+		List<AttachmentEntity> list = article.getAttachments().stream()
+				.sorted(Comparator.comparing(AttachmentEntity::getDisplayPosition))
+				.collect(Collectors.toList());
+		AttachmentEntity lastElement = list.get(list.size() - 1);
+		
+		assertThat(article.getAttachments().size()).isGreaterThan(0);
+		assertThat(lastElement.getDisplayName()).isEqualTo(TestConstants.ATTACHMENT_3_TITLE);
+		assertThat(lastElement.getFileName()).isEqualTo(TestConstants.ATTACHMENT_3_NAME);
+		assertThat(lastElement.getSize()).isEqualTo(32L);
+		assertThat(lastElement.getExtension()).isEqualTo(TestConstants.ATTACHMENT_ODT);
+		assertThat(lastElement.getDisplayPosition()).isEqualTo(article.getAttachments().size());
+		assertThat(lastElement.getAddedBy().getFullName()).isEqualTo(TestConstants.EDITOR_3);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenAddingFileThatAlreadyExistInDb() throws BusinessException {
+		EditorEntity editor = editorRepository.getEditorById(3L);
+		AttachmentEntity attachment = new AttachmentEntity();
+		attachment.setDisplayName(TestConstants.ATTACHMENT_3_TITLE);
+		attachment.setFileName(TestConstants.ATTACHMENT_1_NAME);
+		attachment.setSize(32L);
+		attachment.setExtension(TestConstants.ATTACHMENT_ODT);	
+		
+		excE.expect(AttachmentException.class);
+		excE.expectMessage(ExceptionsMessages.ATTACHMENT_EXISTS);
+		articleRepository.addAttachment(TestConstants.PARENT_LINK, attachment, editor);
 	}
 	
 }

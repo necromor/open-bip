@@ -3,6 +3,7 @@ package net.jewczuk.openbip.repository;
 import java.util.List;
 
 import net.jewczuk.openbip.entity.ArticleEntity;
+import net.jewczuk.openbip.entity.AttachmentEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
@@ -24,5 +25,7 @@ public interface CustomArticleRepository {
 	ArticleEntity addContent(DisplaySingleArticleTO article, EditorEntity editor);
 	
 	ArticleEntity managePinningToMainMenu(String link, boolean status);
+	
+	ArticleEntity addAttachment(String link, AttachmentEntity attEntity, EditorEntity editor) throws BusinessException;
 
 }

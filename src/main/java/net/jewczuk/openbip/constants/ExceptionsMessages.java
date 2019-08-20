@@ -12,4 +12,6 @@ public class ExceptionsMessages {
 	public static final String PINNING_TO_SELF = "Nie można przypiąć artykułu do siebie!";
 	public static final String PINNED_TO_ANOTHER = "Artykuł jest już przypięty!";
 	
+	public static final String ATTACHMENT_EXISTS = "Plik o podanej nazwie już istnieje w bazie danych";
+	
 }
