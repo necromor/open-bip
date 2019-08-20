@@ -18,4 +18,14 @@ public class AttachmentMapper {
 				.addedAt(attachment.getCreatedAt())
 				.build();
 	}
+	
+	public AttachmentEntity mapToNewEntity(AttachmentTO ato) {
+		AttachmentEntity entity = new AttachmentEntity();
+		entity.setDisplayName(ato.getDisplayName());
+		entity.setFileName(ato.getFileName());
+		entity.setExtension(ato.getExtension());
+		entity.setSize(ato.getSize());
+		
+		return entity;
+	}
 }

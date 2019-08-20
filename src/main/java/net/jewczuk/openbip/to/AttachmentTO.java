@@ -2,6 +2,8 @@ package net.jewczuk.openbip.to;
 
 import java.time.LocalDateTime;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class AttachmentTO {
 
 	private String fileName;
@@ -69,6 +71,19 @@ public class AttachmentTO {
 
 	public AttachmentTO() {
 
+	}
+	
+	public AttachmentTO(MultipartFile file, String name) {
+		fileName = file.getOriginalFilename();
+		displayName = name;
+		extension = extractExtension(file.getOriginalFilename());
+		size = file.getSize();
+	}
+
+	private String extractExtension(String name) {
+		String[] parts = name.split("\\.");
+		int last = parts.length - 1;
+		return parts[last];
 	}
 
 	public String getFileName() {
