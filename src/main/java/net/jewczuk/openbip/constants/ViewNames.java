@@ -14,6 +14,7 @@ public class ViewNames {
 	public static final String ARTICLE_PIN_MAIN_MENU = "panelArticlePinMainMenu";
 	public static final String ARTICLE_EDIT_CONTENT = "panelArticleEditContent";
 	public static final String ARTICLE_PIN_CHILD = "panelArticlePinChild";
+	public static final String ARTICLE_ADD_ATTACHMENT = "panelArticleAddAttachment";
 	
 	public static final String LOG_LIST = "panelLogList";
 

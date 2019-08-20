@@ -1,6 +1,7 @@
 HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+/upload
 
 ### ecplipse/maven/h2 ###
 .mvn/

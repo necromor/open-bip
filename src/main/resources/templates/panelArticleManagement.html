@@ -40,7 +40,7 @@
 		</li>
 	</ol>
 
-	<p class="button-middle"><a th:href="@{'/panel/przypnij-dziecko/' +${article.link}}" title="Przypisz nowy artykuł" class="btn btn-success">Przypisz nowy artykuł</a></p>
+	<p class="button-middle"><a th:href="@{'/panel/przypnij-dziecko/' + ${article.link}}" title="Przypisz nowy artykuł" class="btn btn-success">Przypisz nowy artykuł</a></p>
 
 <h3>Załączniki</h3>
 	<p class="article-info">Przeciągnij załączniki aby zmienić ich kolejność wyświetlania.</p>
@@ -48,14 +48,14 @@
 
 	<ol class="list-group">
 		<li class="list-group-item" th:each="attachment : ${article.attachments}">
-			<a th:href="@{'/zalaczniki/' +${attachment.fileName}}" th:text="${attachment.displayName}"></a>
+			<a th:href="@{'/upload/' +${attachment.fileName}}" th:text="${attachment.displayName}"></a>
 			[<span th:text=". +${attachment.extension}" th:remove="tag"></span>; 
 			<span th:text="${T(net.jewczuk.openbip.utils.DisplayUtils).formatSize(attachment.size)}" th:remove="tag"></span>]
 			<a href="#" title="Usuń załącznik" class="badge badge-danger delete-button">X</a>
 		</li>
 	</ol>
 
-	<p class="button-middle"><a href="#" title="Dodaj nowy załącznik" class="btn btn-success">Dodaj nowy załącznik</a></p>
+	<p class="button-middle"><a th:href="@{'/panel/dodaj/zalacznik/' + ${article.link}}" title="Dodaj nowy załącznik" class="btn btn-success">Dodaj nowy załącznik</a></p>
 	
 <h3>Usuń artykuł</h3>
 	<section class="article-info">

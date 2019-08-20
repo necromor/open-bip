@@ -83,3 +83,9 @@ article .article-content {
 	position: absolute;
 	right: 0.5em;
 }
+
+.upload-input {
+	margin:0;
+	padding:0;
+	border-bottom: 1px dotted #000000;
+}

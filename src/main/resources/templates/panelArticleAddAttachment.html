@@ -1,0 +1,46 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/panel_layout}">
+<head>
+    <title>Dodaj załącznik do artykułu - panel redaktora</title>
+</head>
+<body>
+
+<article layout:fragment="panel_content" class="col-md-8">
+
+<h2 th:text="'Dodaj załącznik do artykułu - ' + ${article.title}"></h2>
+
+<section class="article-info">
+	<p>Plik w nazwie nie powinien mieć polskich znaków i spacje zastąpione znakiem "-".</p>
+	<p>Na przykład: nazwę pliku <strong>To już ostatni tekst.docx</strong> zmienić na: <strong>to-juz-ostatni-tekst.docx</strong></p>
+</section>
+
+<form th:action="@{/panel/dodaj/zalacznik.do}" method="post" enctype="multipart/form-data">
+	<fieldset>
+		<legend>Wybierz plik i podaj wyświetlaną nazwę</legend>
+		
+		<div class="form-group row" th:if="${error}">
+			<p class="alert alert-danger text-center col-md-10 offset-md-1" th:text="${error}"></p>
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-md-3" for="name">Nazwa wyświetlana:</label>
+			<input class="col-md-9 form-control" type="text" id="name" name="name">
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-md-3 upload-label" for="customFile">Wybierz plik:</label>
+			<input class="col-md-9 upload-input" type="file" id="customFile" name="file">
+		</div>
+		
+		<input type="hidden" id="link" th:field="*{article.link}">
+		
+		<p class="button-middle"><button type="submit" class="btn btn-primary">Dodaj załącznik</button></p>
+	</fieldset>
+	
+</form>
+
+</article>
+
+</body>
+</html>

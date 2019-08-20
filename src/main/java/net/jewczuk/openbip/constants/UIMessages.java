@@ -10,5 +10,6 @@ public class UIMessages {
 	public static final String ARTICLE_UNPINNED_FAILURE = "Wystąpił błąd odpinania artykułu";
 	public static final String EDIT_CONTENT_SUCCESS = "Treść artykułu zmieniona pomyślnie";
 	public static final String EDIT_CONTENT_FAILURE = "Treść artykułu nie została zmieniona";
-
+	public static final String ARTICLE_ATTACHMENT_SUCCESS = "Załącznik został dodany";
+	
 }
