@@ -4,7 +4,11 @@ import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import net.jewczuk.openbip.exceptions.BusinessException;
+
 public interface UploadService {
 
-	void saveFile(MultipartFile file) throws IOException;
+	void saveFile(MultipartFile file) throws BusinessException;
+	
+	void deleteFile(String fileName) throws BusinessException;
 }
