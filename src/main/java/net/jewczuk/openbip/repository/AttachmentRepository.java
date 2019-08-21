@@ -6,4 +6,5 @@ import net.jewczuk.openbip.entity.AttachmentEntity;
 
 public interface AttachmentRepository extends JpaRepository<AttachmentEntity, Long> {
 
+	AttachmentEntity findByFileName(String name);
 }

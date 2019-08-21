@@ -1,7 +1,5 @@
 package net.jewczuk.openbip.controller;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +19,7 @@ import net.jewczuk.openbip.service.UploadService;
 import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.utils.TransformUtils;
+import net.jewczuk.openbip.validators.AttachmentValidator;
 
 @Controller
 @RequestMapping("/panel/dodaj")
@@ -31,6 +30,9 @@ public class PanelAddController {
 	
 	@Autowired
 	private UploadService uploadService;
+	
+	@Autowired
+	private AttachmentValidator attachmentValidator;
 	
 	@GetMapping("/artykul")
 	public String showAddArticle(Model model) {
@@ -73,20 +75,21 @@ public class PanelAddController {
 				@RequestParam String link, 
 				@RequestParam String name,
 				@RequestParam("file") MultipartFile file,
-				RedirectAttributes attributes) {
+				RedirectAttributes attributes) {	
 		
-		AttachmentTO attachment = new AttachmentTO(file, name);
 		Long editorID = 1L;	
 		
 		try {
+			attachmentValidator.validateAddAttachment(file, name);
+			AttachmentTO attachment = new AttachmentTO(file, name);
 			uploadService.saveFile(file);
 			articleService.addAttachment(link, attachment, editorID);
 			attributes.addFlashAttribute("articleSuccess", UIMessages.ARTICLE_ATTACHMENT_SUCCESS);
 			return "redirect:/panel/zarzadzaj/" + link;	
-		} catch (IOException e) {
-			model.addAttribute("error", e.getMessage());
-			return ViewNames.ARTICLE_ADD_ATTACHMENT;
 		} catch (BusinessException e) {
+			DisplaySingleArticleTO article = articleService.getArticleByLink(link);
+			model.addAttribute("article", article);
+			model.addAttribute("name", name);
 			model.addAttribute("error", e.getMessage());
 			return ViewNames.ARTICLE_ADD_ATTACHMENT;
 		}

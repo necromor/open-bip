@@ -11,7 +11,7 @@
 <h2 th:text="'Dodaj załącznik do artykułu - ' + ${article.title}"></h2>
 
 <section class="article-info">
-	<p>Plik w nazwie nie powinien mieć polskich znaków i spacje zastąpione znakiem "-".</p>
+	<p>Plik w nazwie nie powinien mieć polskich znaków i spacje zastąpione znakiem "-" lub "_".</p>
 	<p>Na przykład: nazwę pliku <strong>To już ostatni tekst.docx</strong> zmienić na: <strong>to-juz-ostatni-tekst.docx</strong></p>
 </section>
 
@@ -25,7 +25,7 @@
 		
 		<div class="form-group row">
 			<label class="col-md-3" for="name">Nazwa wyświetlana:</label>
-			<input class="col-md-9 form-control" type="text" id="name" name="name">
+			<input class="col-md-9 form-control" type="text" id="name" name="name" th:value="${name}">
 		</div>
 		
 		<div class="form-group row">
