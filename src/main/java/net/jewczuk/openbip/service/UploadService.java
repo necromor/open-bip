@@ -1,7 +1,5 @@
 package net.jewczuk.openbip.service;
 
-import java.io.IOException;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import net.jewczuk.openbip.exceptions.BusinessException;

@@ -8,8 +8,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import net.jewczuk.openbip.constants.ExceptionsMessages;
+import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
 import net.jewczuk.openbip.entity.AttachmentEntity;
+import net.jewczuk.openbip.entity.AttachmentHistoryEntity;
 import net.jewczuk.openbip.entity.ContentHistoryEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.ArticleException;
@@ -163,6 +165,7 @@ public class CustomArticleRepositoryImpl
 		attEntity.setAddedBy(editor);
 		attEntity.setDisplayPosition(entity.getAttachments().size() + 1);
 		entity.getAttachments().add(attEntity);
+		entity.getAttachmentsHistory().add(createAttachmentHistory(attEntity, editor));
 		try {
 			entityManager.persist(entity);
 		} catch (Exception e) {
@@ -174,6 +177,14 @@ public class CustomArticleRepositoryImpl
 	}
 	
 	
+	private AttachmentHistoryEntity createAttachmentHistory(AttachmentEntity attEntity, EditorEntity editor) {
+		AttachmentHistoryEntity entity = new AttachmentHistoryEntity();
+		entity.setLog(LogMessages.ATTACHMENT_HISTORY_ADD + attEntity.getDisplayName());
+		entity.setEditor(editor);
+
+		return entity;
+	}
+
 	private int returnNewDisplayPosition(boolean status) {	
 		return status ? getMainMenu().size() + 1 : 0;
 	}

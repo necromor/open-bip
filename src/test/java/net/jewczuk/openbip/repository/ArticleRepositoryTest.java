@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import net.jewczuk.openbip.TestConstants;
 import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.constants.ExceptionsMessages;
+import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
 import net.jewczuk.openbip.entity.AttachmentEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
@@ -287,6 +288,7 @@ public class ArticleRepositoryTest {
 				.sorted(Comparator.comparing(AttachmentEntity::getDisplayPosition))
 				.collect(Collectors.toList());
 		AttachmentEntity lastElement = list.get(list.size() - 1);
+		List<String> attHistoryLogs = article.getAttachmentsHistory().stream().map(a -> a.getLog()).collect(Collectors.toList());
 		
 		assertThat(article.getAttachments().size()).isGreaterThan(0);
 		assertThat(lastElement.getDisplayName()).isEqualTo(TestConstants.ATTACHMENT_3_TITLE);
@@ -295,6 +297,8 @@ public class ArticleRepositoryTest {
 		assertThat(lastElement.getExtension()).isEqualTo(TestConstants.ATTACHMENT_ODT);
 		assertThat(lastElement.getDisplayPosition()).isEqualTo(article.getAttachments().size());
 		assertThat(lastElement.getAddedBy().getFullName()).isEqualTo(TestConstants.EDITOR_3);
+		assertThat(article.getAttachmentsHistory().size()).isGreaterThan(0);
+		assertThat(attHistoryLogs).contains(LogMessages.ATTACHMENT_HISTORY_ADD + TestConstants.ATTACHMENT_3_TITLE);
 	}
 	
 	@Test
