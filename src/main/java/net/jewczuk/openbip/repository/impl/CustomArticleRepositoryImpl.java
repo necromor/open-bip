@@ -158,6 +158,10 @@ public class CustomArticleRepositoryImpl
 		entityManager.persist(entity);
 		return entity;
 	}
+	
+	private int returnNewDisplayPosition(boolean status) {	
+		return status ? getMainMenu().size() + 1 : 0;
+	}
 
 	@Override
 	public ArticleEntity addAttachment(String link, AttachmentEntity attEntity, EditorEntity editor) throws BusinessException {
@@ -165,29 +169,48 @@ public class CustomArticleRepositoryImpl
 		attEntity.setAddedBy(editor);
 		attEntity.setDisplayPosition(entity.getAttachments().size() + 1);
 		entity.getAttachments().add(attEntity);
-		entity.getAttachmentsHistory().add(createAttachmentHistory(attEntity, editor));
+		entity.getAttachmentsHistory().add(createAttachmentHistory(attEntity.getDisplayName(), editor, true));
 		try {
 			entityManager.persist(entity);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new AttachmentException(ExceptionsMessages.ATTACHMENT_EXISTS);
 		}
 		
 		return entity;
 	}
 	
+	@Override
+	public ArticleEntity deleteAttachment(String link, String fileName, EditorEntity editor) throws AttachmentException {
+		ArticleEntity entity = getArticleByLink(link);
+
+		AttachmentEntity attachment;
+		try {
+			attachment = entityManager.createNamedQuery(AttachmentEntity.FIND_ATTACHMENT_BY_NAME, AttachmentEntity.class)
+					.setParameter("fileName", fileName)
+					.getSingleResult();
+		} catch (Exception e) {
+			throw new AttachmentException(ExceptionsMessages.ATTACHMENT_NOT_EXISTS);
+		}
+		entity.getAttachments().remove(attachment);
+				
+		entity.getAttachmentsHistory().add(createAttachmentHistory(attachment.getDisplayName(), editor, false));
+		entityManager.persist(entity);
+		return entity;
+	}
 	
-	private AttachmentHistoryEntity createAttachmentHistory(AttachmentEntity attEntity, EditorEntity editor) {
+	
+	private AttachmentHistoryEntity createAttachmentHistory(String name, EditorEntity editor, boolean adding) {
 		AttachmentHistoryEntity entity = new AttachmentHistoryEntity();
-		entity.setLog(LogMessages.ATTACHMENT_HISTORY_ADD + attEntity.getDisplayName());
+		String logMsg = adding ? LogMessages.ATTACHMENT_HISTORY_ADD : LogMessages.ATTACHMENT_HISTORY_REMOVE;
+		entity.setLog(logMsg + name);
 		entity.setEditor(editor);
 
 		return entity;
 	}
 
-	private int returnNewDisplayPosition(boolean status) {	
-		return status ? getMainMenu().size() + 1 : 0;
-	}
+
+
+
 
 
 }

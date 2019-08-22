@@ -12,7 +12,9 @@ public class LogMessages {
 	public static final String ARTICLE_PINNED_CHILD = " - przypięcie artykułu dziecka: ";
 	public static final String ARTICLE_UNPINNED_CHILD = " - odpięcie artykułu dziecka: ";
 	public static final String ARTICLE_ADD_ATTACHMENT = " - dodanie załącznika: ";
+	public static final String ARTICLE_DELETE_ATTACHMENT = " - usunięcie załącznika: ";
 	
 	public static final String ATTACHMENT_HISTORY_ADD = "dodano załącznik: ";
 	public static final String ATTACHMENT_HISTORY_REMOVE = "usunięto załącznik: ";
+	
 }

@@ -4,11 +4,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+@NamedQueries({
+	@NamedQuery(name = AttachmentEntity.FIND_ATTACHMENT_BY_NAME, query = "SELECT att FROM AttachmentEntity att "
+			+ " WHERE att.fileName = :fileName")
+	})
 @Entity
 @Table(name = "attachment")
 public class AttachmentEntity extends AbstractEntity {
+	
+	public static final String FIND_ATTACHMENT_BY_NAME = "findAttachmentByName";
 
 	@Column(name = "file_name", nullable = false, unique = true)
 	private String fileName;

@@ -315,4 +315,42 @@ public class ArticleRepositoryTest {
 		articleRepository.addAttachment(TestConstants.PARENT_LINK, attachment, editor);
 	}
 	
+	@Test
+	public void shouldSuccessfullyDeleteAttachment() throws BusinessException {
+		EditorEntity editor = editorRepository.getEditorById(3L);
+		String fileName = TestConstants.ATTACHMENT_1_NAME;
+		String link = TestConstants.PARENT_LINK;
+		
+		ArticleEntity article = articleRepository.deleteAttachment(link, fileName, editor);
+		List<String> attNames = article.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
+		List<String> attHistoryLogs = article.getAttachmentsHistory().stream().map(a -> a.getLog()).collect(Collectors.toList());
+		
+		assertThat(attNames).doesNotContain(fileName);
+		assertThat(attNames).containsExactly(TestConstants.ATTACHMENT_2_NAME);
+		assertThat(attHistoryLogs).contains(LogMessages.ATTACHMENT_HISTORY_REMOVE + TestConstants.ATTACHMENT_1_TITLE);
+	}
+	
+	@Test
+	public void shouldCompleteSuccessfullyWhenAttachmentNotInArticle() throws BusinessException {
+		EditorEntity editor = editorRepository.getEditorById(3L);
+		String fileName = TestConstants.ATTACHMENT_4_NAME;
+		String link = TestConstants.PARENT_LINK;
+		
+		ArticleEntity article = articleRepository.deleteAttachment(link, fileName, editor);
+		List<String> attNames = article.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
+		
+		assertThat(attNames).containsExactlyInAnyOrder(TestConstants.ATTACHMENT_1_NAME, TestConstants.ATTACHMENT_2_NAME);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenAttachmentDoesNotExist() throws BusinessException {
+		EditorEntity editor = editorRepository.getEditorById(3L);
+		String fileName = TestConstants.ATTACHMENT_3_NAME;
+		String link = TestConstants.PARENT_LINK;
+		
+		excE.expect(AttachmentException.class);
+		excE.expectMessage(ExceptionsMessages.ATTACHMENT_NOT_EXISTS);
+		articleRepository.deleteAttachment(link, fileName, editor);
+	}
+	
 }
