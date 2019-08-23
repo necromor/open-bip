@@ -84,7 +84,7 @@ public class PanelAddController {
 			AttachmentTO attachment = new AttachmentTO(file, name);
 			uploadService.saveFile(file);
 			articleService.addAttachment(link, attachment, editorID);
-			attributes.addFlashAttribute("articleSuccess", UIMessages.ARTICLE_ATTACHMENT_SUCCESS);
+			attributes.addFlashAttribute("articleSuccess", UIMessages.ARTICLE_ATTACHMENT_ADD_SUCCESS);
 			return "redirect:/panel/zarzadzaj/" + link;	
 		} catch (BusinessException e) {
 			DisplaySingleArticleTO article = articleService.getArticleByLink(link);

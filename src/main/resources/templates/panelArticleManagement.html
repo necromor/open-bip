@@ -51,7 +51,7 @@
 			<a th:href="@{'/upload/' +${attachment.fileName}}" th:text="${attachment.displayName}"></a>
 			[<span th:text=". +${attachment.extension}" th:remove="tag"></span>; 
 			<span th:text="${T(net.jewczuk.openbip.utils.DisplayUtils).formatSize(attachment.size)}" th:remove="tag"></span>]
-			<a href="#" title="Usuń załącznik" class="badge badge-danger delete-button">X</a>
+			<a th:href="@{'/panel/usun/zalacznik/' + ${attachment.fileName} + '/' + ${article.link}}" title="Usuń załącznik" class="badge badge-danger delete-button">X</a>
 		</li>
 	</ol>
 
@@ -62,8 +62,7 @@
 		<p>Usunięcie artykułu jest możliwe tylko gdy artykuł:</p>
 		<ul>
 			<li>nie jest przypisany do menu głównego lub innego artykułu oraz</li>
-			<li>nie ma przypisanych dzieci oraz</li>
-			<li>nie ma przypisanych żadnych załączników</li>
+			<li>nie ma przypisanych dzieci</li>
 		</ul>
 	</section>
 	<p class="alert alert-danger">Usunięcie artykułu jest nieodwracalne i powoduje również usunięcie całej jego historii!</p>
