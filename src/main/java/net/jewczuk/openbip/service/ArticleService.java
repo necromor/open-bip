@@ -36,4 +36,6 @@ public interface ArticleService {
 	DisplaySingleArticleTO managePinningChildren(String parent, String child, Long editorID, boolean status) throws BusinessException;
 	
 	DisplaySingleArticleTO addAttachment(String link, AttachmentTO attachment, Long editorID) throws BusinessException;
+
+	DisplaySingleArticleTO deleteAttachment(String link, String fileName, Long editorID) throws BusinessException;
 }

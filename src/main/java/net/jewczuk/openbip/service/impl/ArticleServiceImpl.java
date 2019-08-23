@@ -190,4 +190,16 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleMapper.mapToDisplaySingleArticle(article);
 	}
 
+	@Override
+	@Transactional
+	public DisplaySingleArticleTO deleteAttachment(String link, String fileName, Long editorID) throws BusinessException {
+		EditorEntity editor = editorRepository.getEditorById(editorID);
+		ArticleEntity article = articleRepository.deleteAttachment(link, fileName, editor);
+		
+		String logMessage = article.getTitle() + LogMessages.ARTICLE_DELETE_ATTACHMENT + fileName;
+		historyService.createLogEntry(logMessage, editorID);	
+		
+		return articleMapper.mapToDisplaySingleArticle(article);
+	}
+
 }

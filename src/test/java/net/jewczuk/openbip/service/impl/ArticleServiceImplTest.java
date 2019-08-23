@@ -478,5 +478,45 @@ public class ArticleServiceImplTest {
 		excE.expectMessage(ExceptionsMessages.ATTACHMENT_EXISTS);
 		articleService.addAttachment(TestConstants.PARENT_LINK, ato, 2L);
 	}
+	
+	@Test
+	public void shouldSuccessfullyDeleteAttachment() throws BusinessException {
+		Long editorID = 2L;
+		String fileName = TestConstants.ATTACHMENT_2_NAME;
+		String link = TestConstants.PARENT_LINK;
+		DisplaySingleArticleTO before = articleService.getArticleByLink(link);
+		
+		DisplaySingleArticleTO after = articleService.deleteAttachment(link, fileName, editorID);
+		List<String> fileNames = after.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
+		
+		assertThat(before.getAttachments().size() - after.getAttachments().size()).isEqualTo(1);
+		assertThat(fileNames).doesNotContain(fileName);
+	}
+	
+	@Test
+	public void shouldNotDeleteAttachmentWhenItExistButNotInGivenArticle() throws BusinessException {
+		Long editorID = 2L;
+		String fileName = TestConstants.ATTACHMENT_4_NAME;
+		String link = TestConstants.PARENT_LINK;
+		DisplaySingleArticleTO before = articleService.getArticleByLink(link);
+		
+		DisplaySingleArticleTO after = articleService.deleteAttachment(link, fileName, editorID);
+		DisplaySingleArticleTO origin = articleService.getArticleByLink(TestConstants.NO_CHILDREN_LINK);
+		List<String> fileNames = origin.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
+		
+		assertThat(before.getAttachments().size()).isEqualTo(after.getAttachments().size());
+		assertThat(fileNames).contains(fileName);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenAttachmentNotInDB() throws BusinessException {
+		Long editorID = 2L;
+		String fileName = TestConstants.ATTACHMENT_3_TITLE;
+		String link = TestConstants.PARENT_LINK;
+		
+		excE.expect(AttachmentException.class);
+		excE.expectMessage(ExceptionsMessages.ATTACHMENT_NOT_EXISTS);
+		articleService.deleteAttachment(link, fileName, editorID);
+	}
 }
  
