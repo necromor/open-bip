@@ -13,6 +13,9 @@ public class SandboxEntity extends AbstractEntity {
 	@Column(name="title", nullable=false)
 	private String title;
 	
+	@Column(name="link", nullable=false, unique=true)
+	private String link;
+	
 	@Column(name="content")
 	private String content;
 	
@@ -42,6 +45,14 @@ public class SandboxEntity extends AbstractEntity {
 
 	public void setEditor(EditorEntity editor) {
 		this.editor = editor;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 	
 }
