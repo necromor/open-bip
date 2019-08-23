@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import net.jewczuk.openbip.attributes.Positionable;
 import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
@@ -123,15 +124,6 @@ public class CustomArticleRepositoryImpl
 		}
 	}
 
-	private void cleanUpDisplayPositions(Collection<ArticleEntity> children, int dispPos) {
-		for (ArticleEntity child : children) {
-			int oldPos = child.getDisplayPosition();
-			if (oldPos > dispPos) {
-				child.setDisplayPosition(oldPos - 1);
-			}
-		}	
-	}
-
 	@Override
 	public ArticleEntity addContent(DisplaySingleArticleTO article, EditorEntity editor) {
 		ArticleEntity entity = getArticleByLink(article.getLink());
@@ -192,6 +184,9 @@ public class CustomArticleRepositoryImpl
 			throw new AttachmentException(ExceptionsMessages.ATTACHMENT_NOT_EXISTS);
 		}
 		entity.getAttachments().remove(attachment);
+		int disPos = attachment.getDisplayPosition();
+		cleanUpDisplayPositions(entity.getAttachments(), disPos);
+		entityManager.remove(attachment);
 				
 		entity.getAttachmentsHistory().add(createAttachmentHistory(attachment.getDisplayName(), editor, false));
 		entityManager.persist(entity);
@@ -208,9 +203,14 @@ public class CustomArticleRepositoryImpl
 		return entity;
 	}
 
-
-
-
-
+	private <T> void cleanUpDisplayPositions(Collection<T> elements, int dispPos) {
+		for (T child : elements) {
+			Positionable el = (Positionable) child;
+			int oldPos = el.getDisplayPosition();
+			if (oldPos > dispPos) {
+				el.setDisplayPosition(oldPos - 1);
+			}
+		}	
+	}
 
 }

@@ -40,6 +40,9 @@ public class ArticleRepositoryTest {
 	@Autowired
 	private EditorRepository editorRepository;
 	
+	@Autowired
+	private AttachmentRepository attachmentRepository;
+	
 	@Rule
     public ExpectedException excE = ExpectedException.none();
 	
@@ -324,10 +327,12 @@ public class ArticleRepositoryTest {
 		ArticleEntity article = articleRepository.deleteAttachment(link, fileName, editor);
 		List<String> attNames = article.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
 		List<String> attHistoryLogs = article.getAttachmentsHistory().stream().map(a -> a.getLog()).collect(Collectors.toList());
+		AttachmentEntity attachment = attachmentRepository.findByFileName(fileName);
 		
 		assertThat(attNames).doesNotContain(fileName);
 		assertThat(attNames).containsExactly(TestConstants.ATTACHMENT_2_NAME);
 		assertThat(attHistoryLogs).contains(LogMessages.ATTACHMENT_HISTORY_REMOVE + TestConstants.ATTACHMENT_1_TITLE);
+		assertThat(attachment).isNull();
 	}
 	
 	@Test

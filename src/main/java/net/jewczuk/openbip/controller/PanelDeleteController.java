@@ -26,7 +26,6 @@ public class PanelDeleteController {
 	public String showFormAddAttachment(@PathVariable String link, 
 										@PathVariable String fileName,
 										RedirectAttributes attributes) {
-		System.out.println(fileName);
 		try {
 			Long editorID = 1L;
 			articleService.deleteAttachment(link, fileName, editorID);
