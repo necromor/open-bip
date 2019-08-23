@@ -8,13 +8,15 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import net.jewczuk.openbip.attributes.Positionable;
+
 @NamedQueries({
 	@NamedQuery(name = AttachmentEntity.FIND_ATTACHMENT_BY_NAME, query = "SELECT att FROM AttachmentEntity att "
 			+ " WHERE att.fileName = :fileName")
 	})
 @Entity
 @Table(name = "attachment")
-public class AttachmentEntity extends AbstractEntity {
+public class AttachmentEntity extends AbstractEntity implements Positionable {
 	
 	public static final String FIND_ATTACHMENT_BY_NAME = "findAttachmentByName";
 
@@ -69,10 +71,12 @@ public class AttachmentEntity extends AbstractEntity {
 		this.size = size;
 	}
 
+	@Override
 	public int getDisplayPosition() {
 		return displayPosition;
 	}
 
+	@Override
 	public void setDisplayPosition(int displayPosition) {
 		this.displayPosition = displayPosition;
 	}

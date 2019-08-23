@@ -12,6 +12,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import net.jewczuk.openbip.attributes.Positionable;
+
 @NamedQueries({
 	@NamedQuery(name = ArticleEntity.FIND_SINGLE_ARTICLE_BY_LINK, query = "SELECT article FROM ArticleEntity article "
 			+ " WHERE article.link = :link"),
@@ -24,7 +26,7 @@ import javax.persistence.Table;
 			+ " ORDER BY article.title ASC")})
 @Entity
 @Table(name = "article")
-public class ArticleEntity extends AbstractEntity {
+public class ArticleEntity extends AbstractEntity implements Positionable {
 
 	public static final String FIND_SINGLE_ARTICLE_BY_LINK = "findSingleArticleByLink";
 	public static final String FIND_MAIN_MENU = "findMainMenu";
@@ -75,10 +77,12 @@ public class ArticleEntity extends AbstractEntity {
 		this.link = link;
 	}
 
+	@Override
 	public int getDisplayPosition() {
 		return displayPosition;
 	}
 
+	@Override
 	public void setDisplayPosition(int displayPosition) {
 		this.displayPosition = displayPosition;
 	}
