@@ -17,8 +17,8 @@ public class ViewNames {
 	public static final String ARTICLE_ADD_ATTACHMENT = "panelArticleAddAttachment";
 	
 	public static final String LOG_LIST = "panelLogList";
+	public static final String SANDBOX_LIST = "panelSandboxList";
 
 	public static final String ERROR_404 = "404";
-	
-	
+
 }

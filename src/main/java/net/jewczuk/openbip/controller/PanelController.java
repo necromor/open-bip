@@ -18,9 +18,11 @@ import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
+import net.jewczuk.openbip.service.SandboxService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.HistoryTO;
+import net.jewczuk.openbip.to.SandboxTO;
 
 @Controller
 @RequestMapping("/panel")
@@ -31,6 +33,9 @@ public class PanelController {
 	
 	@Autowired
 	private HistoryService historyService;
+	
+	@Autowired
+	private SandboxService sandboxService;
 	
 	@GetMapping("")
 	public String redirectToMainPanelPage() {	
@@ -163,5 +168,15 @@ public class PanelController {
 		}
 
 		return "redirect:/panel/zarzadzaj/" + parent;
+	}
+	
+	@GetMapping("/lista-brudnopisow")
+	public String showSandboxList(Model model) {
+		Long editorID = 1L;
+		
+		List<SandboxTO> all = sandboxService.getSandboxesByEditorId(editorID);
+		model.addAttribute("sandboxes", all);
+		
+		return ViewNames.SANDBOX_LIST;
 	}
 }

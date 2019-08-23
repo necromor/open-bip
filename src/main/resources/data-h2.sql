@@ -78,4 +78,10 @@ INSERT INTO history(id, editor_id, action, version, created_at, updated_at)
 INSERT INTO history(id, editor_id, action, version, created_at, updated_at)
 	VALUES(3, 3, 'dodano artykuł 3', 1, now(), default);
 	
+INSERT INTO sandbox(id, editor_id, title, link, content, version, created_at, updated_at)
+	VALUES(1, 2, 'Brudnopis 2_1', 'xyz21', 'brudnopis 2 1', 1, now(), default);
+INSERT INTO sandbox(id, editor_id, title, link, content, version, created_at, updated_at)
+	VALUES(2, 2, 'Brudnopis 2_2', 'xyz22', 'brudnopis 2 2', 1, now(), default);
+INSERT INTO sandbox(id, editor_id, title, link, content, version, created_at, updated_at)
+	VALUES(3, 3, 'Brudnopis 3_1', 'xyz31', 'brudnopis 3 1', 1, now(), default);
 	

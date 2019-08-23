@@ -1,0 +1,44 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/panel_layout}">
+<head>
+    <title>Lista brudnopisów - panel redaktora</title>
+</head>
+<body>
+
+<article layout:fragment="panel_content" class="col-md-8">
+
+<h2>Lista Twoich brudnopisów</h2>
+
+	<p th:if="${sandboxes.size() == 0}">Brak brudnopisów do wyświetlenia.</p>
+
+	<ol class="list-group">
+		<li class="list-group-item article-list-element" th:each="sandbox : ${sandboxes}">	
+		<div class="btn-group" role="group" aria-label="Operacje na brudnopisie">
+			<a th:href="@{'/panel/edytuj/brudnopis/' + ${sandbox.link}}" class="btn btn-info" title="Zmień treść brudnopisu">Edytuj</a>
+			<a th:href="@{'/panel/usun/brudnopis/' + ${sandbox.link}}" class="btn btn-danger" title="Usuń brudnopis">Usuń</a>
+		</div>
+		<span th:text="${sandbox.title}" th:remove="tag"></span>
+		</li>
+	</ol>
+
+	<p class="button-middle"><a href="/panel/dodaj/brudnopis" title="Dodaj nowy brudnopis" class="btn btn-success">Dodaj nowy brudnopis</a></p>
+
+<h3>Co to jest brudnopis?</h3>
+	<p>Brudnopis posiada tylko jedną wersję treści. Wszelkie zmiany nie są rejestrowane.</p>
+	<p>Typowe zastosowanie brudnopisu to: </p>
+	<ul>
+		<li>swobodne tworzenie treści artykułu w częściach</li>
+		<li>utworzenie wzorca jakiegoś artykułu, który może być wielokrotnie wykorzystywany</li>
+	</ul>
+	
+	<h4>Tworzenie treści w częściach</h4>
+	<p>Jeżeli musisz napisać jakiś dłuższy artykuł, to dużo wygodniej będzie utworzyć brudnopis i zmieniać treść w częściach. Po zakończeniu można całą treść dodać do artykułu i w ten sposób w jego historii pokazywana będzie tylko jedna zmiana.</p>
+	
+	<h4>Utworzenie wzorca</h4>
+	<p>Jeżeli zdarza Ci się publikować jakiś artykuł, który zmienia się jedynie w niewielkiej części, to można utworzyć brudnopis zawierający tylko części stałe. W ten sposób po załadowaniu tego wzorca do pola edycji treści artykułu pozostanie jedynie dopisanie części zmiennych.</p>
+
+</article>
+
+</body>
+</html>

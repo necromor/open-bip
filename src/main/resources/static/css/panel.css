@@ -47,6 +47,11 @@ h3 {
 	text-align: center;
 }
 
+h4 {
+	font-size: 1.0em;
+	border-bottom: 1px solid #000000;
+}
+
 article .article-info {
 	font-size: 0.9em;
 	font-style: italic;
