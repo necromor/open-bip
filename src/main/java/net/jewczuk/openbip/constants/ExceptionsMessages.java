@@ -20,6 +20,7 @@ public class ExceptionsMessages {
 	public static final String ATTACHMENT_INVALID_EXTENSION = "Plik nie posiada rozszerzenia";
 	public static final String ATTACHMENT_ERROR_COPING = "Wystąpił błąd podczas kopiowania pliku";
 	public static final String ATTACHMENT_ERROR_DELETING = "Wystąpił błąd podczas usuwania pliku";
-	
+	public static final String TITLE_MIN_LENGTH = "Minimalna długość tytułu to: " 
+													+ ApplicationProperties.MIN_TITLE_LENGHT;
 	
 }
