@@ -15,9 +15,12 @@ import net.jewczuk.openbip.constants.UIMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.ArticleService;
+import net.jewczuk.openbip.service.SandboxService;
 import net.jewczuk.openbip.service.UploadService;
 import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.SandboxTO;
+import net.jewczuk.openbip.utils.GeneralUtils;
 import net.jewczuk.openbip.utils.TransformUtils;
 import net.jewczuk.openbip.validators.AttachmentValidator;
 
@@ -34,6 +37,9 @@ public class PanelAddController {
 	@Autowired
 	private AttachmentValidator attachmentValidator;
 	
+	@Autowired
+	private SandboxService sandboxService;
+	
 	@GetMapping("/artykul")
 	public String showAddArticle(Model model) {
 		
@@ -47,11 +53,10 @@ public class PanelAddController {
 	public String addArticle(Model model, DisplaySingleArticleTO newArticle, RedirectAttributes attributes) {
 		
 		newArticle.setLink(TransformUtils.createLinkFromTitle(newArticle.getTitle()));
-		DisplaySingleArticleTO savedArticle;
 		Long editorID = 1L;
 		
 		try {
-			savedArticle = articleService.saveArticle(newArticle, editorID);
+			DisplaySingleArticleTO savedArticle = articleService.saveArticle(newArticle, editorID);
 			attributes.addFlashAttribute("articleSuccess", UIMessages.ADD_ARTICLE_SUCCESS);
 			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();		
 		} catch (BusinessException e) {	
@@ -93,6 +98,32 @@ public class PanelAddController {
 			model.addAttribute("error", e.getMessage());
 			return ViewNames.ARTICLE_ADD_ATTACHMENT;
 		}
+	}
+	
+	@GetMapping("/brudnopis")
+	public String showAddSandbox(Model model) {
+		
+		SandboxTO sandbox = (SandboxTO) model.asMap().getOrDefault("sandbox", new SandboxTO());
+		model.addAttribute("sandbox", sandbox);
+		
+		return ViewNames.SANDBOX_ADD;
+	}
+	
+	@PostMapping("/brudnopis.do")
+	public String addSandbox(Model model, SandboxTO sandbox, RedirectAttributes attributes) {
+		
+		Long editorID = 1L;
+		sandbox.setLink(GeneralUtils.createUniqueLink(editorID));
+		
+		try {
+			sandboxService.saveSandbox(sandbox, editorID);
+			attributes.addFlashAttribute("sandboxSuccess", UIMessages.ADD_SANDBOX_SUCCESS);
+			return "redirect:/panel/lista-brudnopisow/";		
+		} catch (BusinessException e) {	
+			model.addAttribute("error", e.getMessage());
+			model.addAttribute("sandbox", sandbox);
+			return ViewNames.SANDBOX_ADD;
+		}	
 	}
 	
 }
