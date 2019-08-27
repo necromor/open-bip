@@ -21,4 +21,11 @@ public class SandboxMapper {
 		entity.setEditor(editor);
 		return entity;
 	}
+	
+	public SandboxEntity map2Existing(SandboxTO sandbox, SandboxEntity entity) {
+		entity.setTitle(sandbox.getTitle());
+		entity.setContent(sandbox.getContent());
+		
+		return entity;
+	}
 }

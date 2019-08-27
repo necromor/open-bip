@@ -94,5 +94,21 @@ public class PanelEditController {
 			return "redirect:/panel/lista-brudnopisow/";
 		}	
 	}
+	
+	@PostMapping("/brudnopis.do")
+	public String editSandbox(Model model, SandboxTO sandbox, RedirectAttributes attributes) {
+		
+		Long editorID = 1L;
+		
+		try {
+			sandboxService.editSandbox(sandbox, editorID);
+			attributes.addFlashAttribute("sandboxSuccess", UIMessages.EDIT_SANDBOX_SUCCESS);
+			return "redirect:/panel/lista-brudnopisow/";		
+		} catch (BusinessException e) {	
+			model.addAttribute("error", e.getMessage());
+			model.addAttribute("sandbox", sandbox);
+			return ViewNames.SANDBOX_EDIT;
+		}
+	}	
 
 }

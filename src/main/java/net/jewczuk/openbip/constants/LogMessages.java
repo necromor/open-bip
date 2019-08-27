@@ -17,5 +17,6 @@ public class LogMessages {
 	public static final String ATTACHMENT_HISTORY_ADD = "dodano załącznik: ";
 	public static final String ATTACHMENT_HISTORY_REMOVE = "usunięto załącznik: ";
 	public static final String SANDBOX_ADDED = "dodanie nowego brudnopisu: ";
+	public static final String SANDBOX_EDITED = "zmiana treści brudnopisu: ";
 	
 }

@@ -60,14 +60,33 @@ public class SandboxServiceImpl implements SandboxService {
 		
 		return sandboxMapper.map2TO(saved);
 	}
+	
+	@Override
+	@Transactional
+	public SandboxTO editSandbox(SandboxTO sandbox, Long editorID) throws BusinessException {
+		
+		sandboxValidator.validateSandbox(sandbox);
+		SandboxEntity existing = sandboxRepository.findByLink(sandbox.getLink());
+		checkIfExist(existing);
+		SandboxEntity newE = sandboxMapper.map2Existing(sandbox, existing);
+		
+		SandboxEntity saved = sandboxRepository.save(newE);
+		historyService.createLogEntry(LogMessages.SANDBOX_EDITED + saved.getTitle(), editorID);
+		
+		return sandboxMapper.map2TO(saved);
+	}
 
 	@Override
 	public SandboxTO getSandboxByLink(String link) throws BusinessException {
 		SandboxEntity entity = sandboxRepository.findByLink(link);
+		checkIfExist(entity);
+		return sandboxMapper.map2TO(entity);
+	}
+	
+	private void checkIfExist(SandboxEntity entity) throws BusinessException {
 		if (entity == null) {
 			throw new SandboxException(ExceptionsMessages.SANDBOX_INVALID_LINK);
 		}
-		return sandboxMapper.map2TO(entity);
 	}
 
 }

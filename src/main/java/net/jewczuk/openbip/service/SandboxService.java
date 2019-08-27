@@ -13,4 +13,6 @@ public interface SandboxService {
 	
 	SandboxTO getSandboxByLink(String link) throws BusinessException;
 
+	SandboxTO editSandbox(SandboxTO sandbox, Long editorID) throws BusinessException;
+
 }

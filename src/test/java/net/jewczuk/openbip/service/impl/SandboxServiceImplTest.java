@@ -89,5 +89,34 @@ public class SandboxServiceImplTest {
 		excE.expectMessage(ExceptionsMessages.SANDBOX_INVALID_LINK);
 		sandboxService.getSandboxByLink(TestConstants.SANDBOX_LINK_INVALID);
 	}
+	
+	@Test
+	public void shouldSuccessfullyEditSandbox() throws BusinessException {
+		String link = TestConstants.SANDBOX_LINK_1;
+		SandboxTO sandboxBefore = sandboxService.getSandboxByLink(link);
+		SandboxTO sandbox = new SandboxTO(TestConstants.EDITED_TITLE, link, TestConstants.EMPTY_CONTENT);
+		Long editorID = 2L;
+		List<SandboxTO> listBefore = sandboxService.getSandboxesByEditorId(editorID);
+		
+		SandboxTO sandboxAfter = sandboxService.editSandbox(sandbox, editorID);
+		List<SandboxTO> listAfter = sandboxService.getSandboxesByEditorId(editorID);
+
+		assertThat(sandboxBefore.getTitle()).isEqualTo(TestConstants.SANDBOX_TITLE_1);
+		assertThat(sandboxBefore.getContent()).isEqualTo(TestConstants.SANDBOX_CONTENT_1);
+		assertThat(sandboxAfter.getTitle()).isEqualTo(TestConstants.EDITED_TITLE);
+		assertThat(sandboxAfter.getContent()).isEqualTo(TestConstants.EMPTY_CONTENT);
+		assertThat(sandboxBefore.getLink()).isEqualTo(sandboxAfter.getLink());
+		assertThat(listBefore.size() - listAfter.size()).isEqualTo(0);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenEditingInvalidSandboxLink() throws BusinessException {
+		SandboxTO sandbox = new SandboxTO(TestConstants.EDITED_TITLE, TestConstants.INVALID_LINK, TestConstants.EMPTY_CONTENT);
+		Long editorID = 2L;
+		
+		excE.expect(SandboxException.class);
+		excE.expectMessage(ExceptionsMessages.SANDBOX_INVALID_LINK);
+		sandboxService.editSandbox(sandbox, editorID);
+	}
 
 }
