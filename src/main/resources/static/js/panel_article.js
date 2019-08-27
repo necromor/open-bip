@@ -4,9 +4,18 @@ let panel_article = (function () {
 	
 	const titleField = document.getElementById('title');
 	const linkField = document.getElementById('link');
+	const sandboxSave = document.getElementById('sandboxSaveButton');
+	const sandboxSaveLink = 'http://localhost:8080/api/sandbox/save';
+	
 	
 	function registerCreateLinkEvent() {
-		titleField.addEventListener('keyup', showCreatedLink);
+		if (titleField) {
+			titleField.addEventListener('keyup', showCreatedLink);
+		}
+		
+		if (sandboxSave) {
+			sandboxSave.addEventListener('click', saveSandbox);
+		}
 	}
 	
 	function showCreatedLink() {
@@ -24,6 +33,31 @@ let panel_article = (function () {
         );
 
         return str;
+	}
+	
+	function saveSandbox() {
+		let sandbox = {};
+		sandbox['title'] = $("#sandboxTitle").val();
+		sandbox['content'] = $("#sandboxContent").val();
+		sandbox['link'] = $("#sandboxLink").val();
+		
+		$.ajax({
+			type : "PUT",
+			contentType : "application/json",
+			url : sandboxSaveLink,
+			data : JSON.stringify(sandbox),
+			dataType : 'json',
+			timeout : 100000,
+			success : function(data) {
+				console.log("SUCCESS: ", data);
+			},
+			error : function(e) {
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
 	}
 	
 	return {
