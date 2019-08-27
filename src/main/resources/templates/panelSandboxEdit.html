@@ -1,0 +1,47 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/panel_layout}">
+<head>
+    <title>Edytuj treść brudnopisu - panel redaktora</title>
+</head>
+<body>
+
+<article layout:fragment="panel_content" class="col-md-8">
+
+<h2>Edytuj treść brudnopisu</h2>
+
+<section class="article-info">
+	<p>Wciśnięcie guzika <strong>Zapisz</strong> spowoduje zapisanie aktualnej treści, ale nie spowoduje opuszczenia strony.</p>
+</section>
+
+<form th:action="@{/panel/edytuj/brudnopis.do}" th:object="${sandbox}" method="post">
+	<fieldset>
+		<legend>Zmień treść i/lub tytuł</legend>
+		
+		<div class="form-group row" th:if="${error}">
+			<p class="alert alert-danger text-center col-md-10 offset-md-1" th:text="${error}"></p>
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-md-3" for="sandboxTitle">Tytuł brudnopisu:</label>
+			<input class="col-md-9 form-control" type="text" id="sandboxTitle" th:field="*{title}">
+		</div>
+
+		<div class="form-group row">
+			<label class="col-md-12" for="sandboxContent">Treść:</label>
+			<textarea class="form-control col-md-12" th:field="*{content}" id="sandboxContent" rows="10"></textarea>
+		</div>	
+		
+		<input type="hidden" id="sandboxLink" th:field="*{link}">	
+		
+		<div class="group-middle">
+			<button type="button" class="btn btn-success" id="sandboxSaveButton">Zapisz zmiany</button>
+			<button type="submit" class="btn btn-primary">Zapisz i wyjdź</button>
+		</div>
+	</fieldset>
+</form>
+
+</article>
+
+</body>
+</html>

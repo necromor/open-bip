@@ -10,6 +10,11 @@
 
 <h2>Lista Twoich brudnopisów</h2>
 
+	<div class="row">
+		<p class="alert alert-success text-center col-md-10 offset-md-1" th:if="${sandboxSuccess}" th:text="${sandboxSuccess}"></p>
+		<p class="alert alert-danger text-center col-md-10 offset-md-1" th:if="${sandboxFailure}" th:text="${sandboxFailure}"></p>
+	</div>
+	
 	<p th:if="${sandboxes.size() == 0}">Brak brudnopisów do wyświetlenia.</p>
 
 	<ol class="list-group">

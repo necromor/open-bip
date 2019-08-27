@@ -20,8 +20,8 @@ public class ViewNames {
 	
 	public static final String SANDBOX_LIST = "panelSandboxList";
 	public static final String SANDBOX_ADD = "panelSandboxAdd";
+	public static final String SANDBOX_EDIT = "panelSandboxEdit";
 
 	public static final String ERROR_404 = "404";
-	
 
 }

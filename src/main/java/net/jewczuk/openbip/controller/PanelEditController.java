@@ -13,8 +13,10 @@ import net.jewczuk.openbip.constants.UIMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.ArticleService;
+import net.jewczuk.openbip.service.SandboxService;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.EditArticleTO;
+import net.jewczuk.openbip.to.SandboxTO;
 import net.jewczuk.openbip.utils.TransformUtils;
 
 @Controller
@@ -23,6 +25,9 @@ public class PanelEditController {
 	
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private SandboxService sandboxService;
 	
 	@GetMapping("/tytul/{link}")
 	public String showFormEditTitle(@PathVariable String link, Model model) {
@@ -76,5 +81,18 @@ public class PanelEditController {
 			return "redirect:/panel/zarzadzaj/" + article.getLink();
 		}
 	}	
+	
+	@GetMapping("/brudnopis/{link}")
+	public String showFormEditSandbox(@PathVariable String link, Model model, RedirectAttributes attributes) {
+
+		try {
+			SandboxTO sandbox = sandboxService.getSandboxByLink(link);
+			model.addAttribute("sandbox", sandbox);
+			return ViewNames.SANDBOX_EDIT;
+		} catch (BusinessException e) {
+			attributes.addFlashAttribute("sandboxFailure", UIMessages.SANDBOX_NOT_EXISTS);
+			return "redirect:/panel/lista-brudnopisow/";
+		}	
+	}
 
 }
