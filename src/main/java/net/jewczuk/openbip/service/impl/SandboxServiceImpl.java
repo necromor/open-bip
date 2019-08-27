@@ -8,10 +8,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.entity.SandboxEntity;
 import net.jewczuk.openbip.exceptions.BusinessException;
+import net.jewczuk.openbip.exceptions.SandboxException;
 import net.jewczuk.openbip.mapper.SandboxMapper;
 import net.jewczuk.openbip.repository.EditorRepository;
 import net.jewczuk.openbip.repository.SandboxRepository;
@@ -57,6 +59,15 @@ public class SandboxServiceImpl implements SandboxService {
 		historyService.createLogEntry(LogMessages.SANDBOX_ADDED + saved.getTitle(), editorID);
 		
 		return sandboxMapper.map2TO(saved);
+	}
+
+	@Override
+	public SandboxTO getSandboxByLink(String link) throws BusinessException {
+		SandboxEntity entity = sandboxRepository.findByLink(link);
+		if (entity == null) {
+			throw new SandboxException(ExceptionsMessages.SANDBOX_INVALID_LINK);
+		}
+		return sandboxMapper.map2TO(entity);
 	}
 
 }

@@ -10,5 +10,7 @@ public interface SandboxService {
 	List<SandboxTO> getSandboxesByEditorId(Long editorID);
 	
 	SandboxTO saveSandbox(SandboxTO sandbox, Long editorID) throws BusinessException;
+	
+	SandboxTO getSandboxByLink(String link) throws BusinessException;
 
 }

@@ -23,4 +23,6 @@ public class ExceptionsMessages {
 	public static final String TITLE_MIN_LENGTH = "Minimalna długość tytułu to: " 
 													+ ApplicationProperties.MIN_TITLE_LENGHT;
 	
+	public static final String SANDBOX_INVALID_LINK = "Brudnopis o podanym linku nie istnieje w bazie danych";
+	
 }

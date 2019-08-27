@@ -9,5 +9,7 @@ import net.jewczuk.openbip.entity.SandboxEntity;
 public interface SandboxRepository extends JpaRepository<SandboxEntity, Long> {
 	
 	List<SandboxEntity> findAllByEditorId(Long editorID);
+	
+	SandboxEntity findByLink(String link);
 
 }
