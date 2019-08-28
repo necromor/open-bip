@@ -14,8 +14,10 @@
 	<p>Wciśnięcie guzika <strong>Zapisz</strong> spowoduje zapisanie aktualnej treści, ale nie spowoduje opuszczenia strony.</p>
 </section>
 
+<p class="alert fade text-center" role="alert" id="ajax-message"></p>
+
 <form th:action="@{/panel/edytuj/brudnopis.do}" th:object="${sandbox}" method="post">
-	<fieldset>
+	<fieldset class="container">
 		<legend>Zmień treść i/lub tytuł</legend>
 		
 		<div class="form-group row" th:if="${error}">
@@ -23,8 +25,8 @@
 		</div>
 		
 		<div class="form-group row">
-			<label class="col-md-3" for="sandboxTitle">Tytuł brudnopisu:</label>
-			<input class="col-md-9 form-control" type="text" id="sandboxTitle" th:field="*{title}">
+			<label class="col-md-4" for="sandboxTitle">Tytuł brudnopisu:</label>
+			<input class="col-md-8 form-control" type="text" id="sandboxTitle" th:field="*{title}">
 		</div>
 
 		<div class="form-group row">

@@ -4,16 +4,14 @@ public class AjaxGenericResponse {
 
 	private boolean error;
 	private String message;
-	private String code;
 
 	public AjaxGenericResponse() {
 
 	}
 
-	public AjaxGenericResponse(boolean error, String message, String code) {
+	public AjaxGenericResponse(boolean error, String message) {
 		this.error = error;
 		this.message = message;
-		this.code = code;
 	}
 
 	public boolean isError() {
@@ -30,14 +28,6 @@ public class AjaxGenericResponse {
 
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 }

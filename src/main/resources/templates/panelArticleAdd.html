@@ -17,7 +17,7 @@
 </section>
 
 <form th:action="@{/panel/dodaj/artykul.do}" th:object="${newArticle}" method="post">
-	<fieldset>
+	<fieldset class="container">
 		<legend>Podaj tytuł artykułu</legend>
 		
 		<div class="form-group row" th:if="${error}">

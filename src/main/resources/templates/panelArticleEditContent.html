@@ -11,7 +11,7 @@
 <h2>Zmień treść artykułu</h2>
 
 <form th:action="@{'/panel/edytuj/tresc/' + ${article.link} + '.do'}" th:object="${article}" method="post">
-	<fieldset>
+	<fieldset class="container">
 		
 		<div class="form-group row" th:if="${error}">
 			<p class="alert alert-danger text-center col-md-10 offset-md-1" th:text="${error}"></p>

@@ -98,3 +98,11 @@ article .article-content {
 	padding:0;
 	border-bottom: 1px dotted #000000;
 }
+
+fieldset legend {
+	text-align: center;
+	display: inline;
+	width: auto;
+	padding: 0 2em;
+	font-size: 1.2em;
+}

@@ -16,4 +16,6 @@ public class UIMessages {
 	public static final String ADD_SANDBOX_SUCCESS = "Brudnopis dodany pomyślnie";
 	public static final String SANDBOX_NOT_EXISTS = "Brudnopis o podanym linku nie istnieje";
 	public static final String EDIT_SANDBOX_SUCCESS = "Brudnopis zmieniony pomyślnie";
+	public static final String SAVE_SANDBOX_SUCCESS = "Zmiany zostały zapisane";
+	public static final String SAVE_SANDBOX_FAILURE = "Wystąpił błąd podczas zapisywania zmian";
 }

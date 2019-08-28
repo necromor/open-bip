@@ -11,7 +11,7 @@
 <h2>Zmień tytuł artykułu</h2>
 
 <form th:action="@{'/panel/edytuj/tytul/' + ${newArticle.oldLink} + '.do'}" th:object="${newArticle}" method="post">
-	<fieldset>
+	<fieldset class="container">
 		<legend>Podaj nowy tytuł artykułu</legend>
 		
 		<div class="form-group row" th:if="${error}">

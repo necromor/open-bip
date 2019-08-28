@@ -6,6 +6,8 @@ let panel_article = (function () {
 	const linkField = document.getElementById('link');
 	const sandboxSave = document.getElementById('sandboxSaveButton');
 	const sandboxSaveLink = 'http://localhost:8080/api/sandbox/save';
+	const messageDiv = document.getElementById('ajax-message');
+	const showMessageTime = 4000;
 	
 	
 	function registerCreateLinkEvent() {
@@ -49,9 +51,11 @@ let panel_article = (function () {
 			dataType : 'json',
 			timeout : 100000,
 			success : function(data) {
+				showResult(data);				
 				console.log("SUCCESS: ", data);
 			},
 			error : function(e) {
+				showMessage('alert-danger', data.message);
 				console.log("ERROR: ", e);
 			},
 			done : function(e) {
@@ -59,6 +63,30 @@ let panel_article = (function () {
 			}
 		});
 	}
+	
+	function showResult(data) {
+		let resultClass = 'alert-success';
+		if (data.error) {
+			resultClass = 'alert-danger';
+		}
+		showMessage(resultClass, data.message);
+	}
+	
+	function showMessage(type, message) {
+		sandboxSave.disabled = true;
+		messageDiv.classList.add('show');
+		messageDiv.classList.add(type);
+		messageDiv.innerText = message;
+		window.setTimeout(hideMessage, showMessageTime);
+	}
+	
+	function hideMessage() {
+		messageDiv.classList.remove('show');
+		messageDiv.classList.remove('alert-success');
+		messageDiv.classList.remove('alert-danger');
+		sandboxSave.disabled = false;
+	}
+
 	
 	return {
 		registerCreateLinkEvent: registerCreateLinkEvent
