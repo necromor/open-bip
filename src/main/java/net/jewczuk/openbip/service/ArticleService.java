@@ -8,6 +8,7 @@ import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.EditArticleTO;
+import net.jewczuk.openbip.to.TreeBranchTO;
 
 public interface ArticleService {
 	
@@ -20,6 +21,8 @@ public interface ArticleService {
 	List<ArticleLinkTO> getBreadcrumbs(String link);
 	
 	List<ArticleLinkTO> getAllArticles();
+	
+	List<TreeBranchTO> getTree();
 
 	DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article, Long editorID) throws BusinessException;
 	
@@ -38,4 +41,5 @@ public interface ArticleService {
 	DisplaySingleArticleTO addAttachment(String link, AttachmentTO attachment, Long editorID) throws BusinessException;
 
 	DisplaySingleArticleTO deleteAttachment(String link, String fileName, Long editorID) throws BusinessException;
+	
 }
