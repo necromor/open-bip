@@ -1,0 +1,28 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/panel_layout}">
+<head>
+    <title>Drzewo artykułów - panel redaktora</title>
+</head>
+<body>
+
+<article layout:fragment="panel_content" class="col-md-8">
+
+<h2>Lista wszystkich artykułów w formacie drzewa</h2>
+
+	<p class="button-middle"><a href="/panel/dodaj/artykul" title="Dodaj nowy artykuł" class="btn btn-success">Dodaj nowy artykuł</a></p>
+
+    <ul th:fragment="category" class="tree">
+        <li class="tree-branch" th:each="branch : ${branches}">
+            <a th:href="@{'/panel/zarzadzaj/' +${branch.link}}" th:text="${branch.title}" 
+            	title="Zarządzaj artykułem" th:class="${branch.published ? 'alert alert-link alert-success' : 'alert alert-link alert-secondary'}"></a>
+            <ul class="tree" th:include="this :: category" th:with="branches=${branch.children}" th:if="${branch.children.size() > 0}"></ul>
+        </li>
+    </ul>
+
+	<p class="button-middle"><a href="/panel/dodaj/artykul" title="Dodaj nowy artykuł" class="btn btn-success">Dodaj nowy artykuł</a></p>
+
+</article>
+
+</body>
+</html>

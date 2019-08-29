@@ -23,6 +23,7 @@ import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.HistoryTO;
 import net.jewczuk.openbip.to.SandboxTO;
+import net.jewczuk.openbip.to.TreeBranchTO;
 
 @Controller
 @RequestMapping("/panel")
@@ -65,6 +66,15 @@ public class PanelController {
 		model.addAttribute("allArticles", allArticles);
 		
 		return ViewNames.ARTICLE_LIST;
+	}
+	
+	@GetMapping("/drzewo-artykulow")
+	public String showArticleTree(Model model) {
+		
+		List<TreeBranchTO> branches = articleService.getTree();
+		model.addAttribute("branches", branches);
+		
+		return ViewNames.ARTICLE_TREE;
 	}
 	
 	@GetMapping("/twoja-aktywnosc")

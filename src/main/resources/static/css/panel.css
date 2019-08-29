@@ -106,3 +106,21 @@ fieldset legend {
 	padding: 0 2em;
 	font-size: 1.2em;
 }
+
+article .tree {
+	list-style: none;
+}
+
+article .tree-branch {
+	margin: 0.3em 0;
+}
+
+article .tree-branch > .tree {
+	margin-top: 0.5em;
+}
+
+article .tree-branch a {
+	padding: 0.5em 1em;
+	display: block;
+	border-bottom: 1px dotted gray;
+}
