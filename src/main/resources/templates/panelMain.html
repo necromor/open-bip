@@ -20,10 +20,10 @@
 <p class="article-info">Artykuł strony głównej opatrzony jest tytułem, jaki jest wyświetlany po wejściu na stronę główną serwisu. <br>
 Lista nie zawiera artykułu tworzonego automatycznie czyli <em>Redakcja BIP</em>.</p>
 
-	<ol class="tree" id="sortable">
-		<li class="tree-branch" th:each="article : ${mainMenuArticles}">
+	<ol class="link-list sortable-list" id="main-menu-elements">
+		<li class="link-list-element sortable-element" th:each="article : ${mainMenuArticles}" title="Przeciągnij i upuść aby zmienić kolejność wyświetlania">
 			<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" 
-				class="alert alert-link alert-secondary" title="Zarządzaj artykułem"></a>
+				class="link-list-element-link" title="Zarządzaj artykułem"></a>
 			<a th:href="@{'/panel/odepnij/' +${article.link}}" title="Odepnij artykuł z głównego menu" 
 				class="badge badge-info delete-button">odepnij</a>
 		</li>

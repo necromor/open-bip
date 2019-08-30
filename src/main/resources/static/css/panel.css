@@ -90,7 +90,7 @@ article .article-content {
 
 .delete-button {
 	position: absolute;
-	top: 0.5em;
+	top: 1.0em;
 	right: 0.5em;
 	z-index: 20;
 }
@@ -126,4 +126,27 @@ article .tree-branch a {
 	padding: 0.5em 1em;
 	display: block;
 	border-bottom: 1px dotted gray;
+}
+
+article .link-list {
+	list-style: none;
+}
+
+article .link-list-element {
+	margin: 1.2em 0;
+	position: relative;
+	padding: 0.5em 0.8em;
+	background-color: #e9ecef;
+	border-radius: 0.3rem;
+}
+
+article .link-list-element-link {
+	color: #000000;
+	font-size: 1.0em;
+	font-weight: bold;
+}
+
+article .sortable-element {
+	cursor:move;
+	box-shadow: 0 0 0 0, 0 0 0 0, 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 0;
 }

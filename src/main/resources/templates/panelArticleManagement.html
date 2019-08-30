@@ -33,10 +33,10 @@
 	<p class="article-info">Przeciągnij artykuły aby zmienić ich kolejność wyświetlania.</p>
 	<p th:unless="${article.children.size() != 0}">Do artułu nie przypisano żadnych innych artykułów.</p>
 	
-	<ol class="tree">
-		<li class="tree-branch" th:each="child : ${article.children}">
+	<ol class="link-list sortable-list" th:id="${article.link}">
+		<li class="link-list-element sortable-element" th:each="child : ${article.children}" title="Przeciągnij i upuść aby zmienić kolejność wyświetlania">
 		<a th:href="@{'/panel/zarzadzaj/' + ${child.link}}" th:text="${child.title}" 
-			class="alert alert-link alert-secondary" title="Zarządzaj artykułem"></a>
+			class="link-list-element-link" title="Zarządzaj artykułem"></a>
 		<a th:href="@{'/panel/odepnij-dziecko/' + ${article.link} + '/' + ${child.link}}" 
 			title="Usuń artykuł z listy" class="badge badge-danger delete-button">X</a>
 		</li>
@@ -48,9 +48,9 @@
 	<p class="article-info">Przeciągnij załączniki aby zmienić ich kolejność wyświetlania.</p>
 	<p th:unless="${article.attachments.size() != 0}">Do artułu nie przypisano żadnych załączników.</p>
 
-	<ol class="tree">
-		<li class="tree-branch" th:each="attachment : ${article.attachments}">
-			<a th:href="@{'/upload/' +${attachment.fileName}}" class="alert alert-link alert-secondary" 
+	<ol class="link-list sortable-list" th:id="${article.link}">
+		<li class="link-list-element sortable-element" th:each="attachment : ${article.attachments}" title="Przeciągnij i upuść aby zmienić kolejność wyświetlania">
+			<a th:href="@{'/upload/' +${attachment.fileName}}" class="link-list-element-link" 
 			th:text="${attachment.displayName + ' [.' + attachment.extension + '; '
 				+ T(net.jewczuk.openbip.utils.DisplayUtils).formatSize(attachment.size) + ']'}" ></a>
 			<a th:href="@{'/panel/usun/zalacznik/' + ${attachment.fileName} + '/' + ${article.link}}" 

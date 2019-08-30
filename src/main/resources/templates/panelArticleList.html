@@ -12,10 +12,10 @@
 
 	<p class="button-middle"><a href="/panel/dodaj/artykul" title="Dodaj nowy artykuł" class="btn btn-success">Dodaj nowy artykuł</a></p>
 
-	<ol class="tree">
-		<li class="tree-branch" th:each="article : ${allArticles}">
+	<ol class="link-list">
+		<li class="link-list-element" th:each="article : ${allArticles}">
 		<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" 
-			title="Zarządzaj artykułem" class="alert alert-link alert-secondary"></a>
+			title="Zarządzaj artykułem" class="link-list-element-link"></a>
 		</li>
 	</ol>
 
