@@ -20,7 +20,7 @@
 <p class="article-info">Artykuł strony głównej opatrzony jest tytułem, jaki jest wyświetlany po wejściu na stronę główną serwisu. <br>
 Lista nie zawiera artykułu tworzonego automatycznie czyli <em>Redakcja BIP</em>.</p>
 
-	<ol class="tree">
+	<ol class="tree" id="sortable">
 		<li class="tree-branch" th:each="article : ${mainMenuArticles}">
 			<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" 
 				class="alert alert-link alert-secondary" title="Zarządzaj artykułem"></a>
