@@ -17,11 +17,11 @@
 
 <h3>Informacje podstawowe</h3>
 <div class="row">
-	<p class="col-md-12">Przypisany do menu głównego: <span class="badge badge-primary" th:text="${article.mainMenu} ? 'TAK' : 'NIE'" /></p>
-	<p class="col-md-6">Utworzony dnia: <span class="badge badge-dark" th:text="${#temporals.format(article.createdAt, 'dd-MM-yyyy HH:mm')}" /></p>
-	<p class="col-md-6">Ostatnia edycja dnia: <span class="badge badge-dark" th:text="${#temporals.format(article.editedAt, 'dd-MM-yyyy HH:mm')}" /></p>
-	<p class="col-md-6">Utworzony przez: <span class="badge badge-dark" th:text="${article.createdBy}" /></p>
-	<p class="col-md-6">Ostatnia edycja przez: <span class="badge badge-dark" th:text="${article.editedBy}" /></p>
+	<p class="col-md-12">Przypisany do menu głównego: <span class="badge badge-primary" th:text="${article.mainMenu} ? 'TAK' : 'NIE'"></span></p>
+	<p class="col-md-6">Utworzony dnia: <span class="badge badge-dark" th:text="${#temporals.format(article.createdAt, 'dd-MM-yyyy HH:mm')}"></span></p>
+	<p class="col-md-6">Ostatnia edycja dnia: <span class="badge badge-dark" th:text="${#temporals.format(article.editedAt, 'dd-MM-yyyy HH:mm')}"></span></p>
+	<p class="col-md-6">Utworzony przez: <span class="badge badge-dark" th:text="${article.createdBy}"></span></p>
+	<p class="col-md-6">Ostatnia edycja przez: <span class="badge badge-dark" th:text="${article.editedBy}"></span></p>
 </div>
 <p class="button-middle"><a th:href="@{'/panel/edytuj/tytul/' +${article.link}}" title="Zmień tytuł artykułu" class="btn btn-success">Zmień tytuł artykułu</a></p>
 
@@ -33,10 +33,12 @@
 	<p class="article-info">Przeciągnij artykuły aby zmienić ich kolejność wyświetlania.</p>
 	<p th:unless="${article.children.size() != 0}">Do artułu nie przypisano żadnych innych artykułów.</p>
 	
-	<ol class="list-group">
-		<li class="list-group-item article-list-element" th:each="child : ${article.children}">
-		<a th:href="@{'/panel/zarzadzaj/' + ${child.link}}" th:text="${child.title}" title="Zarządzaj artykułem"></a>
-		<a th:href="@{'/panel/odepnij-dziecko/' + ${article.link} + '/' + ${child.link}}" title="Usuń artykuł z listy" class="badge badge-danger delete-button">X</a>
+	<ol class="tree">
+		<li class="tree-branch" th:each="child : ${article.children}">
+		<a th:href="@{'/panel/zarzadzaj/' + ${child.link}}" th:text="${child.title}" 
+			class="alert alert-link alert-secondary" title="Zarządzaj artykułem"></a>
+		<a th:href="@{'/panel/odepnij-dziecko/' + ${article.link} + '/' + ${child.link}}" 
+			title="Usuń artykuł z listy" class="badge badge-danger delete-button">X</a>
 		</li>
 	</ol>
 
@@ -46,12 +48,13 @@
 	<p class="article-info">Przeciągnij załączniki aby zmienić ich kolejność wyświetlania.</p>
 	<p th:unless="${article.attachments.size() != 0}">Do artułu nie przypisano żadnych załączników.</p>
 
-	<ol class="list-group">
-		<li class="list-group-item" th:each="attachment : ${article.attachments}">
-			<a th:href="@{'/upload/' +${attachment.fileName}}" th:text="${attachment.displayName}"></a>
-			[<span th:text=". +${attachment.extension}" th:remove="tag"></span>; 
-			<span th:text="${T(net.jewczuk.openbip.utils.DisplayUtils).formatSize(attachment.size)}" th:remove="tag"></span>]
-			<a th:href="@{'/panel/usun/zalacznik/' + ${attachment.fileName} + '/' + ${article.link}}" title="Usuń załącznik" class="badge badge-danger delete-button">X</a>
+	<ol class="tree">
+		<li class="tree-branch" th:each="attachment : ${article.attachments}">
+			<a th:href="@{'/upload/' +${attachment.fileName}}" class="alert alert-link alert-secondary" 
+			th:text="${attachment.displayName + ' [.' + attachment.extension + '; '
+				+ T(net.jewczuk.openbip.utils.DisplayUtils).formatSize(attachment.size) + ']'}" ></a>
+			<a th:href="@{'/panel/usun/zalacznik/' + ${attachment.fileName} + '/' + ${article.link}}" 
+				title="Usuń załącznik" class="badge badge-danger delete-button">X</a>
 		</li>
 	</ol>
 
