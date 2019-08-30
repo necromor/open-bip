@@ -33,7 +33,7 @@
 	<p class="article-info">Przeciągnij artykuły aby zmienić ich kolejność wyświetlania.</p>
 	<p th:unless="${article.children.size() != 0}">Do artułu nie przypisano żadnych innych artykułów.</p>
 	
-	<ol class="link-list sortable-list" th:id="${article.link}">
+	<ol class="link-list sortable-list" th:id="${article.link + '#children'}">
 		<li class="link-list-element sortable-element" th:each="child : ${article.children}" title="Przeciągnij i upuść aby zmienić kolejność wyświetlania">
 		<a th:href="@{'/panel/zarzadzaj/' + ${child.link}}" th:text="${child.title}" 
 			class="link-list-element-link" title="Zarządzaj artykułem"></a>
@@ -48,7 +48,7 @@
 	<p class="article-info">Przeciągnij załączniki aby zmienić ich kolejność wyświetlania.</p>
 	<p th:unless="${article.attachments.size() != 0}">Do artułu nie przypisano żadnych załączników.</p>
 
-	<ol class="link-list sortable-list" th:id="${article.link}">
+	<ol class="link-list sortable-list" th:id="${article.link + '#attachments'}">
 		<li class="link-list-element sortable-element" th:each="attachment : ${article.attachments}" title="Przeciągnij i upuść aby zmienić kolejność wyświetlania">
 			<a th:href="@{'/upload/' +${attachment.fileName}}" class="link-list-element-link" 
 			th:text="${attachment.displayName + ' [.' + attachment.extension + '; '
