@@ -1,6 +1,5 @@
 package net.jewczuk.openbip.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -206,61 +205,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public List<TreeBranchTO> getTree() {
-		
-		TreeBranchTO m1 = new TreeBranchTO.Builder()
-				.title("Menu 1")
-				.link("menu-1")
-				.published(true)
-				.children(new ArrayList<>())
-				.build();
-		TreeBranchTO m2 = new TreeBranchTO.Builder()
-				.title("Menu 2")
-				.link("menu-2")
-				.published(true)
-				.children(new ArrayList<>())
-				.build();	
-		TreeBranchTO ch11 = new TreeBranchTO.Builder()
-				.title("Child 1 1")
-				.link("child-1-1")
-				.published(true)
-				.children(new ArrayList<>())
-				.build();
-		TreeBranchTO ch12 = new TreeBranchTO.Builder()
-				.title("Child 1 2")
-				.link("child-1-2")
-				.published(false)
-				.children(new ArrayList<>())
-				.build();	
-		TreeBranchTO ch111 = new TreeBranchTO.Builder()
-				.title("Child 1 1 1")
-				.link("child-1-1-1")
-				.published(false)
-				.children(new ArrayList<>())
-				.build();
-		TreeBranchTO ch112 = new TreeBranchTO.Builder()
-				.title("Child 1 1 2")
-				.link("child-1-1-2")
-				.published(false)
-				.children(new ArrayList<>())
-				.build();
-		TreeBranchTO ch113 = new TreeBranchTO.Builder()
-				.title("Child 1 1 3")
-				.link("child-1-1-3")
-				.published(true)
-				.children(new ArrayList<>())
-				.build();
-		
-		ch11.getChildren().add(ch111);
-		ch11.getChildren().add(ch112);
-		ch11.getChildren().add(ch113);
-		m1.getChildren().add(ch11);
-		m1.getChildren().add(ch12);
-		
-		List<TreeBranchTO> mock = new ArrayList<>();
-		mock.add(m1);
-		mock.add(m2);
-		
-		return mock;
+		return articleRepository.getTree().stream()
+				.map(a -> articleMapper.mapToTreeBranch(a))
+				.collect(Collectors.toList());
 	}
 
 }

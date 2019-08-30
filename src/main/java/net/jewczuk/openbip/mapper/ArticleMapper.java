@@ -15,6 +15,7 @@ import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.EditArticleTO;
+import net.jewczuk.openbip.to.TreeBranchTO;
 
 @Component
 public class ArticleMapper {
@@ -89,6 +90,17 @@ public class ArticleMapper {
 				.link(article.getLink())
 				.title(article.getTitle())
 				.oldLink(article.getLink())
+				.build();
+	}
+	
+	public TreeBranchTO mapToTreeBranch(ArticleEntity article) {	
+		return new TreeBranchTO.Builder()
+				.title(article.getTitle())
+				.link(article.getLink())
+				.children(article.getChildren().stream()
+						.sorted(Comparator.comparing(ArticleEntity::getDisplayPosition))
+						.map(a -> mapToTreeBranch(a))
+						.collect(Collectors.toList()))
 				.build();
 	}
 

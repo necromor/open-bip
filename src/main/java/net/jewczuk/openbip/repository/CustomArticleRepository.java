@@ -29,4 +29,6 @@ public interface CustomArticleRepository {
 	ArticleEntity addAttachment(String link, AttachmentEntity attEntity, EditorEntity editor) throws BusinessException;
 
 	ArticleEntity deleteAttachment(String link, String fileName, EditorEntity editor) throws BusinessException;
+	
+	List<ArticleEntity> getTree();
 }

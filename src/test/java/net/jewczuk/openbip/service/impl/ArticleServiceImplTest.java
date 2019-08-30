@@ -33,6 +33,7 @@ import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.EditArticleTO;
 import net.jewczuk.openbip.to.HistoryTO;
+import net.jewczuk.openbip.to.TreeBranchTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -503,6 +504,7 @@ public class ArticleServiceImplTest {
 		DisplaySingleArticleTO after = articleService.deleteAttachment(link, fileName, editorID);
 		DisplaySingleArticleTO origin = articleService.getArticleByLink(TestConstants.NO_CHILDREN_LINK);
 		List<String> fileNames = origin.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
+		System.out.println(fileNames);
 		
 		assertThat(before.getAttachments().size()).isEqualTo(after.getAttachments().size());
 		assertThat(fileNames).contains(fileName);
@@ -517,6 +519,15 @@ public class ArticleServiceImplTest {
 		excE.expect(AttachmentException.class);
 		excE.expectMessage(ExceptionsMessages.ATTACHMENT_NOT_EXISTS);
 		articleService.deleteAttachment(link, fileName, editorID);
+	}
+	
+	@Test
+	public void shouldReturnAllArticlesAsAHerarchicalStructure() {
+		List<TreeBranchTO> tree = articleService.getTree();
+		
+		assertThat(tree.size()).isEqualTo(5);
+		assertThat(tree.get(0).getChildren().size()).isEqualTo(2);
+		assertThat(tree.get(0).getChildren().get(0).getChildren().size()).isEqualTo(1);
 	}
 }
  

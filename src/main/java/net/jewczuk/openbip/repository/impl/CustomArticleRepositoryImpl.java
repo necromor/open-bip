@@ -2,7 +2,9 @@ package net.jewczuk.openbip.repository.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -183,13 +185,17 @@ public class CustomArticleRepositoryImpl
 		} catch (Exception e) {
 			throw new AttachmentException(ExceptionsMessages.ATTACHMENT_NOT_EXISTS);
 		}
-		entity.getAttachments().remove(attachment);
-		int disPos = attachment.getDisplayPosition();
-		cleanUpDisplayPositions(entity.getAttachments(), disPos);
-		entityManager.remove(attachment);
-				
-		entity.getAttachmentsHistory().add(createAttachmentHistory(attachment.getDisplayName(), editor, false));
-		entityManager.persist(entity);
+		
+		if (entity.getAttachments().contains(attachment)) {
+			entity.getAttachments().remove(attachment);
+			int disPos = attachment.getDisplayPosition();
+			cleanUpDisplayPositions(entity.getAttachments(), disPos);
+			entityManager.remove(attachment);
+					
+			entity.getAttachmentsHistory().add(createAttachmentHistory(attachment.getDisplayName(), editor, false));
+			entityManager.persist(entity);
+		}
+		
 		return entity;
 	}
 	
@@ -211,6 +217,16 @@ public class CustomArticleRepositoryImpl
 				el.setDisplayPosition(oldPos - 1);
 			}
 		}	
+	}
+
+	@Override
+	public List<ArticleEntity> getTree() {
+		List<ArticleEntity> result = new ArrayList<>();
+		result.addAll(getMainMenu());
+		result.addAll(getUnpinnedArticles());
+		result = result.stream().sorted(Comparator.comparing(ArticleEntity::getTitle)).collect(Collectors.toList());
+		
+		return result;
 	}
 
 }

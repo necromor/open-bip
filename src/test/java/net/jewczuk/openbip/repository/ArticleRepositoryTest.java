@@ -2,6 +2,7 @@ package net.jewczuk.openbip.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -336,15 +337,16 @@ public class ArticleRepositoryTest {
 	}
 	
 	@Test
-	public void shouldCompleteSuccessfullyWhenAttachmentNotInArticle() throws BusinessException {
+	public void shouldNotDeleteAttachmentWhenAttachmentNotInArticle() throws BusinessException {
 		EditorEntity editor = editorRepository.getEditorById(3L);
 		String fileName = TestConstants.ATTACHMENT_4_NAME;
 		String link = TestConstants.PARENT_LINK;
 		
-		ArticleEntity article = articleRepository.deleteAttachment(link, fileName, editor);
-		List<String> attNames = article.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
+		articleRepository.deleteAttachment(link, fileName, editor);
+		ArticleEntity origin = articleRepository.getArticleByLink(TestConstants.NO_CHILDREN_LINK);
+		List<String> attNames = origin.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
 		
-		assertThat(attNames).containsExactlyInAnyOrder(TestConstants.ATTACHMENT_1_NAME, TestConstants.ATTACHMENT_2_NAME);
+		assertThat(attNames).contains(TestConstants.ATTACHMENT_4_NAME);
 	}
 	
 	@Test
@@ -358,4 +360,19 @@ public class ArticleRepositoryTest {
 		articleRepository.deleteAttachment(link, fileName, editor);
 	}
 	
+	@Test
+	public void shouldGetAllArticlesHierarchical() {
+		List<ArticleEntity> expected = new ArrayList<>();
+		expected.add(articleRepository.getArticleByLink(TestConstants.MAIN_PAGE_LINK));
+		expected.add(articleRepository.getArticleByLink(TestConstants.PARENT_LINK));
+		expected.add(articleRepository.getArticleByLink(TestConstants.NO_CHILDREN_LINK));
+		expected.add(articleRepository.getArticleByLink(TestConstants.COOKIES_POLICY_LINK));
+		expected.add(articleRepository.getArticleByLink(TestConstants.PRIVACY_POLICY_LINK));
+		expected = expected.stream().sorted(Comparator.comparing(ArticleEntity::getTitle)).collect(Collectors.toList());
+		
+		List<ArticleEntity> tree = articleRepository.getTree();
+		
+		assertThat(tree).isEqualTo(expected);
+		assertThat(tree.get(0).getChildren().size()).isGreaterThan(1);
+	}
 }
