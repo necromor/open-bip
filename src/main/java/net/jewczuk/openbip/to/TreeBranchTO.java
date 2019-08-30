@@ -6,13 +6,11 @@ public class TreeBranchTO {
 
 	private String link;
 	private String title;
-	private boolean published;
 	private List<TreeBranchTO> children;
 
 	public static class Builder {
 		private String link;
 		private String title;
-		private boolean published;
 		private List<TreeBranchTO> children;
 
 		public Builder link(String link) {
@@ -22,11 +20,6 @@ public class TreeBranchTO {
 
 		public Builder title(String title) {
 			this.title = title;
-			return this;
-		}
-
-		public Builder published(boolean published) {
-			this.published = published;
 			return this;
 		}
 
@@ -48,7 +41,6 @@ public class TreeBranchTO {
 	private TreeBranchTO(Builder builder) {
 		link = builder.link;
 		title = builder.title;
-		published = builder.published;
 		children = builder.children;
 	}
 
@@ -66,14 +58,6 @@ public class TreeBranchTO {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public boolean isPublished() {
-		return published;
-	}
-
-	public void setPublished(boolean published) {
-		this.published = published;
 	}
 
 	public List<TreeBranchTO> getChildren() {
