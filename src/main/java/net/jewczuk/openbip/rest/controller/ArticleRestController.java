@@ -44,9 +44,25 @@ public class ArticleRestController {
 		try {
 			articleService.saveAttachmentsPositions(link, children, editorID);	
 		} catch (BusinessException e) {	
-			message = UIMessages.POSITIONS_ATTACHMENTS_SUCCESS;
+			message = UIMessages.POSITIONS_ATTACHMENTS_FAILURE;
 			result = true;
 		}	
+		
+		return new AjaxGenericResponse(result, message);	
+	}
+	
+	@PutMapping("/main-menu-positions")
+	public AjaxGenericResponse saveNewAttachmentsPositions(@RequestBody String[] links) {		
+		Long editorID = 1L;
+		
+		boolean result = false;
+		String message = UIMessages.POSITIONS_MAIN_MENU_SUCCESS;
+		try {
+			articleService.saveMenuPositions(links, editorID);	
+		} catch (BusinessException e) {	
+			message = UIMessages.POSITIONS_MAIN_MENU_FAILURE;
+			result = true;
+		}
 		
 		return new AjaxGenericResponse(result, message);	
 	}

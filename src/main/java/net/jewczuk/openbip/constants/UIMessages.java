@@ -22,4 +22,6 @@ public class UIMessages {
 	public static final String POSITIONS_CHILDREN_FAILURE = "Wystąpił błąd podczas zapisywania zmiany kolejności artykułów";
 	public static final String POSITIONS_ATTACHMENTS_SUCCESS = "Zmiana kolejności załączników została zapisana";
 	public static final String POSITIONS_ATTACHMENTS_FAILURE = "Wystąpił błąd podczas zapisywania zmiany kolejności załączników";
+	public static final String POSITIONS_MAIN_MENU_SUCCESS = "Zmiana kolejności menu została zapisana";
+	public static final String POSITIONS_MAIN_MENU_FAILURE = "Wystąpił błąd podczas zapisywania zmiany kolejności menu";
 }

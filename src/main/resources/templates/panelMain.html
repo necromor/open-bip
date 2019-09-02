@@ -20,6 +20,8 @@
 <p class="article-info">Artykuł strony głównej opatrzony jest tytułem, jaki jest wyświetlany po wejściu na stronę główną serwisu. <br>
 Lista nie zawiera artykułu tworzonego automatycznie czyli <em>Redakcja BIP</em>.</p>
 
+	<p class="alert fade text-center" role="alert" id="ajax-main-menu-message"></p>
+
 	<ol class="link-list sortable-list" id="main-menu-elements">
 		<li class="link-list-element sortable-element" th:each="article : ${mainMenuArticles}" title="Przeciągnij i upuść aby zmienić kolejność wyświetlania">
 			<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" 
