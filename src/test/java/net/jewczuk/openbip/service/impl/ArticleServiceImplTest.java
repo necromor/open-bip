@@ -529,5 +529,98 @@ public class ArticleServiceImplTest {
 		assertThat(tree.get(0).getChildren().size()).isEqualTo(2);
 		assertThat(tree.get(0).getChildren().get(0).getChildren().size()).isEqualTo(1);
 	}
+	
+	@Test
+	public void shouldSaveNewPositionOfChildren() throws BusinessException {
+		Long editorID = 3L;
+		String link = TestConstants.PARENT_LINK;
+		String[] links = {TestConstants.CHILD_1_LINK, TestConstants.CHILD_2_LINK};
+		List<String> newPositions = Arrays.asList(links);
+		
+		DisplaySingleArticleTO article = articleService.saveChildrenPositions(link, links, editorID);
+		List<String> newLinks = article.getChildren().stream().map(c -> c.getLink()).collect(Collectors.toList());
+		
+		assertThat(newLinks).containsExactlyElementsOf(newPositions);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenSizeOfChildrenDiffers() throws BusinessException {
+		Long editorID = 3L;
+		String link = TestConstants.PARENT_LINK;
+		String[] links = {TestConstants.CHILD_2_LINK};
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_CHILDREN_SIZE);
+		articleService.saveChildrenPositions(link, links, editorID);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenNotAllChildrenOnTheList() throws BusinessException {
+		Long editorID = 3L;
+		String link = TestConstants.PARENT_LINK;
+		String[] links = {TestConstants.CHILD_2_LINK, TestConstants.CHILD_2_LINK};
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_CHILDREN_SIZE);
+		articleService.saveChildrenPositions(link, links, editorID);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenInvalidChildOnTheList() throws BusinessException {
+		Long editorID = 3L;
+		String link = TestConstants.PARENT_LINK;
+		String[] links = {TestConstants.NO_CHILDREN_LINK, TestConstants.CHILD_2_LINK};
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_CHILDREN_SIZE);
+		articleService.saveChildrenPositions(link, links, editorID);
+	}
+	
+	@Test
+	public void shouldSaveNewPositionOfAttachments() throws BusinessException {
+		Long editorID = 1L;
+		String link = TestConstants.NO_CHILDREN_LINK;
+		String[] links = {TestConstants.ATTACHMENT_5_NAME, TestConstants.ATTACHMENT_4_NAME, TestConstants.ATTACHMENT_6_NAME};
+		List<String> newPositions = Arrays.asList(links);
+		
+		DisplaySingleArticleTO article = articleService.saveAttachmentsPositions(link, links, editorID);
+		List<String> newNames = article.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
+		
+		assertThat(newNames).containsExactlyElementsOf(newPositions);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenSizeOfAttachmentsDiffers() throws BusinessException {
+		Long editorID = 1L;
+		String link = TestConstants.NO_CHILDREN_LINK;
+		String[] links = {TestConstants.ATTACHMENT_5_NAME};
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_ATTACHMENT_SIZE);
+		articleService.saveAttachmentsPositions(link, links, editorID);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenNotAllAttachmentsOnTheList() throws BusinessException {
+		Long editorID = 1L;
+		String link = TestConstants.NO_CHILDREN_LINK;
+		String[] links = {TestConstants.ATTACHMENT_4_NAME, TestConstants.ATTACHMENT_4_NAME, TestConstants.ATTACHMENT_6_NAME};
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_ATTACHMENT_SIZE);
+		articleService.saveAttachmentsPositions(link, links, editorID);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenInvalidAttachmentOnTheList() throws BusinessException {
+		Long editorID = 1L;
+		String link = TestConstants.NO_CHILDREN_LINK;
+		String[] links = {TestConstants.ATTACHMENT_5_NAME, TestConstants.ATTACHMENT_1_NAME, TestConstants.ATTACHMENT_6_NAME};
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_ATTACHMENT_SIZE);
+		articleService.saveAttachmentsPositions(link, links, editorID);
+	}
+	
 }
  

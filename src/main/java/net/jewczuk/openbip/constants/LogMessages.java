@@ -13,10 +13,13 @@ public class LogMessages {
 	public static final String ARTICLE_UNPINNED_CHILD = " - odpięcie artykułu dziecka: ";
 	public static final String ARTICLE_ADD_ATTACHMENT = " - dodanie załącznika: ";
 	public static final String ARTICLE_DELETE_ATTACHMENT = " - usunięcie załącznika: ";
+	public static final String ARTICLE_CHILDREN_POSITIONS = "Zmiana kolejności artykułów przypisanych do artykułu: ";
+	public static final String ARTICLE_ATTACHMENTS_POSITIONS = "Zmiana kolejności załączników przypisanych do artykułu: ";
 	
 	public static final String ATTACHMENT_HISTORY_ADD = "dodano załącznik: ";
 	public static final String ATTACHMENT_HISTORY_REMOVE = "usunięto załącznik: ";
 	public static final String SANDBOX_ADDED = "dodanie nowego brudnopisu: ";
 	public static final String SANDBOX_EDITED = "zmiana treści brudnopisu: ";
+	
 	
 }

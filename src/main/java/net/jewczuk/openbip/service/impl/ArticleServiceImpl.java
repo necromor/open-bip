@@ -1,5 +1,6 @@
 package net.jewczuk.openbip.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -208,6 +209,38 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleRepository.getTree().stream()
 				.map(a -> articleMapper.mapToTreeBranch(a))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public DisplaySingleArticleTO saveChildrenPositions(String link, String[] children, Long editorID)
+			throws BusinessException {
+		List<String> links = new ArrayList<>();
+		for (String child: children) {
+			links.add(child);
+		}
+		
+		ArticleEntity article = articleRepository.saveChildrenPositions(link, links);
+		
+		String logMessage = LogMessages.ARTICLE_CHILDREN_POSITIONS + article.getTitle() ;
+		historyService.createLogEntry(logMessage, editorID);	
+		
+		return articleMapper.mapToDisplaySingleArticle(article);
+	}
+	
+	@Override
+	public DisplaySingleArticleTO saveAttachmentsPositions(String link, String[] attachments, Long editorID)
+			throws BusinessException {
+		List<String> fileNames = new ArrayList<>();
+		for (String attachment: attachments) {
+			fileNames.add(attachment);
+		}
+		
+		ArticleEntity article = articleRepository.saveAttachmentsPositions(link, fileNames);
+		
+		String logMessage = LogMessages.ARTICLE_ATTACHMENTS_POSITIONS + article.getTitle() ;
+		historyService.createLogEntry(logMessage, editorID);	
+		
+		return articleMapper.mapToDisplaySingleArticle(article);
 	}
 
 }

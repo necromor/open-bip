@@ -24,22 +24,35 @@ public interface ArticleService {
 	
 	List<TreeBranchTO> getTree();
 
-	DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article, Long editorID) throws BusinessException;
+	DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article, Long editorID)
+			throws BusinessException;
 	
 	EditArticleTO getArticleByLinkToEdit(String link);
 
-	EditArticleTO editTitle(EditArticleTO article, Long editorID) throws BusinessException;
+	EditArticleTO editTitle(EditArticleTO article, Long editorID) 
+			throws BusinessException;
 	
 	List<ArticleLinkTO> getAllUnpinnedArticles();
 	
-	ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status) throws BusinessException;
+	ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status) 
+			throws BusinessException;
 
-	DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) throws BusinessException;
+	DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) 
+			throws BusinessException;
 
-	DisplaySingleArticleTO managePinningChildren(String parent, String child, Long editorID, boolean status) throws BusinessException;
+	DisplaySingleArticleTO managePinningChildren(String parent, String child, Long editorID, boolean status) 
+			throws BusinessException;
 	
-	DisplaySingleArticleTO addAttachment(String link, AttachmentTO attachment, Long editorID) throws BusinessException;
+	DisplaySingleArticleTO addAttachment(String link, AttachmentTO attachment, Long editorID) 
+			throws BusinessException;
 
-	DisplaySingleArticleTO deleteAttachment(String link, String fileName, Long editorID) throws BusinessException;
+	DisplaySingleArticleTO deleteAttachment(String link, String fileName, Long editorID) 
+			throws BusinessException;
+
+	DisplaySingleArticleTO saveChildrenPositions(String link, String[] children, Long editorID) 
+			throws BusinessException;
+
+	DisplaySingleArticleTO saveAttachmentsPositions(String link, String[] attachments, Long editorID)
+			throws BusinessException;
 	
 }
