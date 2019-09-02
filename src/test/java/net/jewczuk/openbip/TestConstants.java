@@ -27,6 +27,8 @@ public class TestConstants {
 	public static final String ATTACHMENT_2_NAME = "zal_nr_2.pdf";
 	public static final String ATTACHMENT_3_NAME = "zal_nr_3.pdf";
 	public static final String ATTACHMENT_4_NAME = "zal_art_bez_dzieci_1.odt";
+	public static final String ATTACHMENT_5_NAME = "zal_art_bez_dzieci_2.odt";
+	public static final String ATTACHMENT_6_NAME = "zal_art_bez_dzieci_3.odt";
 	public static final String ATTACHMENT_1_TITLE = "zał nr 1";
 	public static final String ATTACHMENT_3_TITLE = "Nowy załącznik";
 	public static final String ATTACHMENT_ODT = "odt";

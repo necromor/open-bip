@@ -24,5 +24,7 @@ public class ExceptionsMessages {
 													+ ApplicationProperties.MIN_TITLE_LENGHT;
 	
 	public static final String SANDBOX_INVALID_LINK = "Brudnopis o podanym linku nie istnieje w bazie danych";
+	public static final String INVALID_CHILDREN_SIZE = "Wystąpiła rozbieżność między podanymi linkami a faktycznymi artykułami dziećmi";
+	public static final String INVALID_ATTACHMENT_SIZE = "Wystąpiła rozbieżność między podanymi linkami a faktycznymi załącznikami artykułu";
 	
 }

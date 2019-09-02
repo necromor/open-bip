@@ -3,6 +3,7 @@ package net.jewczuk.openbip.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -374,5 +375,105 @@ public class ArticleRepositoryTest {
 		
 		assertThat(tree).isEqualTo(expected);
 		assertThat(tree.get(0).getChildren().size()).isGreaterThan(1);
+	}
+	
+	@Test
+	public void shouldSaveNewChildrenPositions() throws BusinessException {
+		String link = TestConstants.PARENT_LINK;
+		List<String> newPositions = Arrays.asList(TestConstants.CHILD_1_LINK, TestConstants.CHILD_2_LINK);
+		
+		ArticleEntity result = articleRepository.saveChildrenPositions(link, newPositions);
+		List<String> resChildrenTitles = result.getChildren().stream()
+				.sorted(Comparator.comparing(ArticleEntity::getDisplayPosition))
+				.map(c -> c.getLink())
+				.collect(Collectors.toList());
+		
+		assertThat(resChildrenTitles).containsExactlyElementsOf(newPositions);
+	}
+	
+	@Test
+	public void shouldNotChangeChildrenPositionsWhenNoChangeInOrder() throws BusinessException {
+		String link = TestConstants.PARENT_LINK;
+		List<String> newPositions = Arrays.asList(TestConstants.CHILD_2_LINK, TestConstants.CHILD_1_LINK);
+		
+		ArticleEntity result = articleRepository.saveChildrenPositions(link, newPositions);
+		List<String> resChildrenTitles = result.getChildren().stream()
+				.sorted(Comparator.comparing(ArticleEntity::getDisplayPosition))
+				.map(c -> c.getLink())
+				.collect(Collectors.toList());
+		
+		assertThat(resChildrenTitles).containsExactlyElementsOf(newPositions);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenGivenTooManyChildren() throws BusinessException {
+		String link = TestConstants.PARENT_LINK;
+		List<String> newPositions = Arrays.asList(TestConstants.CHILD_2_LINK, TestConstants.CHILD_1_LINK, TestConstants.CHILD_2_1_LINK);
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_CHILDREN_SIZE);
+		articleRepository.saveChildrenPositions(link, newPositions);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenInvalidChild() throws BusinessException {
+		String link = TestConstants.PARENT_LINK;
+		List<String> newPositions = Arrays.asList(TestConstants.CHILD_2_1_LINK, TestConstants.CHILD_1_LINK);
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_CHILDREN_SIZE);
+		articleRepository.saveChildrenPositions(link, newPositions);
+	}
+	
+	@Test
+	public void shouldSaveNewAttachmentsPositions() throws BusinessException {
+		String link = TestConstants.NO_CHILDREN_LINK;
+		List<String> newPositions = 
+				Arrays.asList(TestConstants.ATTACHMENT_5_NAME, TestConstants.ATTACHMENT_6_NAME, TestConstants.ATTACHMENT_4_NAME);
+		
+		ArticleEntity result = articleRepository.saveAttachmentsPositions(link, newPositions);
+		List<String> resAttachmentsNames = result.getAttachments().stream()
+				.sorted(Comparator.comparing(AttachmentEntity::getDisplayPosition))
+				.map(a -> a.getFileName())
+				.collect(Collectors.toList());
+		
+		assertThat(resAttachmentsNames).containsExactlyElementsOf(newPositions);
+	}
+	
+	@Test
+	public void shouldNotChangeAttachmentsPositionsWhenNoChangeInOrder() throws BusinessException {
+		String link = TestConstants.NO_CHILDREN_LINK;
+		List<String> newPositions = 
+				Arrays.asList(TestConstants.ATTACHMENT_4_NAME, TestConstants.ATTACHMENT_5_NAME, TestConstants.ATTACHMENT_6_NAME);
+		
+		ArticleEntity result = articleRepository.saveAttachmentsPositions(link, newPositions);
+		List<String> resAttachmentsNames = result.getAttachments().stream()
+				.sorted(Comparator.comparing(AttachmentEntity::getDisplayPosition))
+				.map(a -> a.getFileName())
+				.collect(Collectors.toList());
+		
+		assertThat(resAttachmentsNames).containsExactlyElementsOf(newPositions);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenGivenTooManyAttachments() throws BusinessException {
+		String link = TestConstants.NO_CHILDREN_LINK;
+		List<String> newPositions = 
+				Arrays.asList(TestConstants.ATTACHMENT_5_NAME, TestConstants.ATTACHMENT_6_NAME);
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_ATTACHMENT_SIZE);
+		articleRepository.saveAttachmentsPositions(link, newPositions);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenInvalidAttachment() throws BusinessException {
+		String link = TestConstants.NO_CHILDREN_LINK;
+		List<String> newPositions = 
+				Arrays.asList(TestConstants.ATTACHMENT_4_NAME, TestConstants.ATTACHMENT_5_NAME, TestConstants.ATTACHMENT_4_NAME);
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_ATTACHMENT_SIZE);
+		articleRepository.saveAttachmentsPositions(link, newPositions);
 	}
 }

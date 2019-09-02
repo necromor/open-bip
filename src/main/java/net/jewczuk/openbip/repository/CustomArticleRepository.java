@@ -31,4 +31,8 @@ public interface CustomArticleRepository {
 	ArticleEntity deleteAttachment(String link, String fileName, EditorEntity editor) throws BusinessException;
 	
 	List<ArticleEntity> getTree();
+	
+	ArticleEntity saveChildrenPositions(String link, List<String> children) throws BusinessException;
+	
+	ArticleEntity saveAttachmentsPositions(String link, List<String> attachments) throws BusinessException;
 }

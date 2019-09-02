@@ -224,9 +224,51 @@ public class CustomArticleRepositoryImpl
 		List<ArticleEntity> result = new ArrayList<>();
 		result.addAll(getMainMenu());
 		result.addAll(getUnpinnedArticles());
-		result = result.stream().sorted(Comparator.comparing(ArticleEntity::getTitle)).collect(Collectors.toList());
+		result = result.stream()
+				.sorted(Comparator.comparing(ArticleEntity::getTitle))
+				.collect(Collectors.toList());
 		
 		return result;
+	}
+
+	@Override
+	public ArticleEntity saveChildrenPositions(String link, List<String> children) throws BusinessException {
+		ArticleEntity article = getArticleByLink(link);
+		Collection<ArticleEntity> artChildren = article.getChildren();
+		
+		if (artChildren.size() != children.size()) {
+			throw new ArticleException(ExceptionsMessages.INVALID_CHILDREN_SIZE);
+		}
+		
+		for (ArticleEntity child: artChildren) {
+			int pos = children.indexOf(child.getLink());
+			if (pos == -1) {
+				throw new ArticleException(ExceptionsMessages.INVALID_CHILDREN_SIZE);
+			}
+			child.setDisplayPosition(pos);
+		}
+		
+		return article;
+	}
+	
+	@Override
+	public ArticleEntity saveAttachmentsPositions(String link, List<String> attachments) throws BusinessException {
+		ArticleEntity article = getArticleByLink(link);
+		Collection<AttachmentEntity> artAttachments = article.getAttachments();
+		
+		if (artAttachments.size() != attachments.size()) {
+			throw new ArticleException(ExceptionsMessages.INVALID_ATTACHMENT_SIZE);
+		}
+		
+		for (AttachmentEntity att: artAttachments) {
+			int pos = attachments.indexOf(att.getFileName());
+			if (pos == -1) {
+				throw new ArticleException(ExceptionsMessages.INVALID_ATTACHMENT_SIZE);
+			}
+			att.setDisplayPosition(pos);
+		}
+		
+		return article;
 	}
 
 }
