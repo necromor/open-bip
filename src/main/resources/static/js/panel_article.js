@@ -7,9 +7,13 @@ let panel_article = (function () {
 	const mainMenuSymbol = 'main-menu-elements';
 	const childrenSymbol = 'children';
 	const attachmentsSymbol = 'attachments';
-	const mainMenuPositions = '/api/main-menu-positions';
-	const articleChildrenPositions = '/api/children-positions/';
-	const articleAttachmentsPositions = '/api/attachments-positions/';
+	const mainMenuPositions = '/api/article/main-menu-positions';
+	const articleChildrenPositions = '/api/article/children-positions/';
+	const articleAttachmentsPositions = '/api/article/attachments-positions/';
+	const childrenMessage = document.getElementById('ajax-children-message');
+	const attachmentsMessage = document.getElementById('ajax-attachments-message');
+	const mainMenuMessage = document.getElementById('ajax-main-menu-message');
+	const showMessageTime = 3000;
 	
 	function registerCreateLinkEvent() {
 		if (titleField) {
@@ -41,20 +45,63 @@ let panel_article = (function () {
 	
 	function saveNewPositions(name, links) {
 		const link = returnLinkBasedOnName(name);
-		console.log(name);
+/*		console.log(name);
 		console.log(link);
-		console.log(links);
+		console.log(links);*/
+		
+		createAjax(link[0], links, link[1]);
+	}
+	
+	function createAjax(address, data, type) {
+		$.ajax({
+			type : "PUT",
+			contentType : "application/json",
+			url : address,
+			data : JSON.stringify(data),
+			dataType : 'json',
+			timeout : 100000,
+			success : function(result) {
+				showResult(result, type);				
+			},
+			error : function(e) {
+				showResult(result, type);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+	}
+	
+	function showResult(data, element) {
+		let resultClass = 'alert-success';
+		if (data.error) {
+			resultClass = 'alert-danger';
+		}
+		showMessage(resultClass, data.message, element);
+	}
+	
+	function showMessage(type, message, element) {
+		element.classList.add('show');
+		element.classList.add(type);
+		element.innerText = message;
+		window.setTimeout(hideMessage, showMessageTime, element);
+	}
+	
+	function hideMessage(element) {
+		element.classList.remove('show');
+		element.classList.remove('alert-success');
+		element.classList.remove('alert-danger');
 	}
 
 	function returnLinkBasedOnName(name) {
 		if (name === mainMenuSymbol) {
-			return mainMenuPositions;
+			return [mainMenuPositions, mainMenuMessage];
 		} else {
 			const splitted = name.split('#');
 			if (splitted[1] === childrenSymbol) {
-				return articleChildrenPositions + splitted[0];
+				return [articleChildrenPositions + splitted[0], childrenMessage];
 			} else {
-				return articleAttachmentsPositions + splitted[0];
+				return [articleAttachmentsPositions + splitted[0], attachmentsMessage];
 			}
 		}
 	}

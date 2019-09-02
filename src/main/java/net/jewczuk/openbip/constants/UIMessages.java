@@ -18,4 +18,8 @@ public class UIMessages {
 	public static final String EDIT_SANDBOX_SUCCESS = "Brudnopis zmieniony pomyślnie";
 	public static final String SAVE_SANDBOX_SUCCESS = "Zmiany zostały zapisane";
 	public static final String SAVE_SANDBOX_FAILURE = "Wystąpił błąd podczas zapisywania zmian";
+	public static final String POSITIONS_CHILDREN_SUCCESS = "Zmiana kolejności artykułów przypisanych została zapisana";
+	public static final String POSITIONS_CHILDREN_FAILURE = "Wystąpił błąd podczas zapisywania zmiany kolejności artykułów";
+	public static final String POSITIONS_ATTACHMENTS_SUCCESS = "Zmiana kolejności załączników została zapisana";
+	public static final String POSITIONS_ATTACHMENTS_FAILURE = "Wystąpił błąd podczas zapisywania zmiany kolejności załączników";
 }
