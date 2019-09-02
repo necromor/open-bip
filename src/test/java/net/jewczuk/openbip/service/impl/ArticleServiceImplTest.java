@@ -622,5 +622,37 @@ public class ArticleServiceImplTest {
 		articleService.saveAttachmentsPositions(link, links, editorID);
 	}
 	
+	@Test
+	public void shouldSaveNewMainMenuPositions() throws BusinessException {
+		Long editorID = 1L;
+		String[] newPositions = {TestConstants.NO_CHILDREN_LINK, TestConstants.PARENT_LINK, TestConstants.MAIN_PAGE_LINK};
+		
+		List<ArticleLinkTO> savedPositions = articleService.saveMenuPositions(newPositions, editorID);
+		List<ArticleLinkTO> newMainMenu = articleService.getMainMenu();
+		
+		assertThat(savedPositions).containsExactlyElementsOf(newMainMenu);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenInvalidNumberOfLinks() throws BusinessException {
+		Long editorID = 2L;
+		String[] newPositions = {TestConstants.NO_CHILDREN_LINK, TestConstants.NO_CHILDREN_LINK, 
+									TestConstants.PARENT_LINK, TestConstants.MAIN_PAGE_LINK};
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_MAIN_MENU_SIZE);
+		articleService.saveMenuPositions(newPositions, editorID);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenLinkNotInMainMenu() throws BusinessException {
+		Long editorID = 2L;
+		String[] newPositions = {TestConstants.NO_CHILDREN_LINK, TestConstants.PRIVACY_POLICY_LINK, TestConstants.MAIN_PAGE_LINK};
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.NOT_IN_MAIN_MENU);
+		articleService.saveMenuPositions(newPositions, editorID);
+	}
+	
 }
  

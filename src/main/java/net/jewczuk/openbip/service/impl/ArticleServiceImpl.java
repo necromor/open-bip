@@ -242,5 +242,20 @@ public class ArticleServiceImpl implements ArticleService {
 		
 		return articleMapper.mapToDisplaySingleArticle(article);
 	}
+	
+	@Override
+	public List<ArticleLinkTO> saveMenuPositions(String[] links, Long editorID) throws BusinessException {
+		List<String> mainMenu = new ArrayList<>();
+		for (String link: links) {
+			mainMenu.add(link);
+		}
+		
+		List<ArticleEntity> newMainMenu = articleRepository.saveMenuPositions(mainMenu);
+		historyService.createLogEntry(LogMessages.MAIN_MENU_POSITIONS, editorID);
+		
+		return newMainMenu.stream()
+				.map(a -> articleMapper.mapToLink(a))
+				.collect(Collectors.toList());
+	}
 
 }

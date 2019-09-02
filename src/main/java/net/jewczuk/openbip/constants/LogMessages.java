@@ -16,10 +16,11 @@ public class LogMessages {
 	public static final String ARTICLE_CHILDREN_POSITIONS = "Zmiana kolejności artykułów przypisanych do artykułu: ";
 	public static final String ARTICLE_ATTACHMENTS_POSITIONS = "Zmiana kolejności załączników przypisanych do artykułu: ";
 	
-	public static final String ATTACHMENT_HISTORY_ADD = "dodano załącznik: ";
-	public static final String ATTACHMENT_HISTORY_REMOVE = "usunięto załącznik: ";
-	public static final String SANDBOX_ADDED = "dodanie nowego brudnopisu: ";
-	public static final String SANDBOX_EDITED = "zmiana treści brudnopisu: ";
+	public static final String ATTACHMENT_HISTORY_ADD = "Dodano załącznik: ";
+	public static final String ATTACHMENT_HISTORY_REMOVE = "Usunięto załącznik: ";
+	public static final String SANDBOX_ADDED = "Dodanie nowego brudnopisu: ";
+	public static final String SANDBOX_EDITED = "Zmiana treści brudnopisu: ";
+	public static final String MAIN_MENU_POSITIONS = "Zmiana kolejności wyświetlania głównego menu";
 	
 	
 }

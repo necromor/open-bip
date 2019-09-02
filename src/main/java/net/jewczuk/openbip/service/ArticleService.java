@@ -54,5 +54,8 @@ public interface ArticleService {
 
 	DisplaySingleArticleTO saveAttachmentsPositions(String link, String[] attachments, Long editorID)
 			throws BusinessException;
+
+	List<ArticleLinkTO> saveMenuPositions(String[] links, Long editorID) 
+			throws BusinessException;
 	
 }
