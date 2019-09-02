@@ -271,4 +271,25 @@ public class CustomArticleRepositoryImpl
 		return article;
 	}
 
+	@Override
+	public List<ArticleEntity> saveMenuPositions(List<String> links) throws BusinessException {
+		List<ArticleEntity> newMenuPositions = new ArrayList<>();
+		
+		if (getMainMenu().size() != links.size()) {
+			throw new ArticleException(ExceptionsMessages.INVALID_MAIN_MENU_SIZE);
+		}
+		
+		int i = 0;
+		for (String link: links) {
+			ArticleEntity article = getArticleByLink(link);
+			if (!article.isMainMenu()) {
+				throw new ArticleException(ExceptionsMessages.NOT_IN_MAIN_MENU);
+			}
+			article.setDisplayPosition(i++);
+			newMenuPositions.add(article);
+		}
+		
+		return newMenuPositions;
+	}
+
 }

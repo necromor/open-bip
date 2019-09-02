@@ -476,4 +476,34 @@ public class ArticleRepositoryTest {
 		excE.expectMessage(ExceptionsMessages.INVALID_ATTACHMENT_SIZE);
 		articleRepository.saveAttachmentsPositions(link, newPositions);
 	}
+	
+	@Test
+	public void shouldSaveNewMainMenuPositions() throws BusinessException {
+		List<String> newPositions = 
+				Arrays.asList(TestConstants.NO_CHILDREN_LINK, TestConstants.MAIN_PAGE_LINK, TestConstants.PARENT_LINK);	
+		
+		List<ArticleEntity> newMenu = articleRepository.saveMenuPositions(newPositions);
+		
+		assertThat(newMenu).containsExactlyElementsOf(articleRepository.getMainMenu());
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenArticleNotInMainMenu() throws BusinessException {
+		List<String> newPositions = 
+				Arrays.asList(TestConstants.CHILD_1_LINK, TestConstants.MAIN_PAGE_LINK, TestConstants.PARENT_LINK);	
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.NOT_IN_MAIN_MENU);		
+		articleRepository.saveMenuPositions(newPositions);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenLinksSizeNotEqualToMainMenu() throws BusinessException {
+		List<String> newPositions = 
+				Arrays.asList(TestConstants.MAIN_PAGE_LINK, TestConstants.PARENT_LINK);	
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_MAIN_MENU_SIZE);		
+		articleRepository.saveMenuPositions(newPositions);
+	}
 }

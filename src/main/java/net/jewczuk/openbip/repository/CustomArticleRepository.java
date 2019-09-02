@@ -20,19 +20,27 @@ public interface CustomArticleRepository {
 	
 	List<ArticleEntity> getUnpinnedArticles();
 	
-	List<ArticleEntity> managePinningChild(String parent, String child) throws BusinessException;
+	List<ArticleEntity> managePinningChild(String parent, String child) 
+			throws BusinessException;
 	
 	ArticleEntity addContent(DisplaySingleArticleTO article, EditorEntity editor);
 	
 	ArticleEntity managePinningToMainMenu(String link, boolean status);
 	
-	ArticleEntity addAttachment(String link, AttachmentEntity attEntity, EditorEntity editor) throws BusinessException;
+	ArticleEntity addAttachment(String link, AttachmentEntity attEntity, EditorEntity editor) 
+			throws BusinessException;
 
-	ArticleEntity deleteAttachment(String link, String fileName, EditorEntity editor) throws BusinessException;
+	ArticleEntity deleteAttachment(String link, String fileName, EditorEntity editor) 
+			throws BusinessException;
 	
 	List<ArticleEntity> getTree();
 	
-	ArticleEntity saveChildrenPositions(String link, List<String> children) throws BusinessException;
+	ArticleEntity saveChildrenPositions(String link, List<String> children) 
+			throws BusinessException;
 	
-	ArticleEntity saveAttachmentsPositions(String link, List<String> attachments) throws BusinessException;
+	ArticleEntity saveAttachmentsPositions(String link, List<String> attachments) 
+			throws BusinessException;
+	
+	List<ArticleEntity> saveMenuPositions(List<String> links)
+			throws BusinessException;
 }

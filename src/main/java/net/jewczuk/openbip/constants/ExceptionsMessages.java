@@ -24,7 +24,10 @@ public class ExceptionsMessages {
 													+ ApplicationProperties.MIN_TITLE_LENGHT;
 	
 	public static final String SANDBOX_INVALID_LINK = "Brudnopis o podanym linku nie istnieje w bazie danych";
-	public static final String INVALID_CHILDREN_SIZE = "Wystąpiła rozbieżność między podanymi linkami a faktycznymi artykułami dziećmi";
-	public static final String INVALID_ATTACHMENT_SIZE = "Wystąpiła rozbieżność między podanymi linkami a faktycznymi załącznikami artykułu";
+	public static final String INVALID_CHILDREN_SIZE = "Wystąpiła rozbieżność między ilością podanych linków a ilością artykułów przypisanych";
+	public static final String INVALID_ATTACHMENT_SIZE = "Wystąpiła rozbieżność między ilością podanych nazw a ilością załączników artykułu";
+	public static final String NOT_IN_MAIN_MENU = "Artykuł nie jest przypisany do głównego menu";
+	public static final String INVALID_MAIN_MENU_SIZE = "Wystąpiła rozbieżność między ilością podanych linków "
+														+ "a ilością artykułów przypisanych do głównego menu";
 	
 }
