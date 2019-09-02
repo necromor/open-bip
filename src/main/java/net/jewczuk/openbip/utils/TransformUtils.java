@@ -1,5 +1,6 @@
 package net.jewczuk.openbip.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -48,5 +49,13 @@ public class TransformUtils {
 		return toReturn.toString();
 	}
 	
+	public static <T> List<T> crateListFromArray(T[] elements) {
+		List<T> result = new ArrayList<>();
+		for (T el: elements) {
+			result.add(el);
+		}
+		
+		return result;
+	}
 	
 }

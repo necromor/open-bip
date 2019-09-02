@@ -1,6 +1,5 @@
 package net.jewczuk.openbip.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +27,7 @@ import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.EditArticleTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
+import net.jewczuk.openbip.utils.TransformUtils;
 import net.jewczuk.openbip.validators.ArticleValidator;
 
 @Service
@@ -214,11 +214,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public DisplaySingleArticleTO saveChildrenPositions(String link, String[] children, Long editorID)
 			throws BusinessException {
-		List<String> links = new ArrayList<>();
-		for (String child: children) {
-			links.add(child);
-		}
-		
+		List<String> links = TransformUtils.crateListFromArray(children);
 		ArticleEntity article = articleRepository.saveChildrenPositions(link, links);
 		
 		String logMessage = LogMessages.ARTICLE_CHILDREN_POSITIONS + article.getTitle() ;
@@ -230,11 +226,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public DisplaySingleArticleTO saveAttachmentsPositions(String link, String[] attachments, Long editorID)
 			throws BusinessException {
-		List<String> fileNames = new ArrayList<>();
-		for (String attachment: attachments) {
-			fileNames.add(attachment);
-		}
-		
+		List<String> fileNames = TransformUtils.crateListFromArray(attachments);
 		ArticleEntity article = articleRepository.saveAttachmentsPositions(link, fileNames);
 		
 		String logMessage = LogMessages.ARTICLE_ATTACHMENTS_POSITIONS + article.getTitle() ;
@@ -245,12 +237,9 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Override
 	public List<ArticleLinkTO> saveMenuPositions(String[] links, Long editorID) throws BusinessException {
-		List<String> mainMenu = new ArrayList<>();
-		for (String link: links) {
-			mainMenu.add(link);
-		}
-		
+		List<String> mainMenu = TransformUtils.crateListFromArray(links);	
 		List<ArticleEntity> newMainMenu = articleRepository.saveMenuPositions(mainMenu);
+		
 		historyService.createLogEntry(LogMessages.MAIN_MENU_POSITIONS, editorID);
 		
 		return newMainMenu.stream()
