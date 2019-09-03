@@ -15,7 +15,7 @@ import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
-import net.jewczuk.openbip.to.EditArticleTO;
+import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.validators.ArticleValidator;
 
 @RunWith(SpringRunner.class)
@@ -29,12 +29,12 @@ public class ArticleValidatorImplTest {
     public ExpectedException excE = ExpectedException.none();
 	
 	DisplaySingleArticleTO article;
-	EditArticleTO edit;
+	ArticleEditTO edit;
 	
 	@Before
 	public void setUp() {
 		article = new DisplaySingleArticleTO();
-		edit = new EditArticleTO();
+		edit = new ArticleEditTO();
 	}
 	
 	@Test

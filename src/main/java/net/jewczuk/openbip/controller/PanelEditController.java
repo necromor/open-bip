@@ -15,7 +15,7 @@ import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.SandboxService;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
-import net.jewczuk.openbip.to.EditArticleTO;
+import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.to.SandboxTO;
 import net.jewczuk.openbip.utils.TransformUtils;
 
@@ -31,7 +31,7 @@ public class PanelEditController {
 	
 	@GetMapping("/tytul/{link}")
 	public String showFormEditTitle(@PathVariable String link, Model model) {
-		EditArticleTO newArticle = articleService.getArticleByLinkToEdit(link);
+		ArticleEditTO newArticle = articleService.getArticleByLinkToEdit(link);
 		model.addAttribute("newArticle", newArticle);
 
 		return ViewNames.ARTICLE_EDIT_TITLE;
@@ -39,11 +39,11 @@ public class PanelEditController {
 	
 	@PostMapping("/tytul/{link}.do")
 	public String editTitle(@PathVariable String link, Model model, 
-						EditArticleTO editedArticle, RedirectAttributes attributes) {
+						ArticleEditTO editedArticle, RedirectAttributes attributes) {
 		
 		editedArticle.setLink(TransformUtils.createLinkFromTitle(editedArticle.getTitle()));
 		
-		EditArticleTO savedArticle;
+		ArticleEditTO savedArticle;
 		Long editorID = 1L;
 		
 		try {

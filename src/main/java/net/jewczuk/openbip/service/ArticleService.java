@@ -7,7 +7,7 @@ import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.ArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
-import net.jewczuk.openbip.to.EditArticleTO;
+import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
 
 public interface ArticleService {
@@ -27,9 +27,9 @@ public interface ArticleService {
 	DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article, Long editorID)
 			throws BusinessException;
 	
-	EditArticleTO getArticleByLinkToEdit(String link);
+	ArticleEditTO getArticleByLinkToEdit(String link);
 
-	EditArticleTO editTitle(EditArticleTO article, Long editorID) 
+	ArticleEditTO editTitle(ArticleEditTO article, Long editorID) 
 			throws BusinessException;
 	
 	List<ArticleLinkTO> getAllUnpinnedArticles();

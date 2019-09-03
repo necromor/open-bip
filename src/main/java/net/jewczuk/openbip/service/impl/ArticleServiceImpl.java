@@ -25,7 +25,7 @@ import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.ArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
-import net.jewczuk.openbip.to.EditArticleTO;
+import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
 import net.jewczuk.openbip.utils.TransformUtils;
 import net.jewczuk.openbip.validators.ArticleValidator;
@@ -101,9 +101,9 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public EditArticleTO getArticleByLinkToEdit(String link) {
+	public ArticleEditTO getArticleByLinkToEdit(String link) {
 		DisplaySingleArticleTO aTO = getArticleByLink(link);
-		return new EditArticleTO.Builder()
+		return new ArticleEditTO.Builder()
 				.link(aTO.getLink())
 				.title(aTO.getTitle())
 				.oldLink(aTO.getLink())
@@ -111,7 +111,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public EditArticleTO editTitle(EditArticleTO article, Long editorID) throws BusinessException {
+	public ArticleEditTO editTitle(ArticleEditTO article, Long editorID) throws BusinessException {
 
 		ArticleEntity entity = articleRepository.getArticleByLink(article.getOldLink());
 
@@ -128,7 +128,7 @@ public class ArticleServiceImpl implements ArticleService {
 			throw new ArticleException(ExceptionsMessages.LINK_EXISTS);
 		}
 		
-		return articleMapper.map2EditArticle(entity);
+		return articleMapper.map2Edit(entity);
 	}
 
 	@Override

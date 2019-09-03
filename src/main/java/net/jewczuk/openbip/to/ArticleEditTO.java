@@ -1,6 +1,6 @@
 package net.jewczuk.openbip.to;
 
-public class EditArticleTO {
+public class ArticleEditTO {
 
 	private String link;
 	private String title;
@@ -30,17 +30,17 @@ public class EditArticleTO {
 			return this;
 		}
 
-		public EditArticleTO build() {
-			return new EditArticleTO(this);
+		public ArticleEditTO build() {
+			return new ArticleEditTO(this);
 		}
 
 	}
 
-	public EditArticleTO() {
+	public ArticleEditTO() {
 
 	}
 
-	private EditArticleTO(Builder builder) {
+	private ArticleEditTO(Builder builder) {
 		link = builder.link;
 		title = builder.title;
 		oldLink = builder.oldLink;

@@ -14,7 +14,7 @@ import net.jewczuk.openbip.entity.ContentHistoryEntity;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.ArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
-import net.jewczuk.openbip.to.EditArticleTO;
+import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
 
 @Component
@@ -85,8 +85,8 @@ public class ArticleMapper {
 		return entity;
 	}
 	
-	public EditArticleTO map2EditArticle(ArticleEntity article) {
-		return new EditArticleTO.Builder()
+	public ArticleEditTO map2Edit(ArticleEntity article) {
+		return new ArticleEditTO.Builder()
 				.link(article.getLink())
 				.title(article.getTitle())
 				.oldLink(article.getLink())

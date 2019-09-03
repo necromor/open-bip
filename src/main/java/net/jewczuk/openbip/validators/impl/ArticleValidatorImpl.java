@@ -7,7 +7,7 @@ import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
-import net.jewczuk.openbip.to.EditArticleTO;
+import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.validators.ArticleValidator;
 
 @Component
@@ -27,7 +27,7 @@ public class ArticleValidatorImpl implements ArticleValidator {
 	}
 
 	@Override
-	public boolean validateEditTitle(EditArticleTO article) throws BusinessException {
+	public boolean validateEditTitle(ArticleEditTO article) throws BusinessException {
 		if (article.getTitle() == null || article.getTitle().length() == 0) {
 			throw new ArticleException(ExceptionsMessages.NO_TITLE);
 		}

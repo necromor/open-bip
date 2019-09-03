@@ -31,7 +31,7 @@ import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.ArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
-import net.jewczuk.openbip.to.EditArticleTO;
+import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.to.HistoryTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
 
@@ -237,7 +237,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldReturnArticleToEditWhenLinkExists() {
-		EditArticleTO edit = articleService.getArticleByLinkToEdit(TestConstants.CHILD_2_1_LINK);
+		ArticleEditTO edit = articleService.getArticleByLinkToEdit(TestConstants.CHILD_2_1_LINK);
 		
 		assertThat(edit.getTitle()).isEqualTo(TestConstants.CHILD_2_1_TITLE);
 		assertThat(edit.getOldLink()).isEqualTo(edit.getLink());
@@ -245,13 +245,13 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldSuccessfullyEditTitle() throws BusinessException {
-		EditArticleTO tbe = new EditArticleTO.Builder()
+		ArticleEditTO tbe = new ArticleEditTO.Builder()
 				.title(TestConstants.EDITED_TITLE)
 				.link(TestConstants.EDITED_LINK)
 				.oldLink(TestConstants.CHILD_1_LINK)
 				.build();
 		
-		EditArticleTO edited = articleService.editTitle(tbe, 1L);
+		ArticleEditTO edited = articleService.editTitle(tbe, 1L);
 		
 		assertThat(edited.getLink()).isEqualTo(TestConstants.EDITED_LINK);
 		assertThat(edited.getOldLink()).isEqualTo(edited.getLink());
@@ -259,7 +259,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldThrowLinkExistsExceptionWhenAnotherArticleHasThatLinkAleardy() throws BusinessException {
-		EditArticleTO tbe = new EditArticleTO.Builder()
+		ArticleEditTO tbe = new ArticleEditTO.Builder()
 				.title(TestConstants.EDITED_TITLE)
 				.link(TestConstants.CHILD_1_LINK)
 				.oldLink(TestConstants.CHILD_2_1_LINK)
