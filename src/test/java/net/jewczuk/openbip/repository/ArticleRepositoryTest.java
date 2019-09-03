@@ -506,4 +506,40 @@ public class ArticleRepositoryTest {
 		excE.expectMessage(ExceptionsMessages.INVALID_MAIN_MENU_SIZE);		
 		articleRepository.saveMenuPositions(newPositions);
 	}
+	
+	@Test
+	public void shouldReturnFalseWhenArticleHasChildren() throws BusinessException {
+		String link = TestConstants.CHILD_2_LINK;
+		
+		boolean result = articleRepository.isReadyToBeDeleted(link);
+		
+		assertThat(result).isFalse();
+	}
+	
+	@Test
+	public void shouldReturnFalseWhenArticleHasAttachments() throws BusinessException {
+		String link = TestConstants.NO_CHILDREN_LINK;
+
+		boolean result = articleRepository.isReadyToBeDeleted(link);
+		
+		assertThat(result).isFalse();
+	}
+	
+	@Test
+	public void shouldReturnFalsenWhenArticleAssignedToMainMenu() throws BusinessException {
+		String link = TestConstants.MAIN_PAGE_LINK;
+		
+		boolean result = articleRepository.isReadyToBeDeleted(link);
+		
+		assertThat(result).isFalse();
+	}
+	
+	@Test
+	public void shouldReturnTrueWhenArticleReadyToBeDeleted() throws BusinessException {
+		String link = TestConstants.CHILD_2_1_LINK;
+		
+		boolean result = articleRepository.isReadyToBeDeleted(link);
+		
+		assertThat(result).isTrue();
+	}
 }

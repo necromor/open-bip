@@ -43,4 +43,6 @@ public interface CustomArticleRepository {
 	
 	List<ArticleEntity> saveMenuPositions(List<String> links)
 			throws BusinessException;
+	
+	boolean isReadyToBeDeleted(String link);
 }

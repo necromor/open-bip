@@ -292,4 +292,13 @@ public class CustomArticleRepositoryImpl
 		return newMenuPositions;
 	}
 
+	@Override
+	public boolean isReadyToBeDeleted(String link) {
+		ArticleEntity article = getArticleByLink(link);
+
+		return !(article.isMainMenu() 
+				|| article.getChildren().size() > 0 
+				|| article.getAttachments().size() > 0);
+	}
+
 }
