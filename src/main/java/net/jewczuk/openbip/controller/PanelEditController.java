@@ -14,7 +14,7 @@ import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.SandboxService;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.to.SandboxTO;
 import net.jewczuk.openbip.utils.TransformUtils;
@@ -59,7 +59,7 @@ public class PanelEditController {
 	
 	@GetMapping("/tresc/{link}")
 	public String showFormEditContent(@PathVariable String link, Model model) {
-		DisplaySingleArticleTO article = articleService.getArticleByLink(link);
+		ArticleDisplayTO article = articleService.getArticleByLink(link);
 		model.addAttribute("article", article);
 
 		return ViewNames.ARTICLE_EDIT_CONTENT;
@@ -67,9 +67,9 @@ public class PanelEditController {
 	
 	@PostMapping("/tresc/{link}.do")
 	public String editContent(@PathVariable String link, Model model, 
-							DisplaySingleArticleTO article, RedirectAttributes attributes) {
+							ArticleDisplayTO article, RedirectAttributes attributes) {
 		
-		DisplaySingleArticleTO savedArticle;
+		ArticleDisplayTO savedArticle;
 		Long editorID = 1L;
 		
 		try {

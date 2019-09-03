@@ -30,7 +30,7 @@ import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.ArticleHistoryTO;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.to.HistoryTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
@@ -58,7 +58,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldReturnArticleWithoutAttachmentsNoChildrenAndNoHistory() {
-		DisplaySingleArticleTO article = articleService.getArticleByLink(TestConstants.CHILD_2_1_LINK);
+		ArticleDisplayTO article = articleService.getArticleByLink(TestConstants.CHILD_2_1_LINK);
 		
 		assertThat(article.getTitle()).isEqualTo(TestConstants.CHILD_2_1_TITLE);
 		assertThat(article.getAttachments()).isEmpty();
@@ -71,7 +71,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldReturnArticleWithContentHistory() {
-		DisplaySingleArticleTO article = articleService.getArticleByLink(TestConstants.CHILD_1_LINK);
+		ArticleDisplayTO article = articleService.getArticleByLink(TestConstants.CHILD_1_LINK);
 		
 		assertThat(article.getTitle()).isEqualTo(TestConstants.CHILD_1_TITLE);
 		assertThat(article.getContent()).isEqualTo(TestConstants.CHILD_1_CONTENT);
@@ -88,7 +88,7 @@ public class ArticleServiceImplTest {
 		children.add(new ArticleLinkTO(TestConstants.CHILD_1_LINK, TestConstants.CHILD_1_TITLE));
 		List<String> expectedAttachments = Arrays.asList(TestConstants.ATTACHMENT_2_NAME, TestConstants.ATTACHMENT_1_NAME);
 		
-		DisplaySingleArticleTO article = articleService.getArticleByLink(TestConstants.PARENT_LINK);
+		ArticleDisplayTO article = articleService.getArticleByLink(TestConstants.PARENT_LINK);
 		List<String> actualAttachments = article.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
 		
 		assertThat(article.getContent()).isEqualTo(TestConstants.EMPTY_CONTENT);
@@ -98,7 +98,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldReturnArticleWithContentHistoryFromDifferentEditors() {
-		DisplaySingleArticleTO article = articleService.getArticleByLink(TestConstants.NO_CHILDREN_LINK);
+		ArticleDisplayTO article = articleService.getArticleByLink(TestConstants.NO_CHILDREN_LINK);
 		
 		assertThat(article.getTitle()).isEqualTo(TestConstants.NO_CHILDREN_TITLE);
 		assertThat(article.getContent()).isEqualTo(TestConstants.NO_CHILDREN_CONTENT);
@@ -197,11 +197,11 @@ public class ArticleServiceImplTest {
 		Long editorID = 1L;
 		final String TITLE = "Testing title";
 		final String LINK = "testing-title";
-		DisplaySingleArticleTO newArticle = new DisplaySingleArticleTO.Builder().title(TITLE).link(LINK).build();
+		ArticleDisplayTO newArticle = new ArticleDisplayTO.Builder().title(TITLE).link(LINK).build();
 		List<ArticleLinkTO> articlesBefore = articleService.getAllArticles();
 		List<HistoryTO> historyBefore = historyService.getAllLogEntriesByEditor(editorID);
 		
-		DisplaySingleArticleTO savedArticle = articleService.saveArticle(newArticle, editorID);
+		ArticleDisplayTO savedArticle = articleService.saveArticle(newArticle, editorID);
 		List<ArticleLinkTO> articlesAfter = articleService.getAllArticles();
 		List<String> titlesAfter = articlesAfter.stream().map(a -> a.getTitle()).collect(Collectors.toList());
 		List<HistoryTO> historyAfter = historyService.getAllLogEntriesByEditor(editorID);
@@ -219,7 +219,7 @@ public class ArticleServiceImplTest {
 		Long editorID = 1L;
 		final String TITLE = "New Title";
 		final String LINK = "new-title";
-		DisplaySingleArticleTO newArticle = new DisplaySingleArticleTO.Builder().title(TITLE).link(LINK).build();
+		ArticleDisplayTO newArticle = new ArticleDisplayTO.Builder().title(TITLE).link(LINK).build();
 		
 		articleService.saveArticle(newArticle, editorID);
 		
@@ -284,7 +284,7 @@ public class ArticleServiceImplTest {
 		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
 		
 		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 1L, true);
-		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
+		ArticleDisplayTO changed = articleService.getArticleByLink(link);
 		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
 		
 		assertThat(menuAfter.size() - menuBefore.size()).isEqualTo(1);
@@ -307,7 +307,7 @@ public class ArticleServiceImplTest {
 		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
 		
 		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 1L, true);
-		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
+		ArticleDisplayTO changed = articleService.getArticleByLink(link);
 		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
 		
 		assertThat(menuAfter.size() - menuBefore.size()).isEqualTo(0);
@@ -321,7 +321,7 @@ public class ArticleServiceImplTest {
 		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
 		
 		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 1L, false);
-		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
+		ArticleDisplayTO changed = articleService.getArticleByLink(link);
 		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
 		
 		assertThat(menuBefore.size() - menuAfter.size()).isEqualTo(1);
@@ -344,7 +344,7 @@ public class ArticleServiceImplTest {
 		List<ArticleLinkTO> menuBefore = articleService.getMainMenu();
 		
 		ArticleLinkTO articleLink = articleService.managePinningToMainMenu(link, 1L, false);
-		DisplaySingleArticleTO changed = articleService.getArticleByLink(link);
+		ArticleDisplayTO changed = articleService.getArticleByLink(link);
 		List<ArticleLinkTO> menuAfter = articleService.getMainMenu();
 		
 		assertThat(menuBefore.size() - menuAfter.size()).isEqualTo(0);
@@ -354,13 +354,13 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldSuccessfullyAddNewContent() throws BusinessException {
-		DisplaySingleArticleTO articleBefore = articleService.getArticleByLink(TestConstants.CHILD_1_LINK);
-		DisplaySingleArticleTO changed = new DisplaySingleArticleTO.Builder()
+		ArticleDisplayTO articleBefore = articleService.getArticleByLink(TestConstants.CHILD_1_LINK);
+		ArticleDisplayTO changed = new ArticleDisplayTO.Builder()
 				.link(TestConstants.CHILD_1_LINK)
 				.content(TestConstants.MAIN_PAGE_CONTENT)
 				.build();
 		
-		DisplaySingleArticleTO articleAfter = articleService.editContent(changed, 2L);
+		ArticleDisplayTO articleAfter = articleService.editContent(changed, 2L);
 		
 		assertThat(articleAfter.getContent()).isEqualTo(TestConstants.MAIN_PAGE_CONTENT);
 		assertThat(articleAfter.getContentChangesNumber() - articleBefore.getContentChangesNumber()).isEqualTo(1);
@@ -370,7 +370,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldThrowExceptionWhenChangingContentForInvalidLink() throws BusinessException {
-		DisplaySingleArticleTO changed = new DisplaySingleArticleTO.Builder()
+		ArticleDisplayTO changed = new ArticleDisplayTO.Builder()
 				.link(TestConstants.INVALID_LINK)
 				.content(TestConstants.MAIN_PAGE_CONTENT)
 				.build();
@@ -381,7 +381,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldThrowExceptionWhenChangingContentForInvalidEditor() throws BusinessException {
-		DisplaySingleArticleTO changed = new DisplaySingleArticleTO.Builder()
+		ArticleDisplayTO changed = new ArticleDisplayTO.Builder()
 				.link(TestConstants.CHILD_1_LINK)
 				.content(TestConstants.MAIN_PAGE_CONTENT)
 				.build();
@@ -397,7 +397,7 @@ public class ArticleServiceImplTest {
 		String childLink = TestConstants.PRIVACY_POLICY_LINK;
 		Long editorID = 1L;
 		
-		DisplaySingleArticleTO result = articleService.managePinningChildren(parentLink, childLink, editorID, true);
+		ArticleDisplayTO result = articleService.managePinningChildren(parentLink, childLink, editorID, true);
 		List<String> childrenTitles = result.getChildren().stream().map(c -> c.getTitle()).collect(Collectors.toList());
 		
 		assertThat(childrenTitles).contains(TestConstants.PRIVACY_POLICY_TITLE);
@@ -410,7 +410,7 @@ public class ArticleServiceImplTest {
 		String childLink = TestConstants.CHILD_1_LINK;
 		Long editorID = 1L;
 		
-		DisplaySingleArticleTO result = articleService.managePinningChildren(parentLink, childLink, editorID, false);
+		ArticleDisplayTO result = articleService.managePinningChildren(parentLink, childLink, editorID, false);
 		List<String> childrenTitles = result.getChildren().stream().map(c -> c.getTitle()).collect(Collectors.toList());
 		
 		assertThat(childrenTitles).doesNotContain(TestConstants.CHILD_1_TITLE);
@@ -458,7 +458,7 @@ public class ArticleServiceImplTest {
 				.size(0L)
 				.build();
 		
-		DisplaySingleArticleTO article = articleService.addAttachment(TestConstants.PARENT_LINK, ato, 2L);
+		ArticleDisplayTO article = articleService.addAttachment(TestConstants.PARENT_LINK, ato, 2L);
 		int last = article.getAttachments().size() - 1;
 		
 		assertThat(article.getAttachments().size()).isGreaterThan(0);
@@ -485,9 +485,9 @@ public class ArticleServiceImplTest {
 		Long editorID = 2L;
 		String fileName = TestConstants.ATTACHMENT_2_NAME;
 		String link = TestConstants.PARENT_LINK;
-		DisplaySingleArticleTO before = articleService.getArticleByLink(link);
+		ArticleDisplayTO before = articleService.getArticleByLink(link);
 		
-		DisplaySingleArticleTO after = articleService.deleteAttachment(link, fileName, editorID);
+		ArticleDisplayTO after = articleService.deleteAttachment(link, fileName, editorID);
 		List<String> fileNames = after.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
 		
 		assertThat(before.getAttachments().size() - after.getAttachments().size()).isEqualTo(1);
@@ -499,10 +499,10 @@ public class ArticleServiceImplTest {
 		Long editorID = 2L;
 		String fileName = TestConstants.ATTACHMENT_4_NAME;
 		String link = TestConstants.PARENT_LINK;
-		DisplaySingleArticleTO before = articleService.getArticleByLink(link);
+		ArticleDisplayTO before = articleService.getArticleByLink(link);
 		
-		DisplaySingleArticleTO after = articleService.deleteAttachment(link, fileName, editorID);
-		DisplaySingleArticleTO origin = articleService.getArticleByLink(TestConstants.NO_CHILDREN_LINK);
+		ArticleDisplayTO after = articleService.deleteAttachment(link, fileName, editorID);
+		ArticleDisplayTO origin = articleService.getArticleByLink(TestConstants.NO_CHILDREN_LINK);
 		List<String> fileNames = origin.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
 		System.out.println(fileNames);
 		
@@ -537,7 +537,7 @@ public class ArticleServiceImplTest {
 		String[] links = {TestConstants.CHILD_1_LINK, TestConstants.CHILD_2_LINK};
 		List<String> newPositions = Arrays.asList(links);
 		
-		DisplaySingleArticleTO article = articleService.saveChildrenPositions(link, links, editorID);
+		ArticleDisplayTO article = articleService.saveChildrenPositions(link, links, editorID);
 		List<String> newLinks = article.getChildren().stream().map(c -> c.getLink()).collect(Collectors.toList());
 		
 		assertThat(newLinks).containsExactlyElementsOf(newPositions);
@@ -583,7 +583,7 @@ public class ArticleServiceImplTest {
 		String[] links = {TestConstants.ATTACHMENT_5_NAME, TestConstants.ATTACHMENT_4_NAME, TestConstants.ATTACHMENT_6_NAME};
 		List<String> newPositions = Arrays.asList(links);
 		
-		DisplaySingleArticleTO article = articleService.saveAttachmentsPositions(link, links, editorID);
+		ArticleDisplayTO article = articleService.saveAttachmentsPositions(link, links, editorID);
 		List<String> newNames = article.getAttachments().stream().map(a -> a.getFileName()).collect(Collectors.toList());
 		
 		assertThat(newNames).containsExactlyElementsOf(newPositions);
@@ -661,7 +661,7 @@ public class ArticleServiceImplTest {
 		List<ArticleLinkTO> allBefore = articleService.getAllArticles();
 		
 		articleService.deleteArticle(link, editorID);
-		DisplaySingleArticleTO parent = articleService.getArticleByLink(TestConstants.CHILD_2_LINK);
+		ArticleDisplayTO parent = articleService.getArticleByLink(TestConstants.CHILD_2_LINK);
 		List<ArticleLinkTO> allAfter = articleService.getAllArticles();
 		
 		assertThat(allAfter.size() - allBefore.size()).isEqualTo(-1);

@@ -22,7 +22,7 @@ import net.jewczuk.openbip.exceptions.AttachmentException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.repository.CustomArticleRepository;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 
 public class CustomArticleRepositoryImpl 
 	implements CustomArticleRepository {
@@ -127,7 +127,7 @@ public class CustomArticleRepositoryImpl
 	}
 
 	@Override
-	public ArticleEntity addContent(DisplaySingleArticleTO article, EditorEntity editor) {
+	public ArticleEntity addContent(ArticleDisplayTO article, EditorEntity editor) {
 		ArticleEntity entity = getArticleByLink(article.getLink());
 		
 		ContentHistoryEntity contentEntity = new ContentHistoryEntity();

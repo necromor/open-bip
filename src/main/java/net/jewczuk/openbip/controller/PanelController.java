@@ -20,7 +20,7 @@ import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.service.SandboxService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.HistoryTO;
 import net.jewczuk.openbip.to.SandboxTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
@@ -53,7 +53,7 @@ public class PanelController {
 	
 	@GetMapping("/zarzadzaj/{link}")
 	public String showArticleManagmentPage(@PathVariable String link, Model model) {
-		DisplaySingleArticleTO article = articleService.getArticleByLink(link);
+		ArticleDisplayTO article = articleService.getArticleByLink(link);
 		model.addAttribute("article", article);
 
 		return ViewNames.ARTICLE_MANAGEMENT;
@@ -133,7 +133,7 @@ public class PanelController {
 	
 	@GetMapping("/przypnij-dziecko/{link}")
 	public String showFormPinChildren(@PathVariable String link, Model model) {
-		DisplaySingleArticleTO newArticle = articleService.getArticleByLink(link);
+		ArticleDisplayTO newArticle = articleService.getArticleByLink(link);
 		List<ArticleLinkTO> articles = articleService.getAllUnpinnedArticles();
 		
 		model.addAttribute("parent", newArticle);

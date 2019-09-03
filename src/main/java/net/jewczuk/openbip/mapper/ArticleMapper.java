@@ -13,7 +13,7 @@ import net.jewczuk.openbip.entity.AttachmentHistoryEntity;
 import net.jewczuk.openbip.entity.ContentHistoryEntity;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.ArticleHistoryTO;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
 
@@ -29,13 +29,13 @@ public class ArticleMapper {
 	@Autowired
 	private ContentHistoryMapper contentHistoryMapper;
 	
-	public DisplaySingleArticleTO mapToDisplaySingleArticle(ArticleEntity article) {
+	public ArticleDisplayTO mapToDisplay(ArticleEntity article) {
 		List<ContentHistoryEntity> contentHistory = article.getContentHistory().stream()
 				.sorted(Comparator.comparing(ContentHistoryEntity::getCreatedAt))
 				.collect(Collectors.toList());
 		int lastElement = contentHistory.size() - 1;
 		
-		DisplaySingleArticleTO saTO = new DisplaySingleArticleTO.Builder()
+		ArticleDisplayTO saTO = new ArticleDisplayTO.Builder()
 				.title(article.getTitle())
 				.link(article.getLink())
 				.content(lastElement == -1 ? null : contentHistory.get(lastElement).getContent())
@@ -77,7 +77,7 @@ public class ArticleMapper {
 		return new ArticleLinkTO(article.getLink(), article.getTitle());
 	}
 	
-	public ArticleEntity map2NewAE(DisplaySingleArticleTO aTO) {
+	public ArticleEntity map2NewAE(ArticleDisplayTO aTO) {
 		ArticleEntity entity = new ArticleEntity();
 		entity.setTitle(aTO.getTitle());
 		entity.setLink(aTO.getLink());

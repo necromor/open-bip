@@ -17,7 +17,7 @@ import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.EditorService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.ArticleHistoryTO;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.RedactorTO;
 
 @Controller
@@ -31,7 +31,7 @@ public class ArticleController {
 
 	@GetMapping("/")
 	public String showMainPage(Model model) {
-		DisplaySingleArticleTO article = articleService.getArticleByLink(ApplicationProperties.MAIN_PAGE_LINK);
+		ArticleDisplayTO article = articleService.getArticleByLink(ApplicationProperties.MAIN_PAGE_LINK);
 		List<ArticleLinkTO> menu = articleService.getMainMenu();
 		model.addAttribute("article", article);
 		model.addAttribute("mainMenu", menu);
@@ -43,7 +43,7 @@ public class ArticleController {
 
 		String template = ViewNames.SHOW_ARTICLE;
 		try {
-			DisplaySingleArticleTO article = articleService.getArticleByLink(link);
+			ArticleDisplayTO article = articleService.getArticleByLink(link);
 			List<ArticleLinkTO> menu = articleService.getMainMenu();
 			List<ArticleLinkTO> breadcrumbs = articleService.getBreadcrumbs(link);
 			Collections.reverse(breadcrumbs);

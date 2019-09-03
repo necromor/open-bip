@@ -24,7 +24,7 @@ import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.ArticleHistoryTO;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
 import net.jewczuk.openbip.utils.TransformUtils;
@@ -52,8 +52,8 @@ public class ArticleServiceImpl implements ArticleService {
 	private AttachmentMapper attachmentMapper;
 
 	@Override
-	public DisplaySingleArticleTO getArticleByLink(String link) {
-		return articleMapper.mapToDisplaySingleArticle(articleRepository.getArticleByLink(link));
+	public ArticleDisplayTO getArticleByLink(String link) {
+		return articleMapper.mapToDisplay(articleRepository.getArticleByLink(link));
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article, Long editorID) throws BusinessException {
+	public ArticleDisplayTO saveArticle(ArticleDisplayTO article, Long editorID) throws BusinessException {
 		
 		ArticleEntity entity = new ArticleEntity();
 		
@@ -97,12 +97,12 @@ public class ArticleServiceImpl implements ArticleService {
 			throw new ArticleException(ExceptionsMessages.LINK_EXISTS);
 		}
 
-		return articleMapper.mapToDisplaySingleArticle(entity);
+		return articleMapper.mapToDisplay(entity);
 	}
 
 	@Override
 	public ArticleEditTO getArticleByLinkToEdit(String link) {
-		DisplaySingleArticleTO aTO = getArticleByLink(link);
+		ArticleDisplayTO aTO = getArticleByLink(link);
 		return new ArticleEditTO.Builder()
 				.link(aTO.getLink())
 				.title(aTO.getTitle())
@@ -151,19 +151,19 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	@Transactional
-	public DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) throws BusinessException {
+	public ArticleDisplayTO editContent(ArticleDisplayTO article, Long editorID) throws BusinessException {
 		
 		EditorEntity editor = editorRepository.getEditorById(editorID);
 		ArticleEntity entity = articleRepository.addContent(article, editor);
 			
 		historyService.createLogEntry(LogMessages.ARTICLE_CONTENT_EDITED + entity.getTitle(), editorID);
 		
-		return articleMapper.mapToDisplaySingleArticle(entity);
+		return articleMapper.mapToDisplay(entity);
 	}
 
 	@Override
 	@Transactional
-	public DisplaySingleArticleTO managePinningChildren(String parent, String child, Long editorID, boolean status)
+	public ArticleDisplayTO managePinningChildren(String parent, String child, Long editorID, boolean status)
 			throws BusinessException {
 		
 		List<ArticleEntity> entities = articleRepository.managePinningChild(parent, child);
@@ -174,12 +174,12 @@ public class ArticleServiceImpl implements ArticleService {
 		
 		historyService.createLogEntry(logMessage, editorID);
 		
-		return articleMapper.mapToDisplaySingleArticle(entities.get(0));
+		return articleMapper.mapToDisplay(entities.get(0));
 	}
 
 	@Override
 	@Transactional
-	public DisplaySingleArticleTO addAttachment(String link, AttachmentTO attachment, Long editorID)
+	public ArticleDisplayTO addAttachment(String link, AttachmentTO attachment, Long editorID)
 			throws BusinessException {
 		
 		AttachmentEntity attEntity = attachmentMapper.mapToNewEntity(attachment);
@@ -189,19 +189,19 @@ public class ArticleServiceImpl implements ArticleService {
 		String logMessage = article.getTitle() + LogMessages.ARTICLE_ADD_ATTACHMENT + attEntity.getFileName();
 		historyService.createLogEntry(logMessage, editorID);	
 		
-		return articleMapper.mapToDisplaySingleArticle(article);
+		return articleMapper.mapToDisplay(article);
 	}
 
 	@Override
 	@Transactional
-	public DisplaySingleArticleTO deleteAttachment(String link, String fileName, Long editorID) throws BusinessException {
+	public ArticleDisplayTO deleteAttachment(String link, String fileName, Long editorID) throws BusinessException {
 		EditorEntity editor = editorRepository.getEditorById(editorID);
 		ArticleEntity article = articleRepository.deleteAttachment(link, fileName, editor);
 		
 		String logMessage = article.getTitle() + LogMessages.ARTICLE_DELETE_ATTACHMENT + fileName;
 		historyService.createLogEntry(logMessage, editorID);	
 		
-		return articleMapper.mapToDisplaySingleArticle(article);
+		return articleMapper.mapToDisplay(article);
 	}
 
 	@Override
@@ -212,7 +212,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public DisplaySingleArticleTO saveChildrenPositions(String link, String[] children, Long editorID)
+	public ArticleDisplayTO saveChildrenPositions(String link, String[] children, Long editorID)
 			throws BusinessException {
 		List<String> links = TransformUtils.crateListFromArray(children);
 		ArticleEntity article = articleRepository.saveChildrenPositions(link, links);
@@ -220,11 +220,11 @@ public class ArticleServiceImpl implements ArticleService {
 		String logMessage = LogMessages.ARTICLE_CHILDREN_POSITIONS + article.getTitle() ;
 		historyService.createLogEntry(logMessage, editorID);	
 		
-		return articleMapper.mapToDisplaySingleArticle(article);
+		return articleMapper.mapToDisplay(article);
 	}
 	
 	@Override
-	public DisplaySingleArticleTO saveAttachmentsPositions(String link, String[] attachments, Long editorID)
+	public ArticleDisplayTO saveAttachmentsPositions(String link, String[] attachments, Long editorID)
 			throws BusinessException {
 		List<String> fileNames = TransformUtils.crateListFromArray(attachments);
 		ArticleEntity article = articleRepository.saveAttachmentsPositions(link, fileNames);
@@ -232,7 +232,7 @@ public class ArticleServiceImpl implements ArticleService {
 		String logMessage = LogMessages.ARTICLE_ATTACHMENTS_POSITIONS + article.getTitle();
 		historyService.createLogEntry(logMessage, editorID);	
 		
-		return articleMapper.mapToDisplaySingleArticle(article);
+		return articleMapper.mapToDisplay(article);
 	}
 	
 	@Override

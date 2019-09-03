@@ -18,7 +18,7 @@ import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.SandboxService;
 import net.jewczuk.openbip.service.UploadService;
 import net.jewczuk.openbip.to.AttachmentTO;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.SandboxTO;
 import net.jewczuk.openbip.utils.GeneralUtils;
 import net.jewczuk.openbip.utils.TransformUtils;
@@ -43,20 +43,20 @@ public class PanelAddController {
 	@GetMapping("/artykul")
 	public String showAddArticle(Model model) {
 		
-		DisplaySingleArticleTO article = (DisplaySingleArticleTO) model.asMap().getOrDefault("newArticle", new DisplaySingleArticleTO());
+		ArticleDisplayTO article = (ArticleDisplayTO) model.asMap().getOrDefault("newArticle", new ArticleDisplayTO());
 		model.addAttribute("newArticle", article);
 		
 		return ViewNames.ARTICLE_ADD;
 	}
 	
 	@PostMapping("/artykul.do")
-	public String addArticle(Model model, DisplaySingleArticleTO newArticle, RedirectAttributes attributes) {
+	public String addArticle(Model model, ArticleDisplayTO newArticle, RedirectAttributes attributes) {
 		
 		newArticle.setLink(TransformUtils.createLinkFromTitle(newArticle.getTitle()));
 		Long editorID = 1L;
 		
 		try {
-			DisplaySingleArticleTO savedArticle = articleService.saveArticle(newArticle, editorID);
+			ArticleDisplayTO savedArticle = articleService.saveArticle(newArticle, editorID);
 			attributes.addFlashAttribute("articleSuccess", UIMessages.ADD_ARTICLE_SUCCESS);
 			return "redirect:/panel/zarzadzaj/" + savedArticle.getLink();		
 		} catch (BusinessException e) {	
@@ -68,7 +68,7 @@ public class PanelAddController {
 	
 	@GetMapping("/zalacznik/{link}")
 	public String showFormAddAttachment(@PathVariable String link, Model model) {
-		DisplaySingleArticleTO article = articleService.getArticleByLink(link);
+		ArticleDisplayTO article = articleService.getArticleByLink(link);
 		model.addAttribute("article", article);
 		model.addAttribute("name", "");
 
@@ -92,7 +92,7 @@ public class PanelAddController {
 			attributes.addFlashAttribute("articleSuccess", UIMessages.ARTICLE_ATTACHMENT_ADD_SUCCESS);
 			return "redirect:/panel/zarzadzaj/" + link;	
 		} catch (BusinessException e) {
-			DisplaySingleArticleTO article = articleService.getArticleByLink(link);
+			ArticleDisplayTO article = articleService.getArticleByLink(link);
 			model.addAttribute("article", article);
 			model.addAttribute("name", name);
 			model.addAttribute("error", e.getMessage());

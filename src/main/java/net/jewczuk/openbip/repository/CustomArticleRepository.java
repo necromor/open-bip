@@ -6,7 +6,7 @@ import net.jewczuk.openbip.entity.ArticleEntity;
 import net.jewczuk.openbip.entity.AttachmentEntity;
 import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.exceptions.BusinessException;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 
 public interface CustomArticleRepository {
 	
@@ -23,7 +23,7 @@ public interface CustomArticleRepository {
 	List<ArticleEntity> managePinningChild(String parent, String child) 
 			throws BusinessException;
 	
-	ArticleEntity addContent(DisplaySingleArticleTO article, EditorEntity editor);
+	ArticleEntity addContent(ArticleDisplayTO article, EditorEntity editor);
 	
 	ArticleEntity managePinningToMainMenu(String link, boolean status);
 	

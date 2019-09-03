@@ -14,7 +14,7 @@ import net.jewczuk.openbip.TestConstants;
 import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.BusinessException;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.validators.ArticleValidator;
 
@@ -28,12 +28,12 @@ public class ArticleValidatorImplTest {
 	@Rule
     public ExpectedException excE = ExpectedException.none();
 	
-	DisplaySingleArticleTO article;
+	ArticleDisplayTO article;
 	ArticleEditTO edit;
 	
 	@Before
 	public void setUp() {
-		article = new DisplaySingleArticleTO();
+		article = new ArticleDisplayTO();
 		edit = new ArticleEditTO();
 	}
 	

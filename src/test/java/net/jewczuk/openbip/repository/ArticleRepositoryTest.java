@@ -29,7 +29,7 @@ import net.jewczuk.openbip.exceptions.ArticleException;
 import net.jewczuk.openbip.exceptions.AttachmentException;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -223,7 +223,7 @@ public class ArticleRepositoryTest {
 	
 	@Test
 	public void shouldSuccessfullyCreateNewContent() throws BusinessException {
-		DisplaySingleArticleTO changed = new DisplaySingleArticleTO.Builder()
+		ArticleDisplayTO changed = new ArticleDisplayTO.Builder()
 				.link(TestConstants.CHILD_2_LINK)
 				.content(TestConstants.MAIN_PAGE_CONTENT)
 				.build();
@@ -238,7 +238,7 @@ public class ArticleRepositoryTest {
 	
 	@Test
 	public void shouldThrowExceptionWhenAddingContentToInvalidLink() throws BusinessException {
-		DisplaySingleArticleTO changed = new DisplaySingleArticleTO.Builder()
+		ArticleDisplayTO changed = new ArticleDisplayTO.Builder()
 				.link(TestConstants.INVALID_LINK)
 				.content(TestConstants.MAIN_PAGE_CONTENT)
 				.build();

@@ -3,7 +3,7 @@ package net.jewczuk.openbip.to;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class DisplaySingleArticleTO {
+public class ArticleDisplayTO {
 
 	private String link;
 	private String title;
@@ -89,12 +89,12 @@ public class DisplaySingleArticleTO {
 			return this;
 		}
 
-		public DisplaySingleArticleTO build() {
-			return new DisplaySingleArticleTO(this);
+		public ArticleDisplayTO build() {
+			return new ArticleDisplayTO(this);
 		}
 	}
 
-	private DisplaySingleArticleTO(Builder builder) {
+	private ArticleDisplayTO(Builder builder) {
 		link = builder.link;
 		title = builder.title;
 		content = builder.content;
@@ -108,7 +108,7 @@ public class DisplaySingleArticleTO {
 		mainMenu = builder.mainMenu;
 	}
 
-	public DisplaySingleArticleTO() {
+	public ArticleDisplayTO() {
 
 	}
 

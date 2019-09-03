@@ -6,13 +6,13 @@ import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.ArticleHistoryTO;
-import net.jewczuk.openbip.to.DisplaySingleArticleTO;
+import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.ArticleEditTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
 
 public interface ArticleService {
 	
-	DisplaySingleArticleTO getArticleByLink(String link);
+	ArticleDisplayTO getArticleByLink(String link);
 	
 	ArticleHistoryTO getHistoryByLink(String link);
 	
@@ -24,7 +24,7 @@ public interface ArticleService {
 	
 	List<TreeBranchTO> getTree();
 
-	DisplaySingleArticleTO saveArticle(DisplaySingleArticleTO article, Long editorID)
+	ArticleDisplayTO saveArticle(ArticleDisplayTO article, Long editorID)
 			throws BusinessException;
 	
 	ArticleEditTO getArticleByLinkToEdit(String link);
@@ -37,22 +37,22 @@ public interface ArticleService {
 	ArticleLinkTO managePinningToMainMenu(String link, Long editorID, boolean status) 
 			throws BusinessException;
 
-	DisplaySingleArticleTO editContent(DisplaySingleArticleTO article, Long editorID) 
+	ArticleDisplayTO editContent(ArticleDisplayTO article, Long editorID) 
 			throws BusinessException;
 
-	DisplaySingleArticleTO managePinningChildren(String parent, String child, Long editorID, boolean status) 
+	ArticleDisplayTO managePinningChildren(String parent, String child, Long editorID, boolean status) 
 			throws BusinessException;
 	
-	DisplaySingleArticleTO addAttachment(String link, AttachmentTO attachment, Long editorID) 
+	ArticleDisplayTO addAttachment(String link, AttachmentTO attachment, Long editorID) 
 			throws BusinessException;
 
-	DisplaySingleArticleTO deleteAttachment(String link, String fileName, Long editorID) 
+	ArticleDisplayTO deleteAttachment(String link, String fileName, Long editorID) 
 			throws BusinessException;
 
-	DisplaySingleArticleTO saveChildrenPositions(String link, String[] children, Long editorID) 
+	ArticleDisplayTO saveChildrenPositions(String link, String[] children, Long editorID) 
 			throws BusinessException;
 
-	DisplaySingleArticleTO saveAttachmentsPositions(String link, String[] attachments, Long editorID)
+	ArticleDisplayTO saveAttachmentsPositions(String link, String[] attachments, Long editorID)
 			throws BusinessException;
 
 	List<ArticleLinkTO> saveMenuPositions(String[] links, Long editorID) 
