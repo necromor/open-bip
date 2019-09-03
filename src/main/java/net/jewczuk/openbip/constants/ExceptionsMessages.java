@@ -29,5 +29,6 @@ public class ExceptionsMessages {
 	public static final String NOT_IN_MAIN_MENU = "Artykuł nie jest przypisany do głównego menu";
 	public static final String INVALID_MAIN_MENU_SIZE = "Wystąpiła rozbieżność między ilością podanych linków "
 														+ "a ilością artykułów przypisanych do głównego menu";
+	public static final String ARTICLE_NOT_READY_TO_BE_DELETED = "Artykuł nie jest gotowy do usunięcia";
 	
 }

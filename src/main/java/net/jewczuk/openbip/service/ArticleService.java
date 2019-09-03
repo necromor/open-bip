@@ -57,5 +57,8 @@ public interface ArticleService {
 
 	List<ArticleLinkTO> saveMenuPositions(String[] links, Long editorID) 
 			throws BusinessException;
+
+	void deleteArticle(String link, Long editorID) 
+			throws BusinessException;
 	
 }

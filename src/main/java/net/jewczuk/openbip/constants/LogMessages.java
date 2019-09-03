@@ -22,5 +22,4 @@ public class LogMessages {
 	public static final String SANDBOX_EDITED = "Zmiana treści brudnopisu: ";
 	public static final String MAIN_MENU_POSITIONS = "Zmiana kolejności wyświetlania głównego menu";
 	
-	
 }

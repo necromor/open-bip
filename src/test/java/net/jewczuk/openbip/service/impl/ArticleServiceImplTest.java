@@ -654,5 +654,51 @@ public class ArticleServiceImplTest {
 		articleService.saveMenuPositions(newPositions, editorID);
 	}
 	
+	@Test
+	public void shouldDeleteArticle() throws BusinessException {
+		Long editorID = 2L;
+		String link = TestConstants.CHILD_2_1_LINK;
+		List<ArticleLinkTO> allBefore = articleService.getAllArticles();
+		
+		articleService.deleteArticle(link, editorID);
+		DisplaySingleArticleTO parent = articleService.getArticleByLink(TestConstants.CHILD_2_LINK);
+		List<ArticleLinkTO> allAfter = articleService.getAllArticles();
+		
+		assertThat(allAfter.size() - allBefore.size()).isEqualTo(-1);
+		assertThat(parent.getChildren()).isEmpty();
+		excE.expect(ResourceNotFoundException.class);
+		articleService.getArticleByLink(link);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenArticleHasChildren() throws BusinessException {
+		Long editorID = 2L;
+		String link = TestConstants.CHILD_2_LINK;
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.ARTICLE_NOT_READY_TO_BE_DELETED);
+		articleService.deleteArticle(link, editorID);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenArticleHasAttachments() throws BusinessException {
+		Long editorID = 2L;
+		String link = TestConstants.NO_CHILDREN_LINK;
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.ARTICLE_NOT_READY_TO_BE_DELETED);
+		articleService.deleteArticle(link, editorID);
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenArticleAssignedToMainMenu() throws BusinessException {
+		Long editorID = 2L;
+		String link = TestConstants.MAIN_PAGE_LINK;
+		
+		excE.expect(ArticleException.class);
+		excE.expectMessage(ExceptionsMessages.ARTICLE_NOT_READY_TO_BE_DELETED);
+		articleService.deleteArticle(link, editorID);
+	}
+	
 }
  

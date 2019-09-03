@@ -229,7 +229,7 @@ public class ArticleServiceImpl implements ArticleService {
 		List<String> fileNames = TransformUtils.crateListFromArray(attachments);
 		ArticleEntity article = articleRepository.saveAttachmentsPositions(link, fileNames);
 		
-		String logMessage = LogMessages.ARTICLE_ATTACHMENTS_POSITIONS + article.getTitle() ;
+		String logMessage = LogMessages.ARTICLE_ATTACHMENTS_POSITIONS + article.getTitle();
 		historyService.createLogEntry(logMessage, editorID);	
 		
 		return articleMapper.mapToDisplaySingleArticle(article);
@@ -245,6 +245,21 @@ public class ArticleServiceImpl implements ArticleService {
 		return newMainMenu.stream()
 				.map(a -> articleMapper.mapToLink(a))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional
+	public void deleteArticle(String link, Long editorID) throws BusinessException {
+		
+		if (articleRepository.isReadyToBeDeleted(link)) {
+			ArticleEntity article = articleRepository.getArticleByLink(link);
+			articleRepository.delete(article);
+			
+			String logMessage = LogMessages.ARTICLE_DELETED + article.getTitle();
+			historyService.createLogEntry(logMessage, editorID);			
+		} else {
+			throw new ArticleException(ExceptionsMessages.ARTICLE_NOT_READY_TO_BE_DELETED);	
+		}
 	}
 
 }
