@@ -29,7 +29,7 @@ import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.AttachmentTO;
-import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
+import net.jewczuk.openbip.to.ArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.EditArticleTO;
 import net.jewczuk.openbip.to.HistoryTO;
@@ -118,7 +118,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldReturnHistoryWhenThereWereNoChangesInContentOrAttachments() {
-		DisplayArticleHistoryTO history = articleService.getHistoryByLink(TestConstants.CHILD_2_LINK);
+		ArticleHistoryTO history = articleService.getHistoryByLink(TestConstants.CHILD_2_LINK);
 		
 		assertThat(history.getAttachmentsHistory()).isEmpty();
 		assertThat(history.getContentHistory().size()).isEqualTo(1);
@@ -129,7 +129,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldReturnSortedHistory() {
-		DisplayArticleHistoryTO history = articleService.getHistoryByLink(TestConstants.CHILD_1_LINK);
+		ArticleHistoryTO history = articleService.getHistoryByLink(TestConstants.CHILD_1_LINK);
 		List<String> contentList = history.getContentHistory().stream()
 				.map(ch -> ch.getContent())
 				.collect(Collectors.toList());
@@ -140,7 +140,7 @@ public class ArticleServiceImplTest {
 	
 	@Test
 	public void shouldReturnSortedAttachmentsHistory() {
-		DisplayArticleHistoryTO history = articleService.getHistoryByLink(TestConstants.NO_CHILDREN_LINK);
+		ArticleHistoryTO history = articleService.getHistoryByLink(TestConstants.NO_CHILDREN_LINK);
 		
 		assertThat(history.getAttachmentsHistory().size()).isEqualTo(5);
 		assertThat(history.getAttachmentsHistory().get(0).getCreatedBy()).isEqualTo(TestConstants.EDITOR_2);

@@ -12,7 +12,7 @@ import net.jewczuk.openbip.entity.AttachmentEntity;
 import net.jewczuk.openbip.entity.AttachmentHistoryEntity;
 import net.jewczuk.openbip.entity.ContentHistoryEntity;
 import net.jewczuk.openbip.to.ArticleLinkTO;
-import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
+import net.jewczuk.openbip.to.ArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.EditArticleTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
@@ -58,8 +58,8 @@ public class ArticleMapper {
 		return saTO;
 	}
 	
-	public DisplayArticleHistoryTO mapToHistory(ArticleEntity article) {		
-		return new DisplayArticleHistoryTO.Builder()
+	public ArticleHistoryTO mapToHistory(ArticleEntity article) {		
+		return new ArticleHistoryTO.Builder()
 				.title(article.getTitle())
 				.link(article.getLink())
 				.contentHistory(article.getContentHistory().stream()

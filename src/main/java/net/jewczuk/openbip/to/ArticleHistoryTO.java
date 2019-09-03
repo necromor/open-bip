@@ -2,7 +2,7 @@ package net.jewczuk.openbip.to;
 
 import java.util.List;
 
-public class DisplayArticleHistoryTO {
+public class ArticleHistoryTO {
 
 	private String link;
 	private String title;
@@ -39,19 +39,19 @@ public class DisplayArticleHistoryTO {
 			return this;
 		}
 
-		public DisplayArticleHistoryTO build() {
-			return new DisplayArticleHistoryTO(this);
+		public ArticleHistoryTO build() {
+			return new ArticleHistoryTO(this);
 		}
 	}
 
-	private DisplayArticleHistoryTO(Builder builder) {
+	private ArticleHistoryTO(Builder builder) {
 		link = builder.link;
 		title = builder.title;
 		contentHistory = builder.contentHistory;
 		attachmentsHistory = builder.attachmentsHistory;
 	}
 
-	public DisplayArticleHistoryTO() {
+	public ArticleHistoryTO() {
 
 	}
 

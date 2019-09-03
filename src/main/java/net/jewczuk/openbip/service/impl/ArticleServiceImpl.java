@@ -23,7 +23,7 @@ import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.AttachmentTO;
-import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
+import net.jewczuk.openbip.to.ArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.EditArticleTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
@@ -57,7 +57,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public DisplayArticleHistoryTO getHistoryByLink(String link) {
+	public ArticleHistoryTO getHistoryByLink(String link) {
 		return articleMapper.mapToHistory(articleRepository.getArticleByLink(link));
 	}
 

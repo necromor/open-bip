@@ -16,7 +16,7 @@ import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.EditorService;
 import net.jewczuk.openbip.to.ArticleLinkTO;
-import net.jewczuk.openbip.to.DisplayArticleHistoryTO;
+import net.jewczuk.openbip.to.ArticleHistoryTO;
 import net.jewczuk.openbip.to.DisplaySingleArticleTO;
 import net.jewczuk.openbip.to.RedactorTO;
 
@@ -62,7 +62,7 @@ public class ArticleController {
 
 		String template = ViewNames.SHOW_HISTORY;
 		try {
-			DisplayArticleHistoryTO history = articleService.getHistoryByLink(link);
+			ArticleHistoryTO history = articleService.getHistoryByLink(link);
 			List<ArticleLinkTO> menu = articleService.getMainMenu();
 			model.addAttribute("history", history);
 			model.addAttribute("mainMenu", menu);
