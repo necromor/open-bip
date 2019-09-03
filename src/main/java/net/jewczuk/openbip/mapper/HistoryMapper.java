@@ -9,7 +9,7 @@ import net.jewczuk.openbip.to.HistoryTO;
 @Component
 public class HistoryMapper {
 
-	public HistoryTO map2TO(HistoryEntity entity) {
+	public HistoryTO mapToTO(HistoryEntity entity) {
 		return new HistoryTO.Builder()
 				.action(entity.getAction())
 				.createdBy(entity.getEditor().getFullName())
@@ -17,7 +17,7 @@ public class HistoryMapper {
 				.build();
 	}
 	
-	public HistoryEntity map2NewHE(HistoryTO hto, EditorEntity editor) {
+	public HistoryEntity mapToNewEntity(HistoryTO hto, EditorEntity editor) {
 		HistoryEntity entity = new HistoryEntity();
 		entity.setAction(hto.getAction());
 		entity.setEditor(editor);

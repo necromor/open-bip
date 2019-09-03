@@ -9,7 +9,7 @@ import net.jewczuk.openbip.to.RedactorTO;
 public class EditorMapper {
 
 	
-	public RedactorTO map2TO(EditorEntity editor) {
+	public RedactorTO mapToTO(EditorEntity editor) {
 		return new RedactorTO.Builder()
 				.firstName(editor.getFirstName())
 				.lastName(editor.getLastName())

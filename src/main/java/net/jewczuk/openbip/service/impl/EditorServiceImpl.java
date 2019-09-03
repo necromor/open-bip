@@ -25,7 +25,7 @@ public class EditorServiceImpl implements EditorService {
 	public List<RedactorTO> getAllRedactors() {
 		return editorRepository.findAll().stream()
 				.filter(e -> e.getRole().equals("EDITOR"))
-				.map(e -> editorMapper.map2TO(e))
+				.map(e -> editorMapper.mapToTO(e))
 				.sorted(Comparator.comparing(RedactorTO::getLastName))
 				.collect(Collectors.toList());
 	}

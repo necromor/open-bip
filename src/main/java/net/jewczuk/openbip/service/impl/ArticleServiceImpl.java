@@ -89,7 +89,7 @@ public class ArticleServiceImpl implements ArticleService {
 		
 		try {
 			articleValidator.validateAddArticle(article);
-			entity = articleRepository.save(articleMapper.map2NewAE(article));
+			entity = articleRepository.save(articleMapper.mapToNewEntity(article));
 			historyService.createLogEntry(LogMessages.ARTICLE_ADDED + article.getTitle(), editorID);
 		} catch (BusinessException be) {
 			throw new ArticleException(be.getMessage());
@@ -128,7 +128,7 @@ public class ArticleServiceImpl implements ArticleService {
 			throw new ArticleException(ExceptionsMessages.LINK_EXISTS);
 		}
 		
-		return articleMapper.map2Edit(entity);
+		return articleMapper.mapToEdit(entity);
 	}
 
 	@Override

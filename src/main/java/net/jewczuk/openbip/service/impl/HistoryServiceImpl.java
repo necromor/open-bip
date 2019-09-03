@@ -31,7 +31,7 @@ public class HistoryServiceImpl implements HistoryService {
 	@Override
 	public List<HistoryTO> getAllLogEntriesByEditor(Long editorID) {
 		return historyRepository.getAllLogEntriesByEditor(editorID).stream()
-				.map(he -> historyMapper.map2TO(he))
+				.map(he -> historyMapper.mapToTO(he))
 				.collect(Collectors.toList());
 	}
 
@@ -44,9 +44,9 @@ public class HistoryServiceImpl implements HistoryService {
 	private HistoryTO saveLogEntry(HistoryTO entry, Long editorID) throws BusinessException {	
 		EditorEntity editor = editorRepository.getEditorById(editorID);
 
-		HistoryEntity savedEntity = historyRepository.save(historyMapper.map2NewHE(entry, editor));
+		HistoryEntity savedEntity = historyRepository.save(historyMapper.mapToNewEntity(entry, editor));
 		
-		return historyMapper.map2TO(savedEntity);		
+		return historyMapper.mapToTO(savedEntity);		
 	}
 
 }

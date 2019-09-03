@@ -77,7 +77,7 @@ public class ArticleMapper {
 		return new ArticleLinkTO(article.getLink(), article.getTitle());
 	}
 	
-	public ArticleEntity map2NewAE(ArticleDisplayTO aTO) {
+	public ArticleEntity mapToNewEntity(ArticleDisplayTO aTO) {
 		ArticleEntity entity = new ArticleEntity();
 		entity.setTitle(aTO.getTitle());
 		entity.setLink(aTO.getLink());
@@ -85,7 +85,7 @@ public class ArticleMapper {
 		return entity;
 	}
 	
-	public ArticleEditTO map2Edit(ArticleEntity article) {
+	public ArticleEditTO mapToEdit(ArticleEntity article) {
 		return new ArticleEditTO.Builder()
 				.link(article.getLink())
 				.title(article.getTitle())

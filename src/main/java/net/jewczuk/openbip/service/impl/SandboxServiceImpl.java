@@ -43,7 +43,7 @@ public class SandboxServiceImpl implements SandboxService {
 	@Override
 	public List<SandboxTO> getSandboxesByEditorId(Long editorID) {
 		return sandboxRepository.findAllByEditorId(editorID).stream()
-				.map(e -> sandboxMapper.map2TO(e))
+				.map(e -> sandboxMapper.mapToTO(e))
 				.collect(Collectors.toList());
 	}
 
@@ -53,12 +53,12 @@ public class SandboxServiceImpl implements SandboxService {
 		
 		sandboxValidator.validateSandbox(sandbox);
 		EditorEntity editor = editorRepository.getEditorById(editorID);
-		SandboxEntity newE = sandboxMapper.map2NewE(sandbox, editor);
+		SandboxEntity newE = sandboxMapper.mapToNewEntity(sandbox, editor);
 		
 		SandboxEntity saved = sandboxRepository.save(newE);
 		historyService.createLogEntry(LogMessages.SANDBOX_ADDED + saved.getTitle(), editorID);
 		
-		return sandboxMapper.map2TO(saved);
+		return sandboxMapper.mapToTO(saved);
 	}
 	
 	@Override
@@ -68,19 +68,19 @@ public class SandboxServiceImpl implements SandboxService {
 		sandboxValidator.validateSandbox(sandbox);
 		SandboxEntity existing = sandboxRepository.findByLink(sandbox.getLink());
 		checkIfExist(existing);
-		SandboxEntity newE = sandboxMapper.map2Existing(sandbox, existing);
+		SandboxEntity newE = sandboxMapper.mapToExistingEntity(sandbox, existing);
 		
 		SandboxEntity saved = sandboxRepository.save(newE);
 		historyService.createLogEntry(LogMessages.SANDBOX_EDITED + saved.getTitle(), editorID);
 		
-		return sandboxMapper.map2TO(saved);
+		return sandboxMapper.mapToTO(saved);
 	}
 
 	@Override
 	public SandboxTO getSandboxByLink(String link) throws BusinessException {
 		SandboxEntity entity = sandboxRepository.findByLink(link);
 		checkIfExist(entity);
-		return sandboxMapper.map2TO(entity);
+		return sandboxMapper.mapToTO(entity);
 	}
 	
 	private void checkIfExist(SandboxEntity entity) throws BusinessException {
