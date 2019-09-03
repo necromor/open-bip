@@ -23,7 +23,7 @@ public class PanelDeleteController {
 	private UploadService uploadService;
 	
 	@GetMapping("/zalacznik/{fileName}/{link}")
-	public String showFormAddAttachment(@PathVariable String link, 
+	public String removeAttachment(@PathVariable String link, 
 										@PathVariable String fileName,
 										RedirectAttributes attributes) {
 		try {
@@ -33,8 +33,21 @@ public class PanelDeleteController {
 			attributes.addFlashAttribute("articleSuccess", UIMessages.ARTICLE_ATTACHMENT_DELETE_SUCCESS);
 			return "redirect:/panel/zarzadzaj/" + link;	
 		} catch (BusinessException e) {
-			e.printStackTrace();
 			attributes.addFlashAttribute("articleFailure", UIMessages.ARTICLE_ATTACHMENT_DELETE_FAILURE);
+			return "redirect:/panel/zarzadzaj/" + link;	
+		}
+	}
+	
+	@GetMapping("/artykul/{link}")
+	public String removeArticle(@PathVariable String link,
+									RedirectAttributes attributes) {
+		try {
+			Long editorID = 1L;
+			articleService.deleteArticle(link, editorID);
+			attributes.addFlashAttribute("articleSuccess", UIMessages.ARTICLE_DELETE_SUCCESS);
+			return "redirect:/panel/lista-artykulow";	
+		} catch (BusinessException e) {
+			attributes.addFlashAttribute("articleFailure", UIMessages.ARTICLE_DELETE_FAILURE);
 			return "redirect:/panel/zarzadzaj/" + link;	
 		}
 	}

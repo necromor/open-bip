@@ -24,4 +24,6 @@ public class UIMessages {
 	public static final String POSITIONS_ATTACHMENTS_FAILURE = "Wystąpił błąd podczas zapisywania zmiany kolejności załączników";
 	public static final String POSITIONS_MAIN_MENU_SUCCESS = "Zmiana kolejności menu została zapisana";
 	public static final String POSITIONS_MAIN_MENU_FAILURE = "Wystąpił błąd podczas zapisywania zmiany kolejności menu";
+	public static final Object ARTICLE_DELETE_SUCCESS = "Artykuł usunięty pomyślnie";
+	public static final Object ARTICLE_DELETE_FAILURE = "Wystąpił błąd podczas usuwania artykułu";
 }

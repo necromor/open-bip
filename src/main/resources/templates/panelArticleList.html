@@ -10,6 +10,8 @@
 
 <h2>Lista wszystkich artykułów</h2>
 
+	<p class="alert alert-success text-center col-md-10 offset-md-1" th:if="${articleSuccess}" th:text="${articleSuccess}"></p>
+
 	<p class="button-middle"><a href="/panel/dodaj/artykul" title="Dodaj nowy artykuł" class="btn btn-success">Dodaj nowy artykuł</a></p>
 
 	<ol class="link-list">

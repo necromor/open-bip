@@ -69,11 +69,12 @@
 		<p>Usunięcie artykułu jest możliwe tylko gdy artykuł:</p>
 		<ul>
 			<li>nie jest przypisany do menu głównego lub innego artykułu oraz</li>
-			<li>nie ma przypisanych dzieci</li>
+			<li>nie ma przypisanych dzieci oraz</li>
+			<li>nie ma przypisanych załączników</li>
 		</ul>
 	</section>
 	<p class="alert alert-danger">Usunięcie artykułu jest nieodwracalne i powoduje również usunięcie całej jego historii!</p>
-	<p class="button-middle"><a href="#" title="Usuń artykuł" class="btn btn-danger">Usuń artykuł</a></p>
+	<p class="button-middle"><a th:href="@{'/panel/usun/artykul/' + ${article.link}}" title="Usuń artykuł" class="btn btn-danger">Usuń artykuł</a></p>
 
 </article>
 
