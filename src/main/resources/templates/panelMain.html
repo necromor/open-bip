@@ -23,9 +23,8 @@ Lista nie zawiera artykułu tworzonego automatycznie czyli <em>Redakcja BIP</em>
 	<p class="alert fade text-center" role="alert" id="ajax-main-menu-message"></p>
 
 	<ol class="link-list sortable-list" id="main-menu-elements">
-		<li class="link-list-element sortable-element" th:each="article : ${mainMenuArticles}" title="Przeciągnij i upuść aby zmienić kolejność wyświetlania">
-			<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" 
-				class="link-list-element-link" title="Zarządzaj artykułem"></a>
+		<li class="link-list-element sortable-element" th:each="article : ${mainMenuArticles}" th:title="#{title.sortable}">
+			<th:block th:replace="fragments/panel_article_manage_link :: sortable (${article})"/>
 			<a th:href="@{'/panel/odepnij/' +${article.link}}" title="Odepnij artykuł z głównego menu" 
 				class="badge badge-info delete-button">odepnij</a>
 		</li>

@@ -12,16 +12,15 @@
 
 	<p class="alert alert-success text-center col-md-10 offset-md-1" th:if="${articleSuccess}" th:text="${articleSuccess}"></p>
 
-	<p class="button-middle"><a href="/panel/dodaj/artykul" title="Dodaj nowy artykuł" class="btn btn-success">Dodaj nowy artykuł</a></p>
+	<th:block th:replace="fragments/panel_buttons :: article_add"/>
 
 	<ol class="link-list">
 		<li class="link-list-element" th:each="article : ${allArticles}">
-		<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" 
-			title="Zarządzaj artykułem" class="link-list-element-link"></a>
+			<th:block th:replace="fragments/panel_article_manage_link :: nonsortable (${article})"/>
 		</li>
 	</ol>
 
-	<p class="button-middle"><a href="/panel/dodaj/artykul" title="Dodaj nowy artykuł" class="btn btn-success">Dodaj nowy artykuł</a></p>
+	<th:block th:replace="fragments/panel_buttons :: article_add"/>
 
 </article>
 

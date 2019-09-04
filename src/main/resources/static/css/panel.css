@@ -109,23 +109,21 @@ fieldset legend {
 	font-size: 1.2em;
 }
 
-article .tree {
-	list-style: none;
-}
-
-article .tree-branch {
+article .tree-list-element {
 	margin: 0.3em 0;
 	position: relative;
 }
 
-article .tree-branch > .tree {
+article .tree-list-element > .link-list {
 	margin-top: 0.5em;
 }
 
-article .tree-branch a {
-	padding: 0.5em 1em;
+article .tree-link {
+	margin: 1.2em 0;
+	padding: 0.5em 0.8em;
+	background-color: #e9ecef;
+	border-radius: 0.3rem;
 	display: block;
-	border-bottom: 1px dotted gray;
 }
 
 article .link-list {

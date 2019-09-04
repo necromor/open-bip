@@ -10,17 +10,18 @@
 
 <h2>Lista wszystkich artykułów w formacie drzewa</h2>
 
-	<p class="button-middle"><a href="/panel/dodaj/artykul" title="Dodaj nowy artykuł" class="btn btn-success">Dodaj nowy artykuł</a></p>
+	<th:block th:replace="fragments/panel_buttons :: article_add"/>
 
-    <ul th:fragment="category" class="tree">
-        <li class="tree-branch" th:each="branch : ${branches}">
-            <a th:href="@{'/panel/zarzadzaj/' +${branch.link}}" th:text="${branch.title}" 
-            	title="Zarządzaj artykułem" class="alert alert-link alert-secondary"></a>
-            <ul class="tree" th:include="this :: category" th:with="branches=${branch.children}" th:if="${branch.children.size() > 0}"></ul>
+    <ul th:fragment="category" class="link-list">
+        <li class="tree-list-element" th:each="branch : ${branches}">
+<!--             <a th:href="@{'/panel/zarzadzaj/' +${branch.link}}" th:text="${branch.title}" 
+            	th:title="#{title.manage.article}" class="alert alert-link alert-secondary"></a> -->
+            <th:block th:replace="fragments/panel_article_manage_link :: tree (${branch})"/>
+            <ul class="link-list" th:include="this :: category" th:with="branches=${branch.children}" th:if="${branch.children.size() > 0}"></ul>
         </li>
     </ul>
 
-	<p class="button-middle"><a href="/panel/dodaj/artykul" title="Dodaj nowy artykuł" class="btn btn-success">Dodaj nowy artykuł</a></p>
+	<th:block th:replace="fragments/panel_buttons :: article_add"/>
 
 </article>
 

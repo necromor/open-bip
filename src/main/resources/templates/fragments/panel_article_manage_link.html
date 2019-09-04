@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+	<th:block th:fragment="sortable (article)">
+		<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" 
+			class="link-list-element-link" th:title="#{title.manage.article}"></a>
+	</th:block>
+	
+	<th:block th:fragment="nonsortable (article)">
+		<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" 
+			class="link-list-element-link d-block" th:title="#{title.manage.article}"></a>
+	</th:block>
+	
+	<th:block th:fragment="tree (article)">
+		<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" 
+			class="tree-link link-list-element-link" th:title="#{title.manage.article}"></a>
+	</th:block>
+	
+</body>
+</html>
+
