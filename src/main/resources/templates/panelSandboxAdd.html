@@ -34,7 +34,9 @@
 			<textarea class="form-control col-md-12" th:field="*{content}" id="content" rows="10"></textarea>
 		</div>		
 		
-		<p class="button-middle"><button type="submit" class="btn btn-primary">Dodaj brudnopis</button></p>
+		<p class="button-middle">
+		<button type="submit" class="btn btn-primary" th:title="#{title.add.sandbox}" th:text="#{button.add.sandbox}"></button>
+		</p>
 	</fieldset>
 </form>
 

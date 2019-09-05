@@ -20,14 +20,18 @@
 	<ol class="list-group">
 		<li class="list-group-item article-list-element" th:each="sandbox : ${sandboxes}">	
 		<div class="btn-group" role="group" aria-label="Operacje na brudnopisie">
-			<a th:href="@{'/panel/edytuj/brudnopis/' + ${sandbox.link}}" class="btn btn-info" title="Zmień treść brudnopisu">Edytuj</a>
-			<a th:href="@{'/panel/usun/brudnopis/' + ${sandbox.link}}" class="btn btn-danger" title="Usuń brudnopis">Usuń</a>
+			<a th:href="@{'/panel/edytuj/brudnopis/' + ${sandbox.link}}" class="btn btn-info" 
+				th:title="#{title.edit.sandbox}" th:text="#{button.edit}"></a>
+			<a th:href="@{'/panel/usun/brudnopis/' + ${sandbox.link}}" class="btn btn-danger" 
+				th:title="#{title.remove.sandbox}" th:text="#{button.remove}"></a>
 		</div>
 		<span th:text="${sandbox.title}" th:remove="tag"></span>
 		</li>
 	</ol>
 
-	<p class="button-middle"><a href="/panel/dodaj/brudnopis" title="Dodaj nowy brudnopis" class="btn btn-success">Dodaj nowy brudnopis</a></p>
+	<p class="button-middle">
+	<a href="/panel/dodaj/brudnopis" th:title="#{title.add.sandbox}" class="btn btn-success" th:text="#{button.add.sandbox}"></a>
+	</p>
 
 <h3>Co to jest brudnopis?</h3>
 	<p>Brudnopis posiada tylko jedną wersję treści. Wszelkie zmiany nie są rejestrowane.</p>

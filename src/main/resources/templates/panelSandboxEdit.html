@@ -11,7 +11,8 @@
 <h2>Edytuj treść brudnopisu</h2>
 
 <section class="article-info">
-	<p>Wciśnięcie guzika <strong>Zapisz</strong> spowoduje zapisanie aktualnej treści, ale nie spowoduje opuszczenia strony.</p>
+	<p>Wciśnięcie guzika <strong th:text="#{button.save}"></strong> spowoduje jedynie zapisanie aktualnej treści.</p>
+	<p>Wciśnięcie guzika <strong th:text="#{button.saveandquit}"></strong> spowoduje zapisanie aktualnej treści i powrót do listy Twoich brudnopisów.</p>
 </section>
 
 <p class="alert fade text-center" role="alert" id="ajax-message"></p>
@@ -37,8 +38,8 @@
 		<input type="hidden" id="sandboxLink" th:field="*{link}">	
 		
 		<div class="group-middle">
-			<button type="button" class="btn btn-success" id="sandboxSaveButton">Zapisz zmiany</button>
-			<button type="submit" class="btn btn-primary">Zapisz i wyjdź</button>
+			<button type="button" class="btn btn-success" id="sandboxSaveButton" th:title="#{title.save.sandbox}" th:text="#{button.save}"></button>
+			<button type="submit" class="btn btn-primary" th:title="#{title.saveandquit.sandbox}" th:text="#{button.saveandquit}"></button>
 		</div>
 	</fieldset>
 </form>
