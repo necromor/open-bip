@@ -25,12 +25,14 @@ Lista nie zawiera artykułu tworzonego automatycznie czyli <em>Redakcja BIP</em>
 	<ol class="link-list sortable-list" id="main-menu-elements">
 		<li class="link-list-element sortable-element" th:each="article : ${mainMenuArticles}" th:title="#{title.sortable}">
 			<th:block th:replace="fragments/panel_article_manage_link :: sortable (${article})"/>
-			<a th:href="@{'/panel/odepnij/' +${article.link}}" title="Odepnij artykuł z głównego menu" 
-				class="badge badge-info delete-button">odepnij</a>
+			<a th:href="@{'/panel/odepnij/' +${article.link}}" th:title="#{title.unpin.mainmenu}" 
+				class="badge badge-info delete-button" th:text="#{button.remove.mainmenu}">odepnij</a>
 		</li>
 	</ol>
 	
-	<p class="button-middle"><a th:href="@{/panel/przypnij}" title="Dopisz artykuł do menu głównego" class="btn btn-success">Dopisz artykuł do menu głównego</a></p>
+	<p class="button-middle">
+		<a th:href="@{/panel/przypnij}" th:title="#{title.pin.mainmenu}" th:text="#{button.add.mainmenu}" class="btn btn-success"></a>
+	</p>
 	
 </article>
 
