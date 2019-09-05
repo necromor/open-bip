@@ -16,53 +16,63 @@
 </div>
 
 <h3>Informacje podstawowe</h3>
-<div class="row">
-	<p class="col-md-12">Przypisany do menu głównego: <span class="badge badge-primary" th:text="${article.mainMenu} ? 'TAK' : 'NIE'"></span></p>
-	<p class="col-md-6">Utworzony dnia: <span class="badge badge-dark" th:text="${#temporals.format(article.createdAt, 'dd-MM-yyyy HH:mm')}"></span></p>
-	<p class="col-md-6">Ostatnia edycja dnia: <span class="badge badge-dark" th:text="${#temporals.format(article.editedAt, 'dd-MM-yyyy HH:mm')}"></span></p>
-	<p class="col-md-6">Utworzony przez: <span class="badge badge-dark" th:text="${article.createdBy}"></span></p>
-	<p class="col-md-6">Ostatnia edycja przez: <span class="badge badge-dark" th:text="${article.editedBy}"></span></p>
-</div>
-<p class="button-middle"><a th:href="@{'/panel/edytuj/tytul/' +${article.link}}" title="Zmień tytuł artykułu" class="btn btn-success">Zmień tytuł artykułu</a></p>
+	<div class="row">
+		<p class="col-md-12">Przypisany do menu głównego: <span class="badge badge-primary" th:text="${article.mainMenu} ? 'TAK' : 'NIE'"></span></p>
+		<p class="col-md-6">Utworzony dnia: <span class="badge badge-dark" th:text="${#temporals.format(article.createdAt, 'dd-MM-yyyy HH:mm')}"></span></p>
+		<p class="col-md-6">Ostatnia edycja dnia: <span class="badge badge-dark" th:text="${#temporals.format(article.editedAt, 'dd-MM-yyyy HH:mm')}"></span></p>
+		<p class="col-md-6">Utworzony przez: <span class="badge badge-dark" th:text="${article.createdBy}"></span></p>
+		<p class="col-md-6">Ostatnia edycja przez: <span class="badge badge-dark" th:text="${article.editedBy}"></span></p>
+	</div>
+	<p class="button-middle">
+	<a th:href="@{'/panel/edytuj/tytul/' +${article.link}}" class="btn btn-success" 
+		th:title="#{title.edit.article.title}" th:text="#{button.edit.article.title}"></a>
+	</p>
 
 <h3>Treść artykułu</h3>
 	<div class="article-content" th:utext="${article.content}"></div>
-	<p class="button-middle"><a th:href="@{'/panel/edytuj/tresc/' + ${article.link}}" title="Zmień treść artykułu" class="btn btn-success">Zmień treść</a></p>
+	<p class="button-middle">
+	<a th:href="@{'/panel/edytuj/tresc/' + ${article.link}}" class="btn btn-success" 
+		th:title="#{title.edit.article.content}" th:text="#{button.edit.article.content}"></a>
+	</p>
 
-<h3>Artykuły przypisane</h3>
-	<p class="article-info">Przeciągnij artykuły aby zmienić ich kolejność wyświetlania.</p>
-	<p th:unless="${article.children.size() != 0}">Do artułu nie przypisano żadnych innych artykułów.</p>
+<h3>Artykuły przypięte</h3>
+	<p class="article-info" th:text="#{title.sortable}"></p>
+	<p th:unless="${article.children.size() != 0}">Do artykułu nie przypięto żadnych artykułów.</p>
 	
 	<p class="alert fade text-center" role="alert" id="ajax-children-message"></p>
 	
 	<ol class="link-list sortable-list" th:id="${article.link + '#children'}">
-		<li class="link-list-element sortable-element" th:each="child : ${article.children}" title="Przeciągnij i upuść aby zmienić kolejność wyświetlania">
-		<a th:href="@{'/panel/zarzadzaj/' + ${child.link}}" th:text="${child.title}" 
-			class="link-list-element-link" title="Zarządzaj artykułem"></a>
+		<li class="link-list-element sortable-element" th:each="child : ${article.children}" th:title="#{title.sortable}">
+		<th:block th:replace="fragments/panel_article_manage_link :: sortable (${child})"/>
 		<a th:href="@{'/panel/odepnij-dziecko/' + ${article.link} + '/' + ${child.link}}" 
-			title="Usuń artykuł z listy" class="badge badge-danger delete-button">X</a>
+			th:title="#{title.unpin.child}" class="badge badge-danger delete-button" th:text="#{button.remove.symbol}"></a>
 		</li>
 	</ol>
 
-	<p class="button-middle"><a th:href="@{'/panel/przypnij-dziecko/' + ${article.link}}" title="Przypisz nowy artykuł" class="btn btn-success">Przypisz nowy artykuł</a></p>
+	<p class="button-middle">
+	<a th:href="@{'/panel/przypnij-dziecko/' + ${article.link}}" class="btn btn-success"
+		th:title="#{title.pin.child}" th:text="#{button.pin.child}"></a>
+	</p>
 
 <h3>Załączniki</h3>
-	<p class="article-info">Przeciągnij załączniki aby zmienić ich kolejność wyświetlania.</p>
-	<p th:unless="${article.attachments.size() != 0}">Do artułu nie przypisano żadnych załączników.</p>
+	<p class="article-info" th:text="#{title.sortable}"></p>
+	<p th:unless="${article.attachments.size() != 0}">Do artykułu nie przypisano żadnych załączników.</p>
 	
 	<p class="alert fade text-center" role="alert" id="ajax-attachments-message"></p>
 
 	<ol class="link-list sortable-list" th:id="${article.link + '#attachments'}">
-		<li class="link-list-element sortable-element" th:each="attachment : ${article.attachments}" title="Przeciągnij i upuść aby zmienić kolejność wyświetlania">
-			<a th:href="@{'/upload/' +${attachment.fileName}}" class="link-list-element-link" 
+		<li class="link-list-element sortable-element" th:each="attachment : ${article.attachments}" th:title="#{title.sortable}">
+			<a th:href="@{'/upload/' +${attachment.fileName}}" class="link-list-element-link" th:title="#{title.show.attachment}"
 			th:text="${attachment.displayName + ' [.' + attachment.extension + '; '
 				+ T(net.jewczuk.openbip.utils.DisplayUtils).formatSize(attachment.size) + ']'}" ></a>
 			<a th:href="@{'/panel/usun/zalacznik/' + ${attachment.fileName} + '/' + ${article.link}}" 
-				title="Usuń załącznik" class="badge badge-danger delete-button">X</a>
+				th:title="#{title.remove.attachment}" class="badge badge-danger delete-button" th:text="#{button.remove.symbol}"></a>
 		</li>
 	</ol>
 
-	<p class="button-middle"><a th:href="@{'/panel/dodaj/zalacznik/' + ${article.link}}" title="Dodaj nowy załącznik" class="btn btn-success">Dodaj nowy załącznik</a></p>
+	<p class="button-middle">
+	<a th:href="@{'/panel/dodaj/zalacznik/' + ${article.link}}" class="btn btn-success"
+		th:title="#{title.add.attachment}" th:text="#{button.add.attachment}"></a></p>
 	
 <h3>Usuń artykuł</h3>
 	<section class="article-info">
@@ -74,7 +84,10 @@
 		</ul>
 	</section>
 	<p class="alert alert-danger">Usunięcie artykułu jest nieodwracalne i powoduje również usunięcie całej jego historii!</p>
-	<p class="button-middle"><a th:href="@{'/panel/usun/artykul/' + ${article.link}}" title="Usuń artykuł" class="btn btn-danger">Usuń artykuł</a></p>
+	<p class="button-middle">
+	<a th:href="@{'/panel/usun/artykul/' + ${article.link}}" class="btn btn-danger"
+		th:title="#{title.remove.article}" th:text="#{button.remove.article}"></a>
+	</p>
 
 </article>
 

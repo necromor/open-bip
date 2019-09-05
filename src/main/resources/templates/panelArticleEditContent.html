@@ -24,7 +24,9 @@
 		
 		<input type="hidden" th:field="*{link}">
 		
-		<p class="button-middle"><button type="submit" class="btn btn-primary">Zapisz zmiany</button></p>
+		<p class="button-middle">
+		<button type="submit" class="btn btn-primary" th:title="#{title.edit.article.content}" th:text="#{button.edit.article.content}"></button>
+		</p>
 	</fieldset>
 </form>
 
