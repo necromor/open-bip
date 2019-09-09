@@ -16,3 +16,16 @@ $( function() {
 	    });
   $( ".sortable-list" ).disableSelection();
 } );
+
+$('#deleteAttachmentModal').on('show.bs.modal', function (event) {
+	const button = $(event.relatedTarget)
+	const displayName = button.data('name')
+	const articleLink = button.data('a-link')
+	const fileName = button.data('link')
+	const deleteLink = '/panel/usun/zalacznik/' + fileName + '/' + articleLink;
+	const displayData = displayName + ' [' + fileName + ']'
+		
+	const modal = $(this)
+	modal.find('.file-name').text(displayData)
+	modal.find('#att-delete-button').attr('href', deleteLink)
+})

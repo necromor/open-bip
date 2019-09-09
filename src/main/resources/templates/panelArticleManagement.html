@@ -66,9 +66,13 @@
 			th:text="${attachment.displayName + ' [.' + attachment.extension + '; '
 				+ T(net.jewczuk.openbip.utils.DisplayUtils).formatSize(attachment.size) + ']'}" ></a>
 			<a th:href="@{'/panel/usun/zalacznik/' + ${attachment.fileName} + '/' + ${article.link}}" 
+			 	data-toggle="modal" data-target="#deleteAttachmentModal" th:data-a-link="${article.link}"
+			 	th:data-name="${attachment.displayName}" th:data-link="${attachment.fileName}"
 				th:title="#{title.remove.attachment}" class="badge badge-danger delete-button" th:text="#{button.remove.symbol}"></a>
 		</li>
 	</ol>
+	
+	<th:block th:replace="fragments/panel_modals :: deleteAttachment"/>
 
 	<p class="button-middle">
 	<a th:href="@{'/panel/dodaj/zalacznik/' + ${article.link}}" class="btn btn-success"
