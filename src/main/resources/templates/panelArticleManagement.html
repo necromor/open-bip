@@ -83,11 +83,14 @@
 			<li>nie ma przypisanych załączników</li>
 		</ul>
 	</section>
-	<p class="alert alert-danger">Usunięcie artykułu jest nieodwracalne i powoduje również usunięcie całej jego historii!</p>
+	<p class="alert alert-danger" th:text="#{message.remove.article.info1}"></p>
 	<p class="button-middle">
-	<a th:href="@{'/panel/usun/artykul/' + ${article.link}}" class="btn btn-danger"
-		th:title="#{title.remove.article}" th:text="#{button.remove.article}"></a>
+	<a th:href="@{'/panel/usun/artykul/' + ${article.link}}" class="btn btn-danger" 
+			data-toggle="modal" data-target="#deleteArticleModal"
+			th:title="#{title.remove.article}" th:text="#{button.remove.article}"></a>
 	</p>
+	
+	<th:block th:replace="fragments/panel_modals :: deleteArticle (${article})"/>
 
 </article>
 
