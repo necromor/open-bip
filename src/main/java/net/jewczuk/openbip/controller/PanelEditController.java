@@ -1,5 +1,7 @@
 package net.jewczuk.openbip.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,8 +61,11 @@ public class PanelEditController {
 	
 	@GetMapping("/tresc/{link}")
 	public String showFormEditContent(@PathVariable String link, Model model) {
+		Long editorID = 1L;
 		ArticleDisplayTO article = articleService.getArticleByLink(link);
+		List<SandboxTO> sandboxes = sandboxService.getSandboxesByEditorId(editorID);
 		model.addAttribute("article", article);
+		model.addAttribute("sandboxes", sandboxes);
 
 		return ViewNames.ARTICLE_EDIT_CONTENT;
 	}

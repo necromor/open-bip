@@ -26,7 +26,7 @@ Lista nie zawiera artykułu tworzonego automatycznie czyli <em>Redakcja BIP</em>
 		<li class="link-list-element sortable-element" th:each="article : ${mainMenuArticles}" th:title="#{title.sortable}">
 			<th:block th:replace="fragments/panel_article_manage_link :: sortable (${article})"/>
 			<a th:href="@{'/panel/odepnij/' +${article.link}}" th:title="#{title.unpin.mainmenu}" 
-				class="badge badge-info delete-button" th:text="#{button.remove.mainmenu}">odepnij</a>
+				class="badge badge-info delete-button" th:text="#{button.remove.mainmenu}"></a>
 		</li>
 	</ol>
 	

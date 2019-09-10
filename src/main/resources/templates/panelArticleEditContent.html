@@ -26,9 +26,15 @@
 		
 		<p class="button-middle">
 		<button type="submit" class="btn btn-primary" th:title="#{title.edit.article.content}" th:text="#{button.edit.article.content}"></button>
+		<button type="button" class="btn btn-info" 
+			data-toggle="modal" data-target="#showSandboxListModal"
+			th:title="#{title.edit.article.sandbox}" th:text="#{button.edit.article.sandbox}">
+		</button>
 		</p>
 	</fieldset>
 </form>
+
+	<th:block th:replace="fragments/panel_modals :: showSandboxList (${sandboxes})"/>
 
 </article>
 
