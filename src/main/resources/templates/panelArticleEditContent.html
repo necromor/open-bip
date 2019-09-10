@@ -13,6 +13,8 @@
 <form th:action="@{'/panel/edytuj/tresc/' + ${article.link} + '.do'}" th:object="${article}" method="post">
 	<fieldset class="container">
 		
+		<p class="alert fade text-center" role="alert" id="ajax-sandbox-content-loaded"></p>
+		
 		<div class="form-group row" th:if="${error}">
 			<p class="alert alert-danger text-center col-md-10 offset-md-1" th:text="${error}"></p>
 		</div>

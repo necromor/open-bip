@@ -15,10 +15,18 @@ let panel_article = (function () {
 	const mainMenuMessage = document.getElementById('ajax-main-menu-message');
 	const showMessageTime = 3000;
 	
+	const sandboxContentMessage = document.getElementById('ajax-sandbox-content-loaded');
+	const insertContentButtons = document.getElementsByClassName("ajax-insert-content");
+	const sandboxGetContent = '/api/sandbox/';
+	
 	function registerCreateLinkEvent() {
 		if (titleField) {
 			titleField.addEventListener('keyup', showCreatedLink);
 		}
+
+		Array.from(insertContentButtons).forEach( (button) => {
+			button.addEventListener('click', insertSandboxContent);
+		});
 	}
 	
 	function showCreatedLink() {
@@ -45,9 +53,6 @@ let panel_article = (function () {
 	
 	function saveNewPositions(name, links) {
 		const link = returnLinkBasedOnName(name);
-/*		console.log(name);
-		console.log(link);
-		console.log(links);*/
 		
 		createAjax(link[0], links, link[1]);
 	}
@@ -104,6 +109,31 @@ let panel_article = (function () {
 				return [articleAttachmentsPositions + splitted[0], attachmentsMessage];
 			}
 		}
+	}
+	
+	function insertSandboxContent() {
+		const address = sandboxGetContent + this.id;
+		fetchSandboxContentAjax(address);
+	}
+	
+	function fetchSandboxContentAjax(address) {
+		$.ajax({
+			type : "GET",
+			contentType : "application/json",
+			url : address,
+			timeout : 100000,
+			success : function(result) {
+				showSandboxResult(result);				
+			},
+			error : function(e) {
+				showSandboxResult(result);
+			}
+		});
+	}
+	
+	function showSandboxResult(result) {
+		showResult(result, sandboxContentMessage);
+		console.log(result);
 	}
 	
 	
