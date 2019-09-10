@@ -70,7 +70,7 @@
 	        
 	        <ol class="link-list">
 				<li class="link-list-element" th:each="sandbox : ${sandboxes}">
-					<button type="button" class="ajax-insert-content btn btn-success" th:id="${sandbox.link}"
+					<button type="button" class="ajax-insert-content btn btn-success" th:id="${sandbox.link}" data-dismiss="modal"
 						th:text="#{button.edit.article.sandbox.insert}" th:title="#{title.edit.article.sandbox.insert}">
 					</button>
 					<span th:text="${sandbox.title}"></span>

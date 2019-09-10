@@ -2,22 +2,25 @@
 
 let panel_article = (function () {
 	
-	const titleField = document.getElementById('title');
-	const linkField = document.getElementById('link');
+	const showMessageTime = 3000;
+
 	const mainMenuSymbol = 'main-menu-elements';
 	const childrenSymbol = 'children';
 	const attachmentsSymbol = 'attachments';
-	const mainMenuPositions = '/api/article/main-menu-positions';
-	const articleChildrenPositions = '/api/article/children-positions/';
-	const articleAttachmentsPositions = '/api/article/attachments-positions/';
+
+	const titleField = document.getElementById('title');
+	const linkField = document.getElementById('link');
 	const childrenMessage = document.getElementById('ajax-children-message');
 	const attachmentsMessage = document.getElementById('ajax-attachments-message');
 	const mainMenuMessage = document.getElementById('ajax-main-menu-message');
-	const showMessageTime = 3000;
-	
 	const sandboxContentMessage = document.getElementById('ajax-sandbox-content-loaded');
+	const articleEditContentField = document.getElementById("content");
 	const insertContentButtons = document.getElementsByClassName("ajax-insert-content");
-	const sandboxGetContent = '/api/sandbox/';
+	
+	const mainMenuPositions = '/api/article/main-menu-positions';
+	const articleChildrenPositions = '/api/article/children-positions/';
+	const articleAttachmentsPositions = '/api/article/attachments-positions/';
+	const sandboxGetContent = '/api/sandbox/get-content/';
 	
 	function registerCreateLinkEvent() {
 		if (titleField) {
@@ -133,7 +136,7 @@ let panel_article = (function () {
 	
 	function showSandboxResult(result) {
 		showResult(result, sandboxContentMessage);
-		console.log(result);
+		articleEditContentField.value = result.content;
 	}
 	
 	

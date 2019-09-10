@@ -26,4 +26,6 @@ public class UIMessages {
 	public static final String POSITIONS_MAIN_MENU_FAILURE = "Wystąpił błąd podczas zapisywania zmiany kolejności menu";
 	public static final Object ARTICLE_DELETE_SUCCESS = "Artykuł usunięty pomyślnie";
 	public static final Object ARTICLE_DELETE_FAILURE = "Wystąpił błąd podczas usuwania artykułu";
+	public static final String SANDBOX_LOAD_SUCCESS = "Treśc brudnopisu została wczytana";
+	public static final String SANDBOX_LOAD_FAILURE = "Wystąpił błąd w pobieraniu treści brudnopisu";
 }
