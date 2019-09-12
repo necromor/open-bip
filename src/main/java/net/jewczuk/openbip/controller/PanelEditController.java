@@ -73,6 +73,7 @@ public class PanelEditController {
 	@PostMapping("/tresc/{link}.do")
 	public String editContent(@PathVariable String link, Model model, 
 							ArticleDisplayTO article, RedirectAttributes attributes) {
+		article.setLink(link);
 		
 		ArticleDisplayTO savedArticle;
 		Long editorID = 1L;
