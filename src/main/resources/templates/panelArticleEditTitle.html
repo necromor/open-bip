@@ -31,7 +31,10 @@
 		<input type="hidden" id="oldLink" th:field="*{oldLink}">
 		
 		<p class="button-middle">
-		<button type="submit" class="btn btn-primary" th:title="#{title.edit.article.title}" th:text="#{button.edit.article.title}"></button>
+			<button type="submit" class="btn btn-primary" 
+				th:title="#{title.edit.article.title}" th:text="#{button.edit.article.title}">
+			</button>
+			<th:block th:replace="fragments/panel_buttons :: article_cancel (${newArticle})"/>
 		</p>
 	</fieldset>
 </form>

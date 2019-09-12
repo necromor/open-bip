@@ -7,6 +7,11 @@
 		<a href="/panel/dodaj/artykul" th:title="#{title.add.article}" th:text="#{button.add.article}" class="btn btn-success"></a>
 	</p>
 	</th:block>
+	
+	<th:block th:fragment="article_cancel (article)">
+		<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" class="btn btn-dark"
+			th:title="#{title.cancel}" th:text="#{button.cancel}" ></a>
+	</th:block>
 </body>
 </html>
 

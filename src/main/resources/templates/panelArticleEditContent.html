@@ -29,9 +29,10 @@
 				data-toggle="modal" data-target="#showSandboxListModal"
 				th:title="#{title.edit.article.sandbox}" th:text="#{button.edit.article.sandbox}">
 			</button>
-			<button type="submit" class="btn btn-primary" 
+			<button type="submit" class="btn btn-success" 
 				th:title="#{title.edit.article.content}" th:text="#{button.edit.article.content}">
 			</button>
+			<th:block th:replace="fragments/panel_buttons :: article_cancel (${article})"/>
 		</p>
 	</fieldset>
 </form>

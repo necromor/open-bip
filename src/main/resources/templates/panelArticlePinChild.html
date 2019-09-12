@@ -21,7 +21,10 @@
 	<input type="hidden" th:value="${parent.link}" name="parentLink">
 
 	<p class="button-middle">
-	<button type="submit" class="btn btn-primary" th:title="#{title.pin.child}" th:text="#{button.pin.mainmenu}"></button>
+		<button type="submit" class="btn btn-primary" 
+			th:title="#{title.pin.child}" th:text="#{button.pin.mainmenu}">
+		</button>
+		<th:block th:replace="fragments/panel_buttons :: article_cancel (${parent})"/>
 	</p>
 </fieldset>
 </form>
