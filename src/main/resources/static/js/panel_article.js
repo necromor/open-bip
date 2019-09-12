@@ -136,7 +136,8 @@ let panel_article = (function () {
 	
 	function showSandboxResult(result) {
 		showResult(result, sandboxContentMessage);
-		articleEditContentField.value = result.content;
+		//articleEditContentField.value = result.content;
+		tinyMCE.activeEditor.setContent(result.content);
 	}
 	
 	

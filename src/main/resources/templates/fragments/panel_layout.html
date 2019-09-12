@@ -9,6 +9,27 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link th:href="@{/css/panel.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.ico}">
+    
+    <script th:src="@{/js/tinymce/tinymce.min.js}"></script>
+    <script>
+	    tinymce.init({
+	    	selector: 'textarea#content',
+	    	language: 'pl',
+	    	width: 1000,
+	    	browser_spellcheck: true,
+	    	contextmenu: false,
+			plugins: [
+				'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+				'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+				'save table directionality'
+	    	],
+	    	menubar: 'edit format insert view tools',
+			menu: {
+				tools: {title: 'Tools', items: 'code wordcount print'}
+			}
+	    	
+	    	});
+    </script>
 
 </head>
 <body>
