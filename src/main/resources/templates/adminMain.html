@@ -1,0 +1,24 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/admin_layout}">
+<head>
+    <title>Panel Admina - strona główna</title>
+</head>
+<body>
+
+<article layout:fragment="admin_content" class="col-md-8">
+
+<h2>Lista redaktorów</h2>
+
+<div class="row">
+	<p class="alert alert-success text-center col-md-10 offset-md-1" th:if="${editorSuccess}" th:text="${editorSuccess}"></p>
+</div>
+<div class="row">
+	<p class="alert alert-danger text-center col-md-10 offset-md-1" th:if="${editorFailure}" th:text="${editorFailure}"></p>
+</div>
+
+	
+</article>
+
+</body>
+</html>

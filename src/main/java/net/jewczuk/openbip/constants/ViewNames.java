@@ -8,6 +8,7 @@ public class ViewNames {
 	
 	public static final String PANEL_MAIN = "panelMain";
 	public static final String LOG_LIST = "panelLogList";
+	public static final String ADMIN_MAIN = "adminMain";
 	
 	public static final String ARTICLE_LIST = "panelArticleList";
 	public static final String ARTICLE_TREE = "panelArticleTree";
@@ -24,5 +25,6 @@ public class ViewNames {
 	public static final String SANDBOX_EDIT = "panelSandboxEdit";
 
 	public static final String ERROR_404 = "404";
+	
 
 }
