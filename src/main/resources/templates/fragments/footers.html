@@ -1,12 +1,20 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<th:block th:fragment="footer">
+
+<th:block th:fragment="page_footer">
 <footer class="row">
 	<p class="col-md-4 offset-md-2">&copy; Instytucja ABC 2019</p>
 	<p class="col-md-2"><a th:href="@{/artykul/polityka-prywatnosci}" title="Polityka prywatności">Polityka prywatności</a></p>
 	<p class="col-md-2"><a th:href="@{/artykul/polityka-cookies}" title="Polityka cookies">Polityka cookies</a></p>
 </footer>
 </th:block>
+
+<th:block th:fragment="panel_footer">
+<footer class="row">
+	<p class="col-md-12">&copy; Instytucja ABC 2019</p>
+</footer>
+</th:block>
+
 </body>
 </html>

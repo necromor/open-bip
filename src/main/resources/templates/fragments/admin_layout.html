@@ -14,12 +14,12 @@
 <body>
 
 <div class="container">
-	<th:block th:replace="fragments/panel_header :: admin_header"/>
+	<th:block th:replace="fragments/headers :: admin_header"/>
 	<div class="row">
-		<th:block th:replace="fragments/panel_menu :: admin_menu"/>
+		<th:block th:replace="fragments/menus :: admin_menu"/>
 		<th:block layout:fragment="admin_content"/>
 	</div>
-	<th:block th:replace="fragments/panel_footer :: panel_footer"/>
+	<th:block th:replace="fragments/footers :: panel_footer"/>
 </div>
 
 

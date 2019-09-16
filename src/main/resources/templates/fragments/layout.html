@@ -13,7 +13,7 @@
 <body>
 
 <div class="container">
-	<th:block th:replace="fragments/header :: header"/>
+	<th:block th:replace="fragments/headers :: page_header"/>
 	<div class="row">
 		<th:block layout:fragment="content"/>
 		<div class="col-md-3 offset-md-1">
@@ -26,7 +26,7 @@
 		</nav>
 		</div>
 	</div>
-	<th:block th:replace="fragments/footer :: footer"/>
+	<th:block th:replace="fragments/footers :: page_footer"/>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
