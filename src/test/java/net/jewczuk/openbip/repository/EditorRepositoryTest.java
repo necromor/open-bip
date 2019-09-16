@@ -1,6 +1,9 @@
 package net.jewczuk.openbip.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.junit.Rule;
@@ -49,6 +52,16 @@ public class EditorRepositoryTest {
 		excE.expect(EditorException.class);
 		excE.expectMessage(ExceptionsMessages.INVALID_EDITOR_ID);
 		editorRepository.getEditorById(-1L);
+	}
+	
+	@Test
+	public void shouldReturnAllEditorsOnly() throws BusinessException {
+		List<EditorEntity> editors = editorRepository.getOnlyEditors();
+		EditorEntity admin = editorRepository.getEditorById(4L);
+		
+		assertThat(editors.size()).isEqualTo(3);
+		assertThat(editors).doesNotContain(admin);
+		assertThat(editors).allMatch(e -> e.getRole().equals("EDITOR"));
 	}
 	
 }

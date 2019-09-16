@@ -1,5 +1,7 @@
 package net.jewczuk.openbip.repository.impl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -27,6 +29,12 @@ public class CustomEditorRepositoryImpl implements CustomEditorRepository {
 		}
 		
 		return entity;
+	}
+
+	@Override
+	public List<EditorEntity> getOnlyEditors() {
+		return entityManager.createNamedQuery(EditorEntity.FIND_ALL_EDITORS_ONLY, EditorEntity.class)
+				.getResultList();
 	}
 
 }

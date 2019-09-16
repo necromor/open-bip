@@ -2,11 +2,19 @@ package net.jewczuk.openbip.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+@NamedQueries({
+	@NamedQuery(name = EditorEntity.FIND_ALL_EDITORS_ONLY , query = "SELECT editor FROM EditorEntity editor "
+			+ " WHERE editor.role = 'EDITOR'")
+	})
 @Entity
 @Table(name="editor")
 public class EditorEntity extends AbstractEntity {
+	
+	public static final String FIND_ALL_EDITORS_ONLY = "findAllEditorsOnly";
 
 	@Column(name="first_name", nullable=false)
 	private String firstName;
