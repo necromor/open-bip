@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+
+	<th:block th:fragment="reset_password (editor)">
+		<span th:if="${editor.passGeneric}">DOMYŚLNE</span>
+		<a th:if="${!editor.passGeneric}" th:href="@{'/admin/resetuj-haslo/' + ${editor.email}}"  class="btn btn-danger"
+		  th:text="#{button.reset}" th:title="#{title.editor.reset.password}"></a>
+	</th:block>
+	
+	<th:block th:fragment="activate (editor)">
+		<a th:if="${editor.active}" th:href="@{'/admin/deaktywuj/' + ${editor.email}}"  class="btn btn-warning"
+		  th:text="#{button.editor.deactivate}" th:title="#{title.editor.deactivate}"></a>
+		<a th:if="${!editor.active}" th:href="@{'/admin/aktywuj/' + ${editor.email}}"  class="btn btn-success"
+		  th:text="#{button.editor.activate}" th:title="#{title.editor.activate}"></a>
+	</th:block>
+	
+</body>
+</html>
+

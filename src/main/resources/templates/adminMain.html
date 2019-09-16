@@ -17,7 +17,28 @@
 	<p class="alert alert-danger text-center col-md-10 offset-md-1" th:if="${editorFailure}" th:text="${editorFailure}"></p>
 </div>
 
-	
+	<table class="table table-hover">
+		<caption>Zestawienie redaktorów uszeregowane alfabetycznie po nazwisku.</caption>
+		<thead class="thead-dark">
+				<th>Imię i nazwisko</th>
+				<th>Email</th>
+				<th>Telefon</th>
+				<th>Aktywny</th>
+				<th>Hasło</th>
+		</thead>
+		
+		<tbody>
+			<tr th:each="editor : ${editors}">
+				<td><a th:href="@{'/admin/edytuj/' +${editor.email}}"
+						th:title="#{title.edit.editor}" th:text="${editor.fullName}"></a></td>
+				<td th:text="${editor.email}"></td>
+				<td th:text="${editor.phone}"></td>
+				<td><th:block th:replace="fragments/links :: activate (${editor})"/></td>
+				<td><th:block th:replace="fragments/links :: reset_password (${editor})"/></td>
+			</tr>
+		</tbody>
+	</table>
+
 </article>
 
 </body>
