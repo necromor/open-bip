@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import net.jewczuk.openbip.TestConstants;
+import net.jewczuk.openbip.to.EditorTO;
 import net.jewczuk.openbip.to.RedactorTO;
 
 @RunWith(SpringRunner.class)
@@ -28,6 +29,14 @@ public class EditorServiceImplTest {
 	public void shoulddisplayAllRedactorsOnly() {
 		List<RedactorTO> redactors = editorService.getAllRedactors();
 		List<String> fullNames = redactors.stream().map(r -> r.getFullName()).collect(Collectors.toList());
+		
+		assertThat(fullNames).containsExactly(TestConstants.EDITOR_1, TestConstants.EDITOR_3, TestConstants.EDITOR_2);
+	}
+	
+	@Test
+	public void shouldReturnOnlyEditors() {
+		List<EditorTO> editors = editorService.getAllEditorsOnly();
+		List<String> fullNames = editors.stream().map(r -> r.getFullName()).collect(Collectors.toList());
 		
 		assertThat(fullNames).containsExactly(TestConstants.EDITOR_1, TestConstants.EDITOR_3, TestConstants.EDITOR_2);
 	}

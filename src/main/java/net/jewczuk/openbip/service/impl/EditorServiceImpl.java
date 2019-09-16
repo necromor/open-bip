@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import net.jewczuk.openbip.mapper.EditorMapper;
 import net.jewczuk.openbip.repository.EditorRepository;
 import net.jewczuk.openbip.service.EditorService;
+import net.jewczuk.openbip.to.EditorTO;
 import net.jewczuk.openbip.to.RedactorTO;
 
 @Service
@@ -27,6 +28,14 @@ public class EditorServiceImpl implements EditorService {
 				.filter(e -> e.getRole().equals("EDITOR"))
 				.map(e -> editorMapper.mapToTO(e))
 				.sorted(Comparator.comparing(RedactorTO::getLastName))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<EditorTO> getAllEditorsOnly() {
+		return editorRepository.getOnlyEditors().stream()
+				.map(e -> editorMapper.mapToEditorTO(e))
+				.sorted(Comparator.comparing(EditorTO::getLastName))
 				.collect(Collectors.toList());
 	}
 
