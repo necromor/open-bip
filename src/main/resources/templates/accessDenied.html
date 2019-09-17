@@ -1,0 +1,18 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/errors_layout}">
+<head>
+    <title>403</title>
+</head>
+<body>
+
+<article layout:fragment="error_content" class="col-md-8">
+
+<h2>Błąd 403</h2>
+
+<p>Nie masz uprawnień aby zobaczyć żądaną stronę! <a th:href="@{/logout}">Wyloguj się</a></p>
+
+</article>
+
+</body>
+</html>
