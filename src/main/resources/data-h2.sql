@@ -1,11 +1,11 @@
 INSERT INTO editor(id, first_name, last_name, email, password, role, phone, active, version, created_at, updated_at) 
-	VALUES(1, 'Michał', 'Niewiadomy', 'niewiadomy@test.pl', 'test', 'EDITOR', '', true, 1, now(), default);
+	VALUES(1, 'Michał', 'Niewiadomy', 'niewiadomy@test.pl', '$2a$11$oZNeih5VE4q2g.r1nsY/jOeWyfjNFQe63DTx4q.GMGLR3XOyt.1fe', 'EDITOR', '', true, 1, now(), default);
 INSERT INTO editor(id, first_name, last_name, email, password, role, phone, active, version, created_at, updated_at) 
-	VALUES(2, 'Ewelina', 'Test', 'etest@test.pl', 'test', 'EDITOR', '', true, 1, now(), default);
+	VALUES(2, 'Ewelina', 'Test', 'etest@test.pl', '$2a$11$oZNeih5VE4q2g.r1nsY/jOeWyfjNFQe63DTx4q.GMGLR3XOyt.1fe', 'EDITOR', '', true, 1, now(), default);
 INSERT INTO editor(id, first_name, last_name, email, password, role, phone, active, version, created_at, updated_at) 
-	VALUES(3, 'Aaron', 'Rodgers', 'rodgers@packers.com', 'test', 'EDITOR', '', true, 1, now(), default);
+	VALUES(3, 'Aaron', 'Rodgers', 'rodgers@packers.com', '$2a$11$oZNeih5VE4q2g.r1nsY/jOeWyfjNFQe63DTx4q.GMGLR3XOyt.1fe', 'EDITOR', '', true, 1, now(), default);
 INSERT INTO editor(id, first_name, last_name, email, password, role, phone, active, version, created_at, updated_at) 
-	VALUES(4, 'admin', 'Michal', 'admin@test.pl', 'test', 'ADMIN', '', true, 1, now(), default);
+	VALUES(4, 'admin', 'Michal', 'admin@test.pl', '$2a$11$oZNeih5VE4q2g.r1nsY/jOeWyfjNFQe63DTx4q.GMGLR3XOyt.1fe', 'ADMIN', '', true, 1, now(), default);
 	
 INSERT INTO article(id, title, link, display_position, main_menu, parent_id, version, created_at, updated_at)
 	VALUES(1, 'Lorem ipsum dolor sit amet', 'strona-glowna', 1, true, null, 1, now(), default);
