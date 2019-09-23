@@ -7,6 +7,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.jewczuk.openbip.constants.ExceptionsMessages;
+import net.jewczuk.openbip.entity.EditorEntity;
+import net.jewczuk.openbip.exceptions.BusinessException;
+import net.jewczuk.openbip.exceptions.EditorException;
 import net.jewczuk.openbip.mapper.EditorMapper;
 import net.jewczuk.openbip.repository.EditorRepository;
 import net.jewczuk.openbip.service.EditorService;
@@ -37,6 +41,19 @@ public class EditorServiceImpl implements EditorService {
 				.map(e -> editorMapper.mapToEditorTO(e))
 				.sorted(Comparator.comparing(EditorTO::getLastName))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public EditorTO addNewEditor(EditorTO editor) throws BusinessException {
+		EditorEntity saved;
+		
+		try {
+			saved = editorRepository.save(editorMapper.mapToNewEntity(editor));
+		} catch (Exception e) {
+			throw new EditorException(ExceptionsMessages.EMAIL_EXISTS);
+		}	
+		
+		return editorMapper.mapToEditorTO(saved);
 	}
 
 }

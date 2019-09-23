@@ -10,4 +10,5 @@ public interface CustomEditorRepository {
 	EditorEntity getEditorById(Long id) throws BusinessException;
 	
 	List<EditorEntity> getOnlyEditors();
+	
 }

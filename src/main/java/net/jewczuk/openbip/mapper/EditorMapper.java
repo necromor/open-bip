@@ -1,5 +1,7 @@
 package net.jewczuk.openbip.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import net.jewczuk.openbip.entity.EditorEntity;
@@ -9,6 +11,8 @@ import net.jewczuk.openbip.to.RedactorTO;
 @Component
 public class EditorMapper {
 
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	public RedactorTO mapToTO(EditorEntity editor) {
 		return new RedactorTO.Builder()
@@ -26,7 +30,20 @@ public class EditorMapper {
 				.email(editor.getEmail())
 				.phone(editor.getPhone())
 				.active(editor.isActive())
-				.passGeneric(editor.getFullName().equals(editor.getPassword()))
+				.passGeneric(encoder.matches(editor.getEmail(), editor.getPassword()))
 				.build();
+	}
+	
+	public EditorEntity mapToNewEntity(EditorTO eTO) {
+		EditorEntity entity = new EditorEntity();
+		entity.setFirstName(eTO.getFirstName());
+		entity.setLastName(eTO.getLastName());
+		entity.setEmail(eTO.getEmail());
+		entity.setPhone(eTO.getPhone());
+		entity.setActive(eTO.isActive());
+		entity.setRole("EDITOR");
+		entity.setPassword(encoder.encode(eTO.getEmail()));
+		
+		return entity;
 	}
 }

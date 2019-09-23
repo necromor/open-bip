@@ -28,4 +28,5 @@ public class UIMessages {
 	public static final Object ARTICLE_DELETE_FAILURE = "Wystąpił błąd podczas usuwania artykułu";
 	public static final String SANDBOX_LOAD_SUCCESS = "Treśc brudnopisu została wczytana";
 	public static final String SANDBOX_LOAD_FAILURE = "Wystąpił błąd w pobieraniu treści brudnopisu";
+	public static final String ADD_EDITOR_SUCCESS = "Redaktor został dodany pomyślnie";
 }

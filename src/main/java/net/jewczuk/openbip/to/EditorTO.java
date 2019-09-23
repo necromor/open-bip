@@ -40,12 +40,12 @@ public class EditorTO {
 			this.phone = phone;
 			return this;
 		}
-		
+
 		public Builder active(boolean active) {
 			this.active = active;
 			return this;
 		}
-		
+
 		public Builder passGeneric(boolean passGeneric) {
 			this.passGeneric = passGeneric;
 			return this;
@@ -100,7 +100,7 @@ public class EditorTO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+
 	public String getFullName() {
 		return this.firstName + " " + this.lastName;
 	}
@@ -119,6 +119,12 @@ public class EditorTO {
 
 	public void setPassGeneric(boolean passGeneric) {
 		this.passGeneric = passGeneric;
+	}
+
+	@Override
+	public String toString() {
+		return "EditorTO [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phone=" + phone
+				+ ", active=" + active + ", passGeneric=" + passGeneric + "]";
 	}
 
 }

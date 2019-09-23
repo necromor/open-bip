@@ -49,5 +49,9 @@ public class TestConstants {
 	public static final String SANDBOX_TITLE_1 = "Brudnopis 2_1";
 	public static final String SANDBOX_CONTENT_1 = "brudnopis 2 1";
 	public static final String SANDBOX_LINK_INVALID = "sandbox-invalid-link";
-	
+	public static final String EDITOR_FIRSTNAME_1 = "firstName_1";
+	public static final String EDITOR_LASTNAME_1 = "lastName_1";
+	public static final String EDITOR_PHONE_1 = "phone_1";
+	public static final String EDITOR_VALID_EMAIL = "valid@test.pl";
+	public static final String EDITOR_INVALID_EMAIL = "niewiadomy@test.pl";
 }
