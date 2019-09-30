@@ -15,4 +15,6 @@ public interface EditorService {
 	EditorTO addNewEditor(EditorTO editor) throws BusinessException;
 	
 	EditorTO resetPassword(String email) throws BusinessException;
+	
+	EditorTO setStatus(String email, boolean status) throws BusinessException;
 }

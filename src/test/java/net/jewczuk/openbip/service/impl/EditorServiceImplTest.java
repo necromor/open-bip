@@ -97,5 +97,28 @@ public class EditorServiceImplTest {
 		excE.expectMessage(ExceptionsMessages.INVALID_EDITOR_ID);
 		editorService.resetPassword(TestConstants.EDITOR_VALID_EMAIL);
 	}
+	
+	@Test
+	public void shouldSetActiveToFalse() throws BusinessException {
+		List<EditorTO> allBefore = editorService.getAllEditorsOnly();
+		EditorTO before = allBefore.get(1);
+		
+		EditorTO after = editorService.setStatus(before.getEmail(), false);
+		
+		assertThat(before.isActive()).isTrue();
+		assertThat(after.isActive()).isFalse();		
+	}
+	
+	@Test
+	public void shouldSetActiveToTrue() throws BusinessException {
+		List<EditorTO> allBefore = editorService.getAllEditorsOnly();
+		EditorTO before = allBefore.get(1);
+		
+		EditorTO after = editorService.setStatus(before.getEmail(), false);
+		after = editorService.setStatus(before.getEmail(), true);
+		
+		assertThat(before.isActive()).isTrue();
+		assertThat(after.isActive()).isTrue();		
+	}
 
 }

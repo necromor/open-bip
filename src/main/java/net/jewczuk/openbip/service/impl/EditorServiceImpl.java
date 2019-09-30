@@ -64,4 +64,10 @@ public class EditorServiceImpl implements EditorService {
 		return editorMapper.mapToEditorTO(editorRepository.resetPassword(email));
 	}
 
+	@Override
+	@Transactional
+	public EditorTO setStatus(String email, boolean status) throws BusinessException {
+		return editorMapper.mapToEditorTO(editorRepository.setStatus(email, status));
+	}
+
 }
