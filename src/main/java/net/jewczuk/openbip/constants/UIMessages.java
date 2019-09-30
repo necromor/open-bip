@@ -31,4 +31,8 @@ public class UIMessages {
 	public static final String ADD_EDITOR_SUCCESS = "Redaktor został dodany pomyślnie";
 	public static final String RESET_EDITOR_SUCCESS = " - hasło ustawiono na domyślne";
 	public static final String RESET_EDITOR_FAILURE = "Wystąpił błąd podczas resetowania hasła redaktora: ";
+	public static final String ACTIVATE_EDITOR_SUCCESS = " - redaktor jest aktywny";
+	public static final String ACTIVATE_EDITOR_FAILURE = "Wystąpił błąd podczas aktywacji redaktora: ";
+	public static final String DEACTIVATE_EDITOR_SUCCESS = " - redaktor jest nieaktywny";
+	public static final String DEACTIVATE_EDITOR_FAILURE = "Wystąpił błąd podczas deaktywacji redaktora: ";
 }

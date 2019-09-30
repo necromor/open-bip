@@ -74,5 +74,31 @@ public class AdminController {
 		return "redirect:/admin/";
 	}
 	
+	@GetMapping("/aktywuj/{email}/")
+	public String activateEditor(@PathVariable String email, RedirectAttributes attributes) {
+		
+		try {
+			EditorTO saved = editorService.setStatus(email, true);
+			attributes.addFlashAttribute("editorSuccess", saved.getFullName() + UIMessages.ACTIVATE_EDITOR_SUCCESS);		
+		} catch (BusinessException e) {	
+			attributes.addFlashAttribute("editorFailure", UIMessages.ACTIVATE_EDITOR_FAILURE +  email);
+		}
+		
+		return "redirect:/admin/";
+	}
+	
+	@GetMapping("/deaktywuj/{email}/")
+	public String deactivateEditor(@PathVariable String email, RedirectAttributes attributes) {
+		
+		try {
+			EditorTO saved = editorService.setStatus(email, false);
+			attributes.addFlashAttribute("editorSuccess", saved.getFullName() + UIMessages.DEACTIVATE_EDITOR_SUCCESS);		
+		} catch (BusinessException e) {	
+			attributes.addFlashAttribute("editorFailure", UIMessages.DEACTIVATE_EDITOR_FAILURE +  email);
+		}
+		
+		return "redirect:/admin/";
+	}
+	
 	
 }
