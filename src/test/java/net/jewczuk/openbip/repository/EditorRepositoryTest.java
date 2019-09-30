@@ -83,4 +83,19 @@ public class EditorRepositoryTest {
 		editorRepository.resetPassword(TestConstants.EDITOR_VALID_EMAIL);
 	}
 	
+	@Test
+	public void shouldSetActiveToFalse() throws BusinessException {
+		EditorEntity saved = editorRepository.setStatus(TestConstants.EDITOR_EMAIL_3, false);
+		
+		assertThat(saved.isActive()).isFalse();
+	}
+	
+	@Test
+	public void shouldSetActiveToTrue() throws BusinessException {
+		EditorEntity saved = editorRepository.setStatus(TestConstants.EDITOR_EMAIL_3, false);
+		saved = editorRepository.setStatus(TestConstants.EDITOR_EMAIL_3, true);
+		
+		assertThat(saved.isActive()).isTrue();
+	}
+	
 }

@@ -13,4 +13,6 @@ public interface CustomEditorRepository {
 	
 	EditorEntity resetPassword(String email) throws BusinessException;
 	
+	EditorEntity setStatus(String email, boolean status) throws BusinessException;
+	
 }

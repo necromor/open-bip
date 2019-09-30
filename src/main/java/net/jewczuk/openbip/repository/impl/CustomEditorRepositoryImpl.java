@@ -51,6 +51,18 @@ public class CustomEditorRepositoryImpl implements CustomEditorRepository {
 		
 		return entity;
 	}
+
+	@Override
+	public EditorEntity setStatus(String email, boolean status) throws BusinessException {
+		EditorEntity entity = findEditorByEmail(email);
+		
+		entity.setActive(status);
+		entityManager.persist(entity);
+		
+		return entity;
+	}
+	
+	
 	
 	private EditorEntity findEditorByEmail(String email) throws BusinessException {
 		try {
