@@ -8,13 +8,16 @@ import javax.persistence.Table;
 
 @NamedQueries({
 	@NamedQuery(name = EditorEntity.FIND_ALL_EDITORS_ONLY , query = "SELECT editor FROM EditorEntity editor "
-			+ " WHERE editor.role = 'EDITOR'")
+			+ " WHERE editor.role = 'EDITOR'"),
+	@NamedQuery(name = EditorEntity.FIND_BY_EMAIL , query = "SELECT editor FROM EditorEntity editor "
+			+ " WHERE editor.email = :email")
 	})
 @Entity
 @Table(name="editor")
 public class EditorEntity extends AbstractEntity {
 	
 	public static final String FIND_ALL_EDITORS_ONLY = "findAllEditorsOnly";
+	public static final String FIND_BY_EMAIL = "findByEmail";
 
 	@Column(name="first_name", nullable=false)
 	private String firstName;

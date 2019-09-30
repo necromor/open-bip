@@ -54,4 +54,5 @@ public class TestConstants {
 	public static final String EDITOR_PHONE_1 = "phone_1";
 	public static final String EDITOR_VALID_EMAIL = "valid@test.pl";
 	public static final String EDITOR_INVALID_EMAIL = "niewiadomy@test.pl";
+	public static final String EDITOR_EMAIL_3 = "etest@test.pl";
 }

@@ -12,6 +12,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import net.jewczuk.openbip.TestConstants;
@@ -27,6 +28,9 @@ public class EditorRepositoryTest {
 
 	@Autowired
 	private EditorRepository editorRepository;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	@Rule
     public ExpectedException excE = ExpectedException.none();
@@ -62,6 +66,21 @@ public class EditorRepositoryTest {
 		assertThat(editors.size()).isEqualTo(3);
 		assertThat(editors).doesNotContain(admin);
 		assertThat(editors).allMatch(e -> e.getRole().equals("EDITOR"));
+	}
+	
+	@Test
+	public void shouldResetPassword() throws BusinessException {
+		EditorEntity reseted = editorRepository.resetPassword(TestConstants.EDITOR_EMAIL_3);
+		
+		assertThat(encoder.matches(reseted.getEmail(), reseted.getPassword())).isTrue();
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenResetingInvalidEmail() throws BusinessException {
+		
+		excE.expect(EditorException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_EDITOR_ID);
+		editorRepository.resetPassword(TestConstants.EDITOR_VALID_EMAIL);
 	}
 	
 }

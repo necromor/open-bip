@@ -11,4 +11,6 @@ public interface CustomEditorRepository {
 	
 	List<EditorEntity> getOnlyEditors();
 	
+	EditorEntity resetPassword(String email) throws BusinessException;
+	
 }
