@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +56,12 @@ public class EditorServiceImpl implements EditorService {
 		}	
 		
 		return editorMapper.mapToEditorTO(saved);
+	}
+
+	@Override
+	@Transactional
+	public EditorTO resetPassword(String email) throws BusinessException {
+		return editorMapper.mapToEditorTO(editorRepository.resetPassword(email));
 	}
 
 }

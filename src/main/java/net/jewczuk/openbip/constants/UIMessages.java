@@ -29,4 +29,6 @@ public class UIMessages {
 	public static final String SANDBOX_LOAD_SUCCESS = "Treśc brudnopisu została wczytana";
 	public static final String SANDBOX_LOAD_FAILURE = "Wystąpił błąd w pobieraniu treści brudnopisu";
 	public static final String ADD_EDITOR_SUCCESS = "Redaktor został dodany pomyślnie";
+	public static final String RESET_EDITOR_SUCCESS = " - hasło ustawiono na domyślne";
+	public static final String RESET_EDITOR_FAILURE = "Wystąpił błąd podczas resetowania hasła redaktora: ";
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -59,6 +60,19 @@ public class AdminController {
 			return ViewNames.EDITOR_ADD;
 		}	
 	}	
+	
+	@GetMapping("/resetuj-haslo/{email}/")
+	public String resetPassword(@PathVariable String email, RedirectAttributes attributes) {
+		
+		try {
+			EditorTO saved = editorService.resetPassword(email);
+			attributes.addFlashAttribute("editorSuccess", saved.getFullName() + UIMessages.RESET_EDITOR_SUCCESS);		
+		} catch (BusinessException e) {	
+			attributes.addFlashAttribute("editorFailure", UIMessages.RESET_EDITOR_FAILURE +  email);
+		}
+		
+		return "redirect:/admin/";
+	}
 	
 	
 }

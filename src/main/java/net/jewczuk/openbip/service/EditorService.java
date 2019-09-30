@@ -13,4 +13,6 @@ public interface EditorService {
 	List<EditorTO> getAllEditorsOnly();
 	
 	EditorTO addNewEditor(EditorTO editor) throws BusinessException;
+	
+	EditorTO resetPassword(String email) throws BusinessException;
 }

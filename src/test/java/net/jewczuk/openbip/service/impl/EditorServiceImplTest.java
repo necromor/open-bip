@@ -79,5 +79,23 @@ public class EditorServiceImplTest {
 		excE.expectMessage(ExceptionsMessages.EMAIL_EXISTS);
 		editorService.addNewEditor(toSave);
 	}
+	
+	@Test
+	public void shouldResetEditorPassword() throws BusinessException {
+		List<EditorTO> allBefore = editorService.getAllEditorsOnly();
+		EditorTO before = allBefore.get(0);
+		
+		EditorTO after = editorService.resetPassword(before.getEmail());
+		
+		assertThat(before.isPassGeneric()).isFalse();
+		assertThat(after.isPassGeneric()).isTrue();
+	}
+	
+	@Test
+	public void shouldThrowExceptionWhenResetingInvalidEditor() throws BusinessException {
+		excE.expect(EditorException.class);
+		excE.expectMessage(ExceptionsMessages.INVALID_EDITOR_ID);
+		editorService.resetPassword(TestConstants.EDITOR_VALID_EMAIL);
+	}
 
 }
