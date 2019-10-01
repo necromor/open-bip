@@ -46,4 +46,13 @@ public class EditorMapper {
 		
 		return entity;
 	}
+	
+	public EditorEntity mapToExistingEntity(EditorEntity existing, EditorTO changes) {
+		existing.setFirstName(changes.getFirstName());
+		existing.setLastName(changes.getLastName());
+		existing.setPhone(changes.getPhone());
+		existing.setEmail(changes.getEmail());
+		
+		return existing;
+	}
 }

@@ -77,8 +77,16 @@ public class EditorServiceImpl implements EditorService {
 
 	@Override
 	public EditorTO editEditor(EditorTO editor, String oldEmail) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		EditorEntity existing = editorRepository.getByEmail(oldEmail);
+		existing = editorMapper.mapToExistingEntity(existing, editor);
+		
+		try {
+			existing = editorRepository.save(existing);
+		} catch (Exception e) {
+			throw new EditorException(ExceptionsMessages.EMAIL_EXISTS);
+		}
+		
+		return editorMapper.mapToEditorTO(existing);
 	}
 
 }

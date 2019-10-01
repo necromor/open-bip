@@ -10,11 +10,11 @@
 
 <h2>Lista redaktorów</h2>
 
-<div class="row">
-	<p class="alert alert-success text-center col-md-10 offset-md-1" th:if="${editorSuccess}" th:text="${editorSuccess}"></p>
+<div class="row" th:if="${editorSuccess}">
+	<p class="alert alert-success text-center col-md-10 offset-md-1" th:text="${editorSuccess}"></p>
 </div>
-<div class="row">
-	<p class="alert alert-danger text-center col-md-10 offset-md-1" th:if="${editorFailure}" th:text="${editorFailure}"></p>
+<div class="row" th:if="${editorFailure}">
+	<p class="alert alert-danger text-center col-md-10 offset-md-1" th:text="${editorFailure}"></p>
 </div>
 
 	<table class="table table-hover">

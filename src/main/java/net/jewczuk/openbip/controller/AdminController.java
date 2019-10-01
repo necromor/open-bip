@@ -53,7 +53,7 @@ public class AdminController {
 		try {
 			editorService.addNewEditor(editor);
 			attributes.addFlashAttribute("editorSuccess", UIMessages.ADD_EDITOR_SUCCESS);
-			return "redirect:/admin";		
+			return "redirect:/admin/";		
 		} catch (BusinessException e) {	
 			model.addAttribute("error", e.getMessage());
 			model.addAttribute("editor", editor);
@@ -117,14 +117,14 @@ public class AdminController {
 	
 	@PostMapping("/edytuj/redaktor.do")
 	public String editEditor(Model model, EditorTO editor, String oldEmail, RedirectAttributes attributes) {
-
 		try {
 			editorService.editEditor(editor, oldEmail);
 			attributes.addFlashAttribute("editorSuccess", UIMessages.EDIT_EDITOR_SUCCESS);
-			return "redirect:/admin";		
+			return "redirect:/admin/";		
 		} catch (BusinessException e) {	
 			model.addAttribute("error", e.getMessage());
 			model.addAttribute("editor", editor);
+			model.addAttribute("oldEmail", oldEmail);
 			return ViewNames.EDITOR_EDIT;
 		}	
 	}
