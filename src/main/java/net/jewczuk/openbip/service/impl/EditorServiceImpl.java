@@ -70,4 +70,15 @@ public class EditorServiceImpl implements EditorService {
 		return editorMapper.mapToEditorTO(editorRepository.setStatus(email, status));
 	}
 
+	@Override
+	public EditorTO getByEmail(String email) throws BusinessException {
+		return editorMapper.mapToEditorTO(editorRepository.getByEmail(email));
+	}
+
+	@Override
+	public EditorTO editEditor(EditorTO editor, String oldEmail) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

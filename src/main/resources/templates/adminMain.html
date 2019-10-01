@@ -29,7 +29,7 @@
 		
 		<tbody>
 			<tr th:each="editor : ${editors}">
-				<td><a th:href="@{'/admin/edytuj/' +${editor.email}}"
+				<td><a th:href="@{'/admin/edytuj/' +${editor.email}} + '/'"
 						th:title="#{title.edit.editor}" th:text="${editor.fullName}"></a></td>
 				<td th:text="${editor.email}"></td>
 				<td th:text="${editor.phone}"></td>

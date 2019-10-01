@@ -15,4 +15,5 @@ public interface CustomEditorRepository {
 	
 	EditorEntity setStatus(String email, boolean status) throws BusinessException;
 	
+	EditorEntity getByEmail(String email) throws BusinessException;
 }

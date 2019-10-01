@@ -44,7 +44,7 @@ public class CustomEditorRepositoryImpl implements CustomEditorRepository {
 
 	@Override
 	public EditorEntity resetPassword(String email) throws BusinessException {	
-		EditorEntity entity = findEditorByEmail(email);
+		EditorEntity entity = getByEmail(email);
 
 		entity.setPassword(encoder.encode(email));
 		entityManager.persist(entity);
@@ -54,17 +54,16 @@ public class CustomEditorRepositoryImpl implements CustomEditorRepository {
 
 	@Override
 	public EditorEntity setStatus(String email, boolean status) throws BusinessException {
-		EditorEntity entity = findEditorByEmail(email);
+		EditorEntity entity = getByEmail(email);
 		
 		entity.setActive(status);
 		entityManager.persist(entity);
 		
 		return entity;
 	}
-	
-	
-	
-	private EditorEntity findEditorByEmail(String email) throws BusinessException {
+
+	@Override
+	public EditorEntity getByEmail(String email) throws BusinessException {
 		try {
 			return entityManager.createNamedQuery(EditorEntity.FIND_BY_EMAIL, EditorEntity.class)
 					.setParameter("email", email)

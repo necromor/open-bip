@@ -46,7 +46,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/dodaj/redaktor.do")
-	public String addArticle(Model model, EditorTO editor, RedirectAttributes attributes) {	
+	public String addEditor(Model model, EditorTO editor, RedirectAttributes attributes) {	
 		editor.setActive(false);
 		editor.setPassGeneric(true);
 
@@ -98,6 +98,35 @@ public class AdminController {
 		}
 		
 		return "redirect:/admin/";
+	}
+	
+	@GetMapping("/edytuj/{email}/")
+	public String showFormEditEditor(@PathVariable String email, Model model, RedirectAttributes attributes) {
+		EditorTO editor;
+		try {
+			editor = editorService.getByEmail(email);
+		} catch (BusinessException e) {
+			attributes.addFlashAttribute("editorFailure", UIMessages.EDITOR_INVALID_EMAIL +  email);
+			return "redirect:/admin/";
+		}
+		model.addAttribute("editor", editor);
+		model.addAttribute("oldEmail", editor.getEmail());
+		
+		return ViewNames.EDITOR_EDIT;
+	}
+	
+	@PostMapping("/edytuj/redaktor.do")
+	public String editEditor(Model model, EditorTO editor, String oldEmail, RedirectAttributes attributes) {
+
+		try {
+			editorService.editEditor(editor, oldEmail);
+			attributes.addFlashAttribute("editorSuccess", UIMessages.EDIT_EDITOR_SUCCESS);
+			return "redirect:/admin";		
+		} catch (BusinessException e) {	
+			model.addAttribute("error", e.getMessage());
+			model.addAttribute("editor", editor);
+			return ViewNames.EDITOR_EDIT;
+		}	
 	}
 	
 	

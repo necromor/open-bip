@@ -1,0 +1,62 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/admin_layout}">
+<head>
+    <title>Zmień dane redaktora - panel admina</title>
+</head>
+<body>
+
+<article layout:fragment="admin_content" class="col-md-8">
+
+<h2>Zmień dane redaktora</h2>
+
+<section class="article-info">
+
+</section>
+
+<form th:action="@{/admin/edytuj/redaktor.do}" th:object="${editor}" method="post">
+	<fieldset class="container">
+		<legend>Podaj nowe dane redaktora</legend>
+		
+		<div class="form-group row" th:if="${error}">
+			<p class="alert alert-danger text-center col-md-10 offset-md-1" th:text="${error}"></p>
+		</div>
+		
+		<input type="hidden" th:value="${oldEmail}" name="oldEmail">
+		
+		<div class="form-group row">
+			<label class="col-md-3" for="firstName">Imię:</label>
+			<input class="col-md-9 form-control" type="text" id="firstName" 
+				th:field="*{firstName}" required aria-required="true">
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-md-3" for="lastName">Nazwisko:</label>
+			<input class="col-md-9 form-control" type="text" id="lastName" 
+				th:field="*{lastName}" required aria-required="true">
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-md-3" for="email">E-Mail:</label>
+			<input class="col-md-9 form-control" type="email" id="email" 
+				th:field="*{email}" required aria-required="true">
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-md-3" for="phone">Numer telefonu:</label>
+			<input class="col-md-9 form-control" type="text" id="phone" 
+				th:field="*{phone}" required aria-required="true">
+		</div>
+		
+		<p class="button-middle">
+			<button type="submit" class="btn btn-primary" 
+				th:text="#{button.edit.editor}" th:title="#{title.edit.editor}">
+			</button>
+		</p>
+	</fieldset>
+</form>
+
+</article>
+
+</body>
+</html>

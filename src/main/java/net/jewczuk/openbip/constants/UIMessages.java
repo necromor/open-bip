@@ -35,4 +35,6 @@ public class UIMessages {
 	public static final String ACTIVATE_EDITOR_FAILURE = "Wystąpił błąd podczas aktywacji redaktora: ";
 	public static final String DEACTIVATE_EDITOR_SUCCESS = " - redaktor jest nieaktywny";
 	public static final String DEACTIVATE_EDITOR_FAILURE = "Wystąpił błąd podczas deaktywacji redaktora: ";
+	public static final String EDITOR_INVALID_EMAIL = "Nie można znaleźć redaktora z adresem e-mail: ";
+	public static final String EDIT_EDITOR_SUCCESS = "Dane redaktora zostały pomyślnie zmienione";
 }
