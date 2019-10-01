@@ -16,17 +16,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-/*	@Autowired
-	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.inMemoryAuthentication()
-			.withUser("first_user").password("{noop}test123").roles("ADMIN")
-			.and().withUser("second_user").password("{noop}test123").roles("EDITOR")
-			.withUser("first_user").password(encoder().encode("test123")).roles("ADMIN")
-			.and().withUser("second_user").password(encoder().encode("test123")).roles("EDITOR")
-			.and().passwordEncoder(encoder());
-	}*/
-	
 	@Autowired
 	private CustomUserDetailService userDetailService;
 	
@@ -54,8 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/resource/**").permitAll()
 			.antMatchers("/").permitAll()
-			.antMatchers("/panel", "/panel/*").hasRole("EDITOR")
-			.antMatchers("/admin", "/admin/*").hasRole("ADMIN")
+			.antMatchers("/panel", "/panel/**").hasRole("EDITOR")
+			.antMatchers("/admin", "/admin/**").hasRole("ADMIN")
 			.and()
 			.formLogin()
 				.loginPage("/login")
