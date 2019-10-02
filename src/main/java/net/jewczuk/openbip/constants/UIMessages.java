@@ -40,4 +40,8 @@ public class UIMessages {
 	
 	public static final String PASSWORDS_MISSMATCH = "Podane nowe hasła się różnią";
 	public static final String PASS_CHANGE_SUCCESS = "Hasło zostało zmienione pomyślnie";
+	
+	public static final String LOGIN_BAD_CREDENTIALS = "Błędna nazwa użytkownika i/lub hasło.";
+	public static final String LOGIN_EXPIRED = "Twoje konto jest nieaktywne.";
+	public static final String LOGIN_UNIDENTIFIED = "Wystąpił niezidentyfikowany błąd.";
 }

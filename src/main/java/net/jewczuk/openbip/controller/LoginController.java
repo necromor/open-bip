@@ -1,13 +1,20 @@
 package net.jewczuk.openbip.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.jewczuk.openbip.config.CustomUserDetails;
@@ -23,10 +30,26 @@ public class LoginController {
 	private EditorService editorService;
 
 	@GetMapping("/login")
-	public String showLoginForm(@RequestParam(required = false) String error, Model model) {
-		if (error != null) {
-			model.addAttribute("error", true);
-		}
+	public String showLoginForm(Model model) {
+		model.addAttribute("errorMessage", null);
+		return ViewNames.LOGIN;
+	}	
+	
+	@GetMapping("/login-error")
+	public String showLoginErrorForm(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession(false);
+		String errorMessage = null;
+        
+		if (session != null) {
+            AuthenticationException ex = (AuthenticationException) session
+                    .getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+            if (ex != null) {
+                errorMessage = localizeError(ex.getMessage());
+            }
+        }
+		
+        model.addAttribute("errorMessage", errorMessage);
+
 		return ViewNames.LOGIN;
 	}	
 	
@@ -36,8 +59,7 @@ public class LoginController {
 	}
 	
 	@GetMapping("/redaktor/zmien-haslo")
-	public String showFormChangepass(Model model) {
-		
+	public String showFormChangepass(Model model) {	
 		return ViewNames.CHANGE_PASS;
 	}
 	
@@ -46,14 +68,13 @@ public class LoginController {
 			String oldPass, String newPass, String newPass2) {
 		
 		CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
+				.getContext().getAuthentication().getPrincipal();		
 		
+		//TODO validate new pass
 		if (!newPass.equals(newPass2)) {
 			model.addAttribute("error", UIMessages.PASSWORDS_MISSMATCH);
 			return ViewNames.CHANGE_PASS;
-		}
-		
-		//validate new pass
+		}	
 		
 		try {
 			editorService.changePassword(principal.getUsername(), oldPass, newPass);
@@ -74,5 +95,13 @@ public class LoginController {
 	private boolean isAdmin(CustomUserDetails principal) {
 		SimpleGrantedAuthority adminRole = new SimpleGrantedAuthority("ROLE_ADMIN");
 		return principal.getAuthorities().contains(adminRole);
+	}
+	
+	private String localizeError(String error) {
+		Map<String, String> localized = new HashMap<>();
+		localized.put("Bad credentials", UIMessages.LOGIN_BAD_CREDENTIALS);
+		localized.put("User account has expired", UIMessages.LOGIN_EXPIRED);
+
+		return localized.getOrDefault(error, UIMessages.LOGIN_UNIDENTIFIED);
 	}
 }
