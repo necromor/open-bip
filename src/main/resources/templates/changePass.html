@@ -1,0 +1,47 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/panel_layout}">
+<head>
+    <title>Zmień hasło</title>
+</head>
+<body>
+
+<article layout:fragment="panel_content" class="col-md-8">
+
+<h2>Zmień hasło</h2>
+
+<form th:action="${'/redaktor/zmien-haslo.do'}" method="post">
+	<fieldset class="container">
+		<legend>Podaj nowe hasło</legend>
+		
+		<div class="form-group row" th:if="${error}">
+			<p class="alert alert-danger text-center col-md-10 offset-md-1" th:text="${error}"></p>
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-md-3" for="title">Stare hasło:</label>
+			<input class="col-md-9 form-control" type="password" id="oldPass" name="oldPass">
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-md-3" for="title">Nowe hasło:</label>
+			<input class="col-md-9 form-control" type="password" id="newPass" name="newPass">
+		</div>
+		
+		<div class="form-group row">
+			<label class="col-md-3" for="title">Powtórz hasło:</label>
+			<input class="col-md-9 form-control" type="password" id="newPass2" name="newPass2">
+		</div>
+		
+		<p class="button-middle">
+			<button type="submit" class="btn btn-primary" 
+				th:title="#{title.changePass}" th:text="#{button.changePass}">
+			</button>
+		</p>
+	</fieldset>
+</form>
+
+</article>
+
+</body>
+</html>

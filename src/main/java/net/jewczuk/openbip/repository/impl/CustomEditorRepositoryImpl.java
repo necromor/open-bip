@@ -80,7 +80,7 @@ public class CustomEditorRepositoryImpl implements CustomEditorRepository {
 		EditorEntity entity = getByEmail(email);
 		
 		if (!encoder.matches(oldPass, entity.getPassword())) {
-			throw new EditorException(ExceptionsMessages.PASSWORDS_DO_NOT_MATCH);
+			throw new EditorException(ExceptionsMessages.INVALID_OLD_PASSWORD);
 		}
 		
 		entity.setPassword(encoder.encode(newPass));

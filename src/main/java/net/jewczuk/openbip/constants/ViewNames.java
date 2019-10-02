@@ -13,6 +13,8 @@ public class ViewNames {
 	public static final String EDITOR_ADD = "adminEditorAdd";
 	public static final String EDITOR_EDIT = "adminEditorEdit";
 	
+	public static final String CHANGE_PASS = "changePass";
+	
 	public static final String ARTICLE_LIST = "panelArticleList";
 	public static final String ARTICLE_TREE = "panelArticleTree";
 	public static final String ARTICLE_MANAGEMENT = "panelArticleManagement";
