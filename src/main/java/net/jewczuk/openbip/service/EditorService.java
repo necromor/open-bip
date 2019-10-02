@@ -21,4 +21,6 @@ public interface EditorService {
 	EditorTO getByEmail(String email) throws BusinessException;
 
 	EditorTO editEditor(EditorTO editor, String oldEmail) throws BusinessException;
+	
+	EditorTO changePassword(String email, String oldPass, String newPass) throws BusinessException;
 }

@@ -32,5 +32,6 @@ public class ExceptionsMessages {
 	public static final String ARTICLE_NOT_READY_TO_BE_DELETED = "Artykuł nie jest gotowy do usunięcia";
 	
 	public static final String EMAIL_EXISTS = "Podany e-mail już istnieje w bazie danych";
+	public static final String PASSWORDS_DO_NOT_MATCH = "Podane hasło nie pasuje do tego w bazie danych";
 	
 }

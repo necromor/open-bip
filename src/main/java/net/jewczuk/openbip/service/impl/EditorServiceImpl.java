@@ -89,4 +89,10 @@ public class EditorServiceImpl implements EditorService {
 		return editorMapper.mapToEditorTO(existing);
 	}
 
+	@Override
+	@Transactional
+	public EditorTO changePassword(String email, String oldPass, String newPass) throws BusinessException {
+		return editorMapper.mapToEditorTO(editorRepository.changePassword(email, oldPass, newPass));
+	}
+
 }

@@ -38,7 +38,8 @@ public class CustomEditorRepositoryImpl implements CustomEditorRepository {
 
 	@Override
 	public List<EditorEntity> getOnlyEditors() {
-		return entityManager.createNamedQuery(EditorEntity.FIND_ALL_EDITORS_ONLY, EditorEntity.class)
+		return entityManager
+				.createNamedQuery(EditorEntity.FIND_ALL_EDITORS_ONLY, EditorEntity.class)
 				.getResultList();
 	}
 
@@ -71,6 +72,21 @@ public class CustomEditorRepositoryImpl implements CustomEditorRepository {
 		} catch (Exception e) {
 			throw new EditorException(ExceptionsMessages.INVALID_EDITOR_ID);
 		}
+	}
+
+	@Override
+	public EditorEntity changePassword(String email, String oldPass, String newPass) 
+			throws BusinessException {
+		EditorEntity entity = getByEmail(email);
+		
+		if (!encoder.matches(oldPass, entity.getPassword())) {
+			throw new EditorException(ExceptionsMessages.PASSWORDS_DO_NOT_MATCH);
+		}
+		
+		entity.setPassword(encoder.encode(newPass));
+		entityManager.persist(entity);
+		
+		return entity;
 	}
 
 }
