@@ -3,6 +3,7 @@ package net.jewczuk.openbip.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import net.jewczuk.openbip.config.CustomUserDetails;
 import net.jewczuk.openbip.constants.UIMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
@@ -46,7 +48,7 @@ public class PanelEditController {
 		editedArticle.setLink(TransformUtils.createLinkFromTitle(editedArticle.getTitle()));
 		
 		ArticleEditTO savedArticle;
-		Long editorID = 1L;
+		Long editorID = getIdOfLoggedEditor();
 		
 		try {
 			savedArticle = articleService.editTitle(editedArticle, editorID);
@@ -61,7 +63,7 @@ public class PanelEditController {
 	
 	@GetMapping("/tresc/{link}")
 	public String showFormEditContent(@PathVariable String link, Model model) {
-		Long editorID = 1L;
+		Long editorID = getIdOfLoggedEditor();
 		ArticleDisplayTO article = articleService.getArticleByLink(link);
 		List<SandboxTO> sandboxes = sandboxService.getSandboxesByEditorId(editorID);
 		model.addAttribute("article", article);
@@ -76,7 +78,7 @@ public class PanelEditController {
 		article.setLink(link);
 		
 		ArticleDisplayTO savedArticle;
-		Long editorID = 1L;
+		Long editorID = getIdOfLoggedEditor();
 		
 		try {
 			savedArticle = articleService.editContent(article, editorID);
@@ -104,7 +106,7 @@ public class PanelEditController {
 	@PostMapping("/brudnopis.do")
 	public String editSandbox(Model model, SandboxTO sandbox, RedirectAttributes attributes) {
 		
-		Long editorID = 1L;
+		Long editorID = getIdOfLoggedEditor();
 		
 		try {
 			sandboxService.editSandbox(sandbox, editorID);
@@ -116,5 +118,12 @@ public class PanelEditController {
 			return ViewNames.SANDBOX_EDIT;
 		}
 	}	
+	
+	private Long getIdOfLoggedEditor() {
+		CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+
+		return principal.getUserId();
+	}
 
 }

@@ -1,12 +1,14 @@
 package net.jewczuk.openbip.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import net.jewczuk.openbip.config.CustomUserDetails;
 import net.jewczuk.openbip.constants.UIMessages;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.ArticleService;
@@ -27,7 +29,7 @@ public class PanelDeleteController {
 										@PathVariable String fileName,
 										RedirectAttributes attributes) {
 		try {
-			Long editorID = 1L;
+			Long editorID = getIdOfLoggedEditor();
 			articleService.deleteAttachment(link, fileName, editorID);
 			uploadService.deleteFile(fileName);
 			attributes.addFlashAttribute("articleSuccess", UIMessages.ARTICLE_ATTACHMENT_DELETE_SUCCESS);
@@ -42,7 +44,7 @@ public class PanelDeleteController {
 	public String removeArticle(@PathVariable String link,
 									RedirectAttributes attributes) {
 		try {
-			Long editorID = 1L;
+			Long editorID = getIdOfLoggedEditor();
 			articleService.deleteArticle(link, editorID);
 			attributes.addFlashAttribute("articleSuccess", UIMessages.ARTICLE_DELETE_SUCCESS);
 			return "redirect:/panel/lista-artykulow";	
@@ -50,5 +52,12 @@ public class PanelDeleteController {
 			attributes.addFlashAttribute("articleFailure", UIMessages.ARTICLE_DELETE_FAILURE);
 			return "redirect:/panel/zarzadzaj/" + link;	
 		}
+	}
+	
+	private Long getIdOfLoggedEditor() {
+		CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+
+		return principal.getUserId();
 	}
 }

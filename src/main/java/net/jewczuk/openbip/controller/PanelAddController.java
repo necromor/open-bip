@@ -1,6 +1,7 @@
 package net.jewczuk.openbip.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import net.jewczuk.openbip.config.CustomUserDetails;
 import net.jewczuk.openbip.constants.UIMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
@@ -53,7 +55,7 @@ public class PanelAddController {
 	public String addArticle(Model model, ArticleDisplayTO newArticle, RedirectAttributes attributes) {
 		
 		newArticle.setLink(TransformUtils.createLinkFromTitle(newArticle.getTitle()));
-		Long editorID = 1L;
+		Long editorID = getIdOfLoggedEditor();
 		
 		try {
 			ArticleDisplayTO savedArticle = articleService.saveArticle(newArticle, editorID);
@@ -82,7 +84,7 @@ public class PanelAddController {
 				@RequestParam("file") MultipartFile file,
 				RedirectAttributes attributes) {	
 		
-		Long editorID = 1L;	
+		Long editorID = getIdOfLoggedEditor();
 		
 		try {
 			attachmentValidator.validateAddAttachment(file, name);
@@ -112,7 +114,7 @@ public class PanelAddController {
 	@PostMapping("/brudnopis.do")
 	public String addSandbox(Model model, SandboxTO sandbox, RedirectAttributes attributes) {
 		
-		Long editorID = 1L;
+		Long editorID = getIdOfLoggedEditor();
 		sandbox.setLink(GeneralUtils.createUniqueLink(editorID));
 		
 		try {
@@ -124,6 +126,13 @@ public class PanelAddController {
 			model.addAttribute("sandbox", sandbox);
 			return ViewNames.SANDBOX_ADD;
 		}	
+	}
+	
+	private Long getIdOfLoggedEditor() {
+		CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+
+		return principal.getUserId();
 	}
 	
 }

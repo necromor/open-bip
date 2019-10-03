@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,14 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import net.jewczuk.openbip.config.CustomUserDetails;
 import net.jewczuk.openbip.constants.UIMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.service.SandboxService;
-import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.ArticleDisplayTO;
+import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.HistoryTO;
 import net.jewczuk.openbip.to.SandboxTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
@@ -79,13 +81,20 @@ public class PanelController {
 	
 	@GetMapping("/twoja-aktywnosc")
 	public String showEditorHistory(Model model) {
-		Long editorID = 1L;
-		List<HistoryTO> history = historyService.getAllLogEntriesByEditor(editorID);
-		
-		model.addAttribute("history", history);
-		return ViewNames.LOG_LIST;
+		return "redirect:/panel/twoja-aktywnosc/30";
 	}
 	
+	@GetMapping("/twoja-aktywnosc/{limit}")
+	public String showEditorHistoryLimit(@PathVariable int limit, Model model) {
+		Long editorID = getIdOfLoggedEditor();
+		List<HistoryTO> history = historyService.getLimitedLogEntriesByEditor(editorID, limit);
+		
+		model.addAttribute("history", history);
+		model.addAttribute("limit", limit);
+		model.addAttribute("newlimit", limit + 30);
+		return ViewNames.LOG_LIST;
+	}
+
 	@GetMapping("/przypnij")
 	public String showListOfUnatachtedArticles(Model model) {
 		List<ArticleLinkTO> articles = articleService.getAllUnpinnedArticles();
@@ -97,7 +106,7 @@ public class PanelController {
 	
 	@PostMapping("/przypnij.do")
 	public String pinSelectedToMainMenu(@RequestParam(required = false) List<String> selectedArticles, RedirectAttributes attributes) {
-		Long editorID = 1L;
+		Long editorID = getIdOfLoggedEditor();
 		
 		if (selectedArticles == null) {
 			attributes.addFlashAttribute("mainMenuFailure", UIMessages.ARTICLE_PINNED_FAILURE);
@@ -118,9 +127,9 @@ public class PanelController {
 	}
 	
 	@GetMapping("/odepnij/{link}")
-	public String unpinSelectedFromMainMenu(@PathVariable String link, RedirectAttributes attributes) {
+	public String unpinSelectedFromMainMenu(@PathVariable String link, RedirectAttributes attributes) {	
+		Long editorID = getIdOfLoggedEditor();	
 		
-		Long editorID = 1L;		
 		try {
 			articleService.managePinningToMainMenu(link, editorID, false);
 			attributes.addFlashAttribute("mainMenuSuccess", UIMessages.ARTICLE_UNPINNED_SUCCESS);
@@ -146,7 +155,7 @@ public class PanelController {
 	@PostMapping("/przypnij-dziecko.do")
 	public String pinSelectedAsChildren(@RequestParam(required = false) List<String> selectedArticles, 
 										@RequestParam String parentLink, RedirectAttributes attributes) {
-		Long editorID = 1L;
+		Long editorID = getIdOfLoggedEditor();
 		
 		if (selectedArticles == null) {
 			attributes.addFlashAttribute("articleFailure", UIMessages.ARTICLE_PINNED_FAILURE);
@@ -167,9 +176,9 @@ public class PanelController {
 	}
 	
 	@GetMapping("/odepnij-dziecko/{parent}/{child}")
-	public String unpinSelectedChild(@PathVariable String parent, @PathVariable String child, RedirectAttributes attributes) {
+	public String unpinSelectedChild(@PathVariable String parent, @PathVariable String child, RedirectAttributes attributes) {	
+		Long editorID = getIdOfLoggedEditor();
 		
-		Long editorID = 1L;		
 		try {
 			articleService.managePinningChildren(parent, child, editorID, false);
 			attributes.addFlashAttribute("articleSuccess", UIMessages.ARTICLE_UNPINNED_SUCCESS);
@@ -182,11 +191,18 @@ public class PanelController {
 	
 	@GetMapping("/lista-brudnopisow")
 	public String showSandboxList(Model model) {
-		Long editorID = 1L;
+		Long editorID = getIdOfLoggedEditor();
 		
 		List<SandboxTO> all = sandboxService.getSandboxesByEditorId(editorID);
 		model.addAttribute("sandboxes", all);
 		
 		return ViewNames.SANDBOX_LIST;
+	}
+	
+	private Long getIdOfLoggedEditor() {
+		CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+
+		return principal.getUserId();
 	}
 }
