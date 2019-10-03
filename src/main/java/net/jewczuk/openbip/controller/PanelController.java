@@ -19,10 +19,12 @@ import net.jewczuk.openbip.constants.UIMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.ArticleService;
+import net.jewczuk.openbip.service.EditorService;
 import net.jewczuk.openbip.service.HistoryService;
 import net.jewczuk.openbip.service.SandboxService;
 import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.ArticleLinkTO;
+import net.jewczuk.openbip.to.EditorTO;
 import net.jewczuk.openbip.to.HistoryTO;
 import net.jewczuk.openbip.to.SandboxTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
@@ -40,19 +42,26 @@ public class PanelController {
 	@Autowired
 	private SandboxService sandboxService;
 	
+	@Autowired
+	private EditorService editorService;
+	
 	@GetMapping("")
 	public String redirectToMainPanelPage() {	
 		return "redirect:/panel/";
 	}
 	
 	@GetMapping("/")
-	public String showMainPanelPage(Model model) {
-		
-		List<ArticleLinkTO> mainMenuArticles = articleService.getMainMenu();
-		model.addAttribute("mainMenuArticles", mainMenuArticles);
-		return ViewNames.PANEL_MAIN;
+	public String showMainPanelPage(Model model, RedirectAttributes attributes) {
+		if (checkIfPasswordDefault()) {
+			attributes.addFlashAttribute("passGeneric", UIMessages.PASS_GENERIC);
+			return "redirect:/redaktor/zmien-haslo";
+		} else {
+			List<ArticleLinkTO> mainMenuArticles = articleService.getMainMenu();
+			model.addAttribute("mainMenuArticles", mainMenuArticles);
+			return ViewNames.PANEL_MAIN;
+		}
 	}
-	
+
 	@GetMapping("/zarzadzaj/{link}")
 	public String showArticleManagmentPage(@PathVariable String link, Model model) {
 		ArticleDisplayTO article = articleService.getArticleByLink(link);
@@ -204,5 +213,20 @@ public class PanelController {
 				.getContext().getAuthentication().getPrincipal();
 
 		return principal.getUserId();
+	}
+	
+	private boolean checkIfPasswordDefault() {
+		CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+		
+		EditorTO loggedIn = new EditorTO();
+		loggedIn.setPassGeneric(true);
+		
+		try {
+			loggedIn = editorService.getByEmail(principal.getUsername());
+		} catch (BusinessException e) {
+			// Should not happen - logged in user exists
+		}
+		return loggedIn.isPassGeneric();
 	}
 }

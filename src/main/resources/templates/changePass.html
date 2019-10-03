@@ -19,6 +19,10 @@
 	<article class="col-md-6 offset-md-3">
 		<h2>Zmień hasło</h2>
 		
+		<div class="row" th:if="${passGeneric}">
+			<p class="alert alert-danger text-center col-md-10 offset-md-1" th:text="${passGeneric}"></p>
+		</div>
+		
 		<form th:action="${'/redaktor/zmien-haslo.do'}" method="post">
 			<fieldset class="container">
 				<legend>Podaj nowe hasło</legend>
