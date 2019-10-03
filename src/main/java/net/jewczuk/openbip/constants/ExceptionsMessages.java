@@ -34,4 +34,10 @@ public class ExceptionsMessages {
 	public static final String EMAIL_EXISTS = "Podany e-mail już istnieje w bazie danych";
 	public static final String INVALID_OLD_PASSWORD = "Podane stare hasło nie pasuje do tego w bazie danych";
 	
+	public static final String PASSWORDS_MISSMATCH = "Podane nowe hasła się różnią";
+	public static final String PASSWORD_NOT_CHANGED = "Nowe hasło jest identyczne ze starym";
+	public static final String PASSWORD_TOO_SHORT = "Nowe hasło musi mieć znaków nie mniej niż: " 
+													+ ApplicationProperties.MIN_PASS_LENGTH;
+	public static final String PASSWORD_CONTAINS_ONLY_SMALL_LETTERS = "Nowe hasło nie może zawierać tylko małych liter";
+	
 }
