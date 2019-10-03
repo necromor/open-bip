@@ -11,4 +11,6 @@ public interface HistoryService {
 	
 	List<HistoryTO> getAllLogEntriesByEditor(Long editorID);
 	
+	List<HistoryTO> getLimitedLogEntriesByEditor(Long editorID, int limit);
+	
 }
