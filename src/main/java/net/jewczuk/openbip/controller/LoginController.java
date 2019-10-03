@@ -22,12 +22,16 @@ import net.jewczuk.openbip.constants.UIMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.EditorService;
+import net.jewczuk.openbip.validators.PasswordValidator;
 
 @Controller
 public class LoginController {
 	
 	@Autowired
 	private EditorService editorService;
+	
+	@Autowired
+	private PasswordValidator passwordValidator;
 
 	@GetMapping("/login")
 	public String showLoginForm(Model model) {
@@ -69,14 +73,9 @@ public class LoginController {
 		
 		CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();		
-		
-		//TODO validate new pass
-		if (!newPass.equals(newPass2)) {
-			model.addAttribute("error", UIMessages.PASSWORDS_MISSMATCH);
-			return ViewNames.CHANGE_PASS;
-		}	
-		
+
 		try {
+			passwordValidator.validatePassword(oldPass, newPass, newPass2);
 			editorService.changePassword(principal.getUsername(), oldPass, newPass);
 		} catch (BusinessException be) {
 			model.addAttribute("error", be.getMessage());
