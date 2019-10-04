@@ -21,6 +21,7 @@ import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.EditorService;
 import net.jewczuk.openbip.service.HistoryService;
+import net.jewczuk.openbip.service.MainPageService;
 import net.jewczuk.openbip.service.SandboxService;
 import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.ArticleLinkTO;
@@ -44,6 +45,9 @@ public class PanelController {
 	
 	@Autowired
 	private EditorService editorService;
+	
+	@Autowired
+	private MainPageService mainPageService;
 	
 	@GetMapping("")
 	public String redirectToMainPanelPage() {	
@@ -206,6 +210,25 @@ public class PanelController {
 		model.addAttribute("sandboxes", all);
 		
 		return ViewNames.SANDBOX_LIST;
+	}
+	
+	@GetMapping("/strona-glowna")
+	public String showMainPageChooser(Model model) {	
+		ArticleLinkTO mainPage = mainPageService.getMainPage();
+		List<ArticleLinkTO> articles = articleService.getAllUnpinnedArticles();
+		
+		model.addAttribute("article", mainPage);
+		model.addAttribute("allOthers", articles);
+		
+		return ViewNames.ARTICLE_MAIN_PAGE;
+	}
+	
+	@GetMapping("/ustaw-strona-glowna/{link}")
+	public String setMainPage(Model model, @PathVariable String link, RedirectAttributes attributes) {	
+		mainPageService.setMainPage(link);
+		attributes.addFlashAttribute("mainPageSuccess", UIMessages.MAIN_PAGE_SUCCESS);
+		
+		return "redirect:/panel/strona-glowna";
 	}
 	
 	private Long getIdOfLoggedEditor() {

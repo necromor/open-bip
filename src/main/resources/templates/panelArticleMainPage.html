@@ -1,0 +1,35 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/panel_layout}">
+<head>
+    <title>Artykuł na stronie głównej - panel redaktora</title>
+</head>
+<body>
+
+<article layout:fragment="panel_content" class="col-md-8">
+
+<h2>Aktualny artykuł na stronie głównej</h2>
+
+	<p class="alert alert-success text-center col-md-10 offset-md-1" 
+		th:if="${mainPageSuccess}" th:text="${mainPageSuccess}"></p>
+		
+	<div class="alert alert-info text-center col-md-10 offset-md-1" role="alert">
+		<p th:text="${article.title}" class="font-weight-bold"></p>	
+		<hr>
+		<p th:text="${'[' + article.link + ']'}"></p>
+	</div>
+		
+<h3>Pozostałe artykuły możliwe do ustawienia jako strona główna</h3>
+<section class="article-info">
+	<p>Na poniższej liście wyświetlane są artykuły, które nie są przypisane do głównego menu lub do rodzica.</p>
+	<p>Jeżeli chesz ustawić jako artykuł strony głównej artykuł, który jest przypisany go menu głównego, to musisz go najpierw odpiąć, a dopiero później ustawić jako stronę główną.</p>
+</section>
+
+	<p class="alert alert-secondary" th:each="art : ${allOthers}">
+		<th:block th:replace="fragments/panel_article_manage_link :: mainPage (${art})" />
+	</p>
+
+</article>
+
+</body>
+</html>

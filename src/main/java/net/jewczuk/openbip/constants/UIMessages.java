@@ -37,6 +37,7 @@ public class UIMessages {
 	public static final String DEACTIVATE_EDITOR_FAILURE = "Wystąpił błąd podczas deaktywacji redaktora: ";
 	public static final String EDITOR_INVALID_EMAIL = "Nie można znaleźć redaktora z adresem e-mail: ";
 	public static final String EDIT_EDITOR_SUCCESS = "Dane redaktora zostały pomyślnie zmienione";
+	public static final String MAIN_PAGE_SUCCESS = "Artykuł został ustawiony jako strona główna";
 	
 	public static final String PASS_CHANGE_SUCCESS = "Hasło zostało zmienione pomyślnie";
 	

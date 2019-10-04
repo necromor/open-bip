@@ -17,6 +17,13 @@
 			class="tree-link link-list-element-link" th:title="#{title.manage.article}"></a>
 	</th:block>
 	
+	<th:block th:fragment="mainPage (article)">
+		<a th:href="@{'/panel/ustaw-strona-glowna/' +${article.link}}" th:text="#{button.set.mainpage}" 
+			class="btn btn-info" th:title="#{title.set.mainpage}"></a>
+		<a th:href="@{'/panel/zarzadzaj/' +${article.link}}" th:text="${article.title}" 
+			class="" th:title="#{title.manage.article}"></a>
+	</th:block>
+	
 </body>
 </html>
 
