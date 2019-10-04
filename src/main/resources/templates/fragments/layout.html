@@ -18,8 +18,8 @@
 		<th:block layout:fragment="content"/>
 		<div class="col-md-3 offset-md-1">
 		<nav class="nav nav-pills flex-column">
+		<a class="nav-item nav-link" th:href="@{/}">Strona główna</a>
 		<th:block th:each="menu : ${mainMenu}">
-		<a class="nav-item nav-link" th:href="@{/}" th:if="${menu.link == 'strona-glowna'}">Strona główna</a>
 		<a class="nav-item nav-link" th:href="@{'/artykul/' +${menu.link}}" th:text="${menu.title}" th:unless="${menu.link == 'strona-glowna'}"></a>
 		</th:block>
 		<a class="nav-item nav-link" th:href="@{/redakcja-bip}">Redakcja BIP</a>

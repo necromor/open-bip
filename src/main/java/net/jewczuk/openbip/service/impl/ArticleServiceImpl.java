@@ -21,11 +21,11 @@ import net.jewczuk.openbip.repository.ArticleRepository;
 import net.jewczuk.openbip.repository.EditorRepository;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.HistoryService;
-import net.jewczuk.openbip.to.ArticleLinkTO;
-import net.jewczuk.openbip.to.AttachmentTO;
-import net.jewczuk.openbip.to.ArticleHistoryTO;
 import net.jewczuk.openbip.to.ArticleDisplayTO;
 import net.jewczuk.openbip.to.ArticleEditTO;
+import net.jewczuk.openbip.to.ArticleHistoryTO;
+import net.jewczuk.openbip.to.ArticleLinkTO;
+import net.jewczuk.openbip.to.AttachmentTO;
 import net.jewczuk.openbip.to.TreeBranchTO;
 import net.jewczuk.openbip.utils.TransformUtils;
 import net.jewczuk.openbip.validators.ArticleValidator;
@@ -62,10 +62,12 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<ArticleLinkTO> getMainMenu() {
-		return articleRepository.getMainMenu().stream()
+	public List<ArticleLinkTO> getMainMenu() {	
+		List<ArticleLinkTO> menu = articleRepository.getMainMenu().stream()
 				.map(a -> articleMapper.mapToLink(a))
 				.collect(Collectors.toList());
+		
+		return menu;
 	}
 
 	@Override

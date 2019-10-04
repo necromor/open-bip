@@ -2,6 +2,8 @@ package net.jewczuk.openbip.constants;
 
 public class UIMessages {
 	
+	public static final String MAIN_PAGE_TITLE = "Strona główna";
+	
 	public static final String ADD_ARTICLE_SUCCESS = "Artykuł dodany pomyślnie";
 	public static final String EDIT_TITLE_SUCCESS = "Tytuł artykułu zmieniony pomyślnie";
 	public static final String ARTICLE_PINNED_SUCCESS = "Artykuł został przypięty pomyślnie";

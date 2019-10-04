@@ -10,14 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.ResourceNotFoundException;
 import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.EditorService;
-import net.jewczuk.openbip.to.ArticleLinkTO;
-import net.jewczuk.openbip.to.ArticleHistoryTO;
+import net.jewczuk.openbip.service.MainPageService;
 import net.jewczuk.openbip.to.ArticleDisplayTO;
+import net.jewczuk.openbip.to.ArticleHistoryTO;
+import net.jewczuk.openbip.to.ArticleLinkTO;
 import net.jewczuk.openbip.to.RedactorTO;
 
 @Controller
@@ -28,11 +28,16 @@ public class ArticleController {
 	
 	@Autowired
 	private EditorService editorService;
+	
+	@Autowired
+	private MainPageService mainPageService;
 
 	@GetMapping("/")
 	public String showMainPage(Model model) {
-		ArticleDisplayTO article = articleService.getArticleByLink(ApplicationProperties.MAIN_PAGE_LINK);
+		ArticleLinkTO mainPage = mainPageService.getMainPage();
+		ArticleDisplayTO article = articleService.getArticleByLink(mainPage.getLink());
 		List<ArticleLinkTO> menu = articleService.getMainMenu();
+	
 		model.addAttribute("article", article);
 		model.addAttribute("mainMenu", menu);
 		return ViewNames.SHOW_ARTICLE;
