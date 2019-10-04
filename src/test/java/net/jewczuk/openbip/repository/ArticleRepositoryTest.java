@@ -19,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import net.jewczuk.openbip.TestConstants;
-import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.constants.ExceptionsMessages;
 import net.jewczuk.openbip.constants.LogMessages;
 import net.jewczuk.openbip.entity.ArticleEntity;
@@ -53,15 +52,6 @@ public class ArticleRepositoryTest {
 		
 		excE.expect(ResourceNotFoundException.class);
 		articleRepository.getArticleByLink(TestConstants.INVALID_LINK);
-	}
-	
-	@Test
-	public void shouldReturnMainPageArticle() {
-		ArticleEntity article = articleRepository.getArticleByLink(ApplicationProperties.MAIN_PAGE_LINK);
-		
-		assertThat(article.getTitle()).isEqualTo(TestConstants.MAIN_PAGE_TITLE);
-		assertThat(article.getAttachments()).isEmpty();
-		assertThat(article.getChildren()).isEmpty();
 	}
 	
 	@Test

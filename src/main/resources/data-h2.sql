@@ -85,3 +85,6 @@ INSERT INTO sandbox(id, editor_id, title, link, content, version, created_at, up
 INSERT INTO sandbox(id, editor_id, title, link, content, version, created_at, updated_at)
 	VALUES(3, 3, 'Brudnopis 3_1', 'xyz31', 'brudnopis 3 1', 1, now(), default);
 	
+INSERT INTO mainpage(id, article_id, version, created_at, updated_at)
+	VALUES(1, 1, 1, now(), default);
+	
