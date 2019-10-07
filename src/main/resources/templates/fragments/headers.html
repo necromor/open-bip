@@ -31,8 +31,10 @@
 
 <th:block th:fragment="error_header">
 <header class="row">
-	<p class="col-md-2 col-12"><a th:href="@{/}" title="Strona główna"><img th:src="@{/img/logo.png}" alt="Logo urzędu" ></a></p>
-	<h1 class="col-md col-12">Biuletyn Informacji Publicznej - error</h1>
+	<p class="col-md-2 col-12">
+		<a th:href="@{/}" title="Strona główna"><img th:src="@{/img/logo.png}" th:alt="#{company.shortname} + '-logo'" ></a>
+	</p>
+	<h1 class="col-md col-12" th:text="#{company.shortname} + ' - Biuletyn Informacji Publicznej - błąd'"></h1>
 </header>
 </th:block>
 
