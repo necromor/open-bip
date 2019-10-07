@@ -5,9 +5,13 @@
 
 <th:block th:fragment="page_header">
 <header class="row">
-	<p class="col-md-2 col-12"><a th:href="@{/}" title="Strona główna"><img th:src="@{/img/logo.png}" alt="Logo urzędu" ></a></p>
-	<h1 class="col-md col-12">Biuletyn Informacji Publicznej Instytucji ABC</h1>
-	<p class="col-md-3 col-12"><a href="http://bip.gov.pl" title="Biuletyn Informacji Publicznej"><img th:src="@{/img/ava.jpg}" alt="Logo BIP"></a></p>
+	<p class="col-md-2 col-12">
+		<a th:href="@{/}" title="Strona główna"><img th:src="@{/img/logo.png}" th:alt="#{company.shortname} + '-logo'" ></a>
+	</p>
+	<h1 class="col-md col-12" th:text="#{company.fullname} + ' - Biuletyn Informacji Publicznej'"></h1>
+	<p class="col-md-3 col-12">
+		<a href="http://bip.gov.pl" title="Biuletyn Informacji Publicznej"><img th:src="@{/img/ava.jpg}" alt="Logo BIP"></a>
+	</p>
 </header>
 </th:block>
 
