@@ -47,4 +47,7 @@ public class UIMessages {
 	public static final String LOGIN_EXPIRED = "Twoje konto jest nieaktywne.";
 	public static final String LOGIN_UNIDENTIFIED = "Wystąpił niezidentyfikowany błąd.";
 	public static final String PASS_GENERIC = "Twoje hasło jest domyślne. Musisz je zmienić.";
+
+	public static final String CONNECTION_FAILURE = "Połączenie z bazą danych jest niewłaściwe";
+	public static final String CONNECTION_SUCCESS = "Połączenie z bazą danych jest poprawne";
 }

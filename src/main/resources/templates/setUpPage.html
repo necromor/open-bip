@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link th:href="@{/css/panel.css}" rel="stylesheet">
+	<link rel="icon" th:href="@{/img/favicon.ico}">
+</head>
+<body>
+
+<div class="container">
+	<th:block th:replace="fragments/headers :: setup_header"/>
+	<div class="row">
+	
+	<article class="col-md-8 offset-md-2">
+			
+		<h2 class="col-12">Skonfiguruj Twoją stronę Biuletynu Informacji Publicznej</h2>	
+		
+		<h3 class="col-12">Aktualna konfiguracja</h3>
+		<dl class="config-list">
+			<dt>Utworzone konto administratora:</dt>
+			<dd>TODO</dd>
+			<dt>Pełna nazwa instytucji:</dt>
+			<dd th:text="#{company.fullname}"></dd>
+			<dt>Skrócona nazwa instytucji:</dt>
+			<dd th:text="#{company.shortname}"></dd>
+			<dt>Link do polityki prywatności:</dt>
+			<dd th:text="#{show.privacypolicy} ? 'Pokazuj' : 'Nie pokazuj'"></dd>
+			<dt>Utworzona strona polityki prywatności:</dt>
+			<dd>TODO</dd>
+			<dt>Link do polityki cookies:</dt>
+			<dd th:text="#{show.cookiespolicy} ? 'Pokazuj' : 'Nie pokazuj'"></dd>
+			<dt>Utworzona strona polityki cookies:</dt>
+			<dd>TODO</dd>
+		</dl>		
+		
+		<h3 class="col-12">Testowanie połączenia z bazą danych</h3>
+			<div class="col-12 row">
+				<button class="col-md-3 btn btn-info" id="db-conn-test" th:text="#{button.test.connection}"></button>
+				<p class="col-md-8 offset-md-1 alert alert-primary" id="db-conn-result">Nie przetestowanio połączenia</p>
+			</div>
+		<h3 class="col-12">Utworzenie konta administratora</h3>
+
+		<h3 class="col-12">Dalsze niezbędne kroki</h3>
+		<ol class="list-group list-group-flush">
+			<li class="list-group-item">Z poziomu panelu administratora utwórz przynajmniej jedno konto redaktora.</li>
+			<li class="list-group-item">Z poziomu panelu redaktora utwórz przynajmniej jeden artykuł i odznacz go jako <em>strona główna</em></li>
+			<li class="list-group-item">W razie potrzeby utwórz strony polityka prywatności oraz polityka cookies.</li>
+		</ol>
+
+	</article>
+	</div>
+	<th:block th:replace="fragments/footers :: panel_footer"/>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script th:src="@{/js/test_module.js}"></script>
+<script th:src="@{/js/test_main.js}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

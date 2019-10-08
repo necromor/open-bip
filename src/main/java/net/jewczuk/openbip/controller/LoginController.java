@@ -32,6 +32,11 @@ public class LoginController {
 	
 	@Autowired
 	private PasswordValidator passwordValidator;
+	
+	@GetMapping("/pierwsza-konfiguracja")
+	public String showSetUpPage(Model model) {
+		return ViewNames.SET_UP_PAGE;
+	}
 
 	@GetMapping("/login")
 	public String showLoginForm(Model model) {

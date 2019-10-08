@@ -33,5 +33,8 @@ public class ViewNames {
 	public static final String ERROR_404 = "404";
 	public static final String ACCESS_DENIED = "accessDenied";
 	public static final String LOGIN = "login";
+	
+	public static final String IN_CONSTRUCTION = "pageInConstruction";
+	public static final String SET_UP_PAGE = "setUpPage";
 
 }
