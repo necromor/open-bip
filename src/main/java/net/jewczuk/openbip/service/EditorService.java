@@ -23,4 +23,8 @@ public interface EditorService {
 	EditorTO editEditor(EditorTO editor, String oldEmail) throws BusinessException;
 	
 	EditorTO changePassword(String email, String oldPass, String newPass) throws BusinessException;
+	
+	boolean isAdminPresent();
+	
+	void createAdminAccount(EditorTO admin) throws BusinessException;
 }

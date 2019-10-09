@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.jewczuk.openbip.config.CustomUserDetails;
+import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.constants.UIMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
 import net.jewczuk.openbip.service.EditorService;
+import net.jewczuk.openbip.to.EditorTO;
 import net.jewczuk.openbip.validators.PasswordValidator;
 
 @Controller
@@ -33,9 +35,29 @@ public class LoginController {
 	@Autowired
 	private PasswordValidator passwordValidator;
 	
-	@GetMapping("/pierwsza-konfiguracja")
+	@GetMapping(ApplicationProperties.SETUP_PAGE_LINK)
 	public String showSetUpPage(Model model) {
+		EditorTO admin = (EditorTO) model.asMap().getOrDefault("admin", new EditorTO());
+		model.addAttribute("admin", admin);	
+		model.addAttribute("adminPresent", editorService.isAdminPresent());
+		model.addAttribute("postLink", ApplicationProperties.SETUP_PAGE_LINK + ".do");
+		
 		return ViewNames.SET_UP_PAGE;
+	}
+	
+	@PostMapping(ApplicationProperties.SETUP_PAGE_LINK + ".do")
+	public String crateAdminAccount(Model model, EditorTO admin) {		
+		try {
+			editorService.createAdminAccount(admin);	
+			return "redirect:" + ApplicationProperties.SETUP_PAGE_LINK;
+		} catch (BusinessException e) {
+			model.addAttribute("admin", new EditorTO());	
+			model.addAttribute("adminPresent", editorService.isAdminPresent());
+			model.addAttribute("error", e.getMessage());
+			model.addAttribute("postLink", ApplicationProperties.SETUP_PAGE_LINK + ".do");
+			
+			return ViewNames.SET_UP_PAGE;
+		}
 	}
 
 	@GetMapping("/login")

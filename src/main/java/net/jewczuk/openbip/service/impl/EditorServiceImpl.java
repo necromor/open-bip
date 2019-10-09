@@ -95,4 +95,25 @@ public class EditorServiceImpl implements EditorService {
 		return editorMapper.mapToEditorTO(editorRepository.changePassword(email, oldPass, newPass));
 	}
 
+	@Override
+	public boolean isAdminPresent() {
+		List<EditorEntity> admin = editorRepository.findAll().stream()
+				.filter(e -> e.getRole().equals("ADMIN"))
+				.collect(Collectors.toList());
+		return !admin.isEmpty();
+	}
+
+	@Override
+	public void createAdminAccount(EditorTO admin) throws BusinessException {
+		if (isAdminPresent()) {
+			throw new EditorException(ExceptionsMessages.ADMIN_ALREADY_EXISTS);
+		}
+		
+		try {
+			editorRepository.save(editorMapper.mapToNewAdminAccount(admin));
+		} catch (Exception e) {
+			throw new EditorException(ExceptionsMessages.EMAIL_EXISTS);
+		}	
+	}
+
 }

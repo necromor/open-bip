@@ -9,6 +9,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link th:href="@{/css/panel.css}" rel="stylesheet">
 	<link rel="icon" th:href="@{/img/favicon.ico}">
+	<title th:text="#{company.shortname} + ' - BIP - pierwsza konfiguracja'"></title>
 </head>
 <body>
 
@@ -23,7 +24,7 @@
 		<h3 class="col-12">Aktualna konfiguracja</h3>
 		<dl class="config-list">
 			<dt>Utworzone konto administratora:</dt>
-			<dd>TODO</dd>
+			<dd th:text="${adminPresent} ? 'Utworzone' : 'Brak'"></dd>
 			<dt>Pełna nazwa instytucji:</dt>
 			<dd th:text="#{company.fullname}"></dd>
 			<dt>Skrócona nazwa instytucji:</dt>
@@ -44,6 +45,38 @@
 				<p class="col-md-8 offset-md-1 alert alert-primary" id="db-conn-result">Nie przetestowanio połączenia</p>
 			</div>
 		<h3 class="col-12">Utworzenie konta administratora</h3>
+			<p class="alert alert-success text-center" th:if="${adminPresent}">Konto administratora zostało już utworzone.
+				<a th:href="@{/admin}">Zaloguj się</a>
+			</p>
+			
+			<div th:unless="${adminPresent}">			
+			<section class="article-info">
+				<p>W systemie może istnieć tylko jedno konto administratora.</p>
+				<p><strong>Nie można</strong> użyć tego samego adresu e-mail do utworzenia konta administratora i konta redaktora!</p>
+				<p>Konto administratora tworzone jest z domyślnym hasłem (adres e-mail). Zalecana jest zmiana hasła.</p>
+			</section>
+			
+			<form th:action="@{${postLink}}" th:object="${admin}" method="post">
+				<fieldset class="container">
+					<legend>Utwórz konto administratora</legend>
+					
+					<div class="form-group row" th:if="${error}">
+						<p class="alert alert-danger text-center col-md-10 offset-md-1" th:text="${error}"></p>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-md-3" for="title">Adres email:</label>
+						<input class="col-md-9 form-control" type="email" id="email" th:field="*{email}" required>
+					</div>
+					
+					<p class="button-middle">
+						<button type="submit" class="btn btn-primary" 
+							th:text="#{button.add.admin}" th:title="#{title.add.admin}">
+						</button>
+					</p>
+				</fieldset>
+			</form>			
+			</div>
 
 		<h3 class="col-12">Dalsze niezbędne kroki</h3>
 		<ol class="list-group list-group-flush">

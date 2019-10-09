@@ -39,5 +39,6 @@ public class ExceptionsMessages {
 	public static final String PASSWORD_TOO_SHORT = "Nowe hasło musi mieć znaków nie mniej niż: " 
 													+ ApplicationProperties.MIN_PASS_LENGTH;
 	public static final String PASSWORD_CONTAINS_ONLY_SMALL_LETTERS = "Nowe hasło nie może zawierać tylko małych liter";
+	public static final String ADMIN_ALREADY_EXISTS = "Konto administratora już istnieje w systemie!";
 	
 }

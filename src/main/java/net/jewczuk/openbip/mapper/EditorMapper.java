@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.entity.EditorEntity;
 import net.jewczuk.openbip.to.EditorTO;
 import net.jewczuk.openbip.to.RedactorTO;
@@ -54,5 +55,17 @@ public class EditorMapper {
 		existing.setEmail(changes.getEmail());
 		
 		return existing;
+	}
+	
+	public EditorEntity mapToNewAdminAccount(EditorTO admin) {
+		EditorEntity entity = new EditorEntity();
+		entity.setFirstName(ApplicationProperties.ADMIN_DATA);
+		entity.setLastName(ApplicationProperties.ADMIN_DATA);
+		entity.setActive(true);
+		entity.setRole("ADMIN");
+		entity.setEmail(admin.getEmail());
+		entity.setPassword(encoder.encode(admin.getEmail()));	
+		
+		return entity;
 	}
 }
