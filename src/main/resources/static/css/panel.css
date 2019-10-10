@@ -153,3 +153,17 @@ article .sortable-element {
 	float:left;
 	margin-right: 1em;
 }
+
+#accordion h4 {
+	border: 1px dashed #ffffff;
+	padding: 0.2em 0.2em 0.2em 2em;
+	background-color: #000000;
+	color: #ffffff;
+	cursor: help;
+}
+
+#accordion div {
+	margin: 0 0.5em;
+	border-left: 2px solid #000000;
+	padding: 0 0.5em;
+}

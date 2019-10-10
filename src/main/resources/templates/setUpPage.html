@@ -29,21 +29,21 @@
 			<dd th:text="#{company.fullname}"></dd>
 			<dt>Skrócona nazwa instytucji:</dt>
 			<dd th:text="#{company.shortname}"></dd>
+			<dt>Utworzona strona polityki prywatności:</dt>
+			<dd>TODO</dd>
 			<dt>Link do polityki prywatności:</dt>
 			<dd th:text="#{show.privacypolicy} ? 'Pokazuj' : 'Nie pokazuj'"></dd>
-			<dt>Utworzona strona polityki prywatności:</dt>
+			<dt>Utworzona strona polityki cookies:</dt>
 			<dd>TODO</dd>
 			<dt>Link do polityki cookies:</dt>
 			<dd th:text="#{show.cookiespolicy} ? 'Pokazuj' : 'Nie pokazuj'"></dd>
-			<dt>Utworzona strona polityki cookies:</dt>
-			<dd>TODO</dd>
 		</dl>		
 		
-		<h3 class="col-12">Testowanie połączenia z bazą danych</h3>
+<!-- 		<h3 class="col-12">Testowanie połączenia z bazą danych</h3>
 			<div class="col-12 row">
 				<button class="col-md-3 btn btn-info" id="db-conn-test" th:text="#{button.test.connection}"></button>
 				<p class="col-md-8 offset-md-1 alert alert-primary" id="db-conn-result">Nie przetestowanio połączenia</p>
-			</div>
+			</div> -->
 		<h3 class="col-12">Utworzenie konta administratora</h3>
 			<p class="alert alert-success text-center" th:if="${adminPresent}">Konto administratora zostało już utworzone.
 				<a th:href="@{/admin}">Zaloguj się</a>
@@ -79,11 +79,41 @@
 			</div>
 
 		<h3 class="col-12">Dalsze niezbędne kroki</h3>
-		<ol class="list-group list-group-flush">
-			<li class="list-group-item">Z poziomu panelu administratora utwórz przynajmniej jedno konto redaktora.</li>
-			<li class="list-group-item">Z poziomu panelu redaktora utwórz przynajmniej jeden artykuł i odznacz go jako <em>strona główna</em></li>
-			<li class="list-group-item">W razie potrzeby utwórz strony polityka prywatności oraz polityka cookies.</li>
-		</ol>
+		<div id="accordion">
+			<h4 th:title="#{title.show.additional.info}">Utwórz konto redaktora</h4>
+			<div>
+				<p>Z poziomu panelu administratora utwórz przynajmniej jedno konto redaktora.</p>
+				<p>Tylko redaktor ma możliwość dodawania i zarzadzania artykułami. </p>
+				<p>Pamiętaj, że dane redaktora (imię, nazwisko, adres email, telefon) są dostępne dla przeglądających stronę BIP.</p>
+			</div>
+			
+			<h4 th:title="#{title.show.additional.info}">Dodaj artykuł strony głównej</h4>
+			<div>
+				<p>Z poziomu panelu redaktora utwórz przynajmniej jeden artykuł i odznacz go jako <em>strona główna</em>.</p>
+				<p>Bez artykułu oznaczonego jako strona główna, wejście na stronę główną serwisu przekierowywać będzie na stronę <em>/strona-w-budowie</em>
+				nawet jeżeli dostępne będą inne artykuły przypięte do menu głównego.</p>
+			</div>
+			
+			<h4 th:title="#{title.show.additional.info}">Dodaj artykuł polityka prywatności i polityka cookies</h4>
+			<div>
+				<p>Domyślny link do polityki prywatności to <em>/artykul/polityka-prywatnosci</em>.</p>
+				<p>Z tego wynika, że musisz utworzyć artykuł, którego tytuł musi zostać przekształcony do postaci <em>polityka-prywatnosci</em>.</p>
+				<p>W panelu redaktora podczas dodawania nowego artykułu na bieżąco można śledzić link jaki zostanie utworzony z podanego tytułu.</p>
+				<p>Domyślny link do polityki cookies to <em>/artykul/polityka-cookies</em>. Sposób postępowania jest identyczny jak w przypadku polityki prywatności.</p>
+				<p><strong>Ważne:</strong> jeżeli chcesz by linki do powyższych artykułów były wyświetlna w stopce, to musisz ustawić odpowiednie opcje na <em>true</em> w pliku <em>company.properties</em>.</p>
+			</div>
+			
+			<h4 th:title="#{title.show.additional.info}">Ustaw logo serwisu i favicon</h4>
+			<div>
+				<p>Logo można zmienić na dwa sposoby:</p>
+				<ol>
+					<li>Podmienić plik <em>logo.png</em> w katalogu <em>/resources/static/img</em></li>
+					<li>W pliku <em>company.properties</em> ustawić link do swojego loga</li>
+				</ol>
+				<p>Logo skalowane jest do wysokości 75px. Można to oczywiście zmienić w pliu <em>main.css</em>.</p>
+				<p>Plik <em>favicon.ico</em> znajduje się w katalogu <em>/resources/static/img</em>.</p>
+			</div>
+		</div>
 
 	</article>
 	</div>
@@ -92,6 +122,7 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
   	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script th:src="@{/js/test_module.js}"></script>
 <script th:src="@{/js/test_main.js}"></script>
 
