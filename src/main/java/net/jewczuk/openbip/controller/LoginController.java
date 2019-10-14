@@ -22,6 +22,7 @@ import net.jewczuk.openbip.constants.ApplicationProperties;
 import net.jewczuk.openbip.constants.UIMessages;
 import net.jewczuk.openbip.constants.ViewNames;
 import net.jewczuk.openbip.exceptions.BusinessException;
+import net.jewczuk.openbip.service.ArticleService;
 import net.jewczuk.openbip.service.EditorService;
 import net.jewczuk.openbip.to.EditorTO;
 import net.jewczuk.openbip.validators.PasswordValidator;
@@ -33,6 +34,9 @@ public class LoginController {
 	private EditorService editorService;
 	
 	@Autowired
+	private ArticleService articleService;
+	
+	@Autowired
 	private PasswordValidator passwordValidator;
 	
 	@GetMapping(ApplicationProperties.SETUP_PAGE_LINK)
@@ -41,6 +45,8 @@ public class LoginController {
 		model.addAttribute("admin", admin);	
 		model.addAttribute("adminPresent", editorService.isAdminPresent());
 		model.addAttribute("postLink", ApplicationProperties.SETUP_PAGE_LINK + ".do");
+		model.addAttribute("privacyPolicy", doesLinkExists("polityka-prywatnosci"));
+		model.addAttribute("cookiesPolicy", doesLinkExists("polityka-cookies"));
 		
 		return ViewNames.SET_UP_PAGE;
 	}
@@ -129,5 +135,14 @@ public class LoginController {
 		localized.put("User account has expired", UIMessages.LOGIN_EXPIRED);
 
 		return localized.getOrDefault(error, UIMessages.LOGIN_UNIDENTIFIED);
+	}
+	
+	private boolean doesLinkExists(String link) {
+		try {
+			articleService.getArticleByLink(link);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }
