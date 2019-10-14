@@ -9,6 +9,7 @@ public class ViewNames {
 	public static final String PANEL_MAIN = "panelMain";
 	public static final String LOG_LIST = "panelLogList";
 	public static final String ADMIN_MAIN = "adminMain";
+	public static final String ADMIN_TODO = "adminToDoList";
 	
 	public static final String EDITOR_ADD = "adminEditorAdd";
 	public static final String EDITOR_EDIT = "adminEditorEdit";

@@ -37,6 +37,11 @@ public class AdminController {
 		return ViewNames.ADMIN_MAIN;
 	}
 	
+	@GetMapping("/do-zrobienia")
+	public String showToDoPage() {		
+		return ViewNames.ADMIN_TODO;
+	}
+	
 	@GetMapping("/dodaj/redaktor")
 	public String showFormAddEditor(Model model) {
 		EditorTO editor = (EditorTO) model.asMap().getOrDefault("editor", new EditorTO());

@@ -1,0 +1,17 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/admin_layout}">
+<head>
+    <title>Panel Admina - lista rzeczy do zrobienia</title>
+</head>
+<body>
+
+<article layout:fragment="admin_content" class="col-md-8">
+
+	<h2>Lista rzeczy do zrobienia</h2>
+	<th:block th:replace="fragments/other :: additional_info"/>
+
+</article>
+
+</body>
+</html>
