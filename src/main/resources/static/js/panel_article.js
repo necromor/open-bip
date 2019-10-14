@@ -22,6 +22,9 @@ let panel_article = (function () {
 	const articleAttachmentsPositions = '/api/article/attachments-positions/';
 	const sandboxGetContent = '/api/sandbox/get-content/';
 	
+	const token = document.querySelector("meta[name='_csrf']").getAttribute("content");
+	const header = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+	
 	function registerCreateLinkEvent() {
 		if (titleField) {
 			titleField.addEventListener('keyup', showCreatedLink);
@@ -63,6 +66,9 @@ let panel_article = (function () {
 	function createAjax(address, data, type) {
 		$.ajax({
 			type : "PUT",
+			beforeSend: function(request) {
+			    request.setRequestHeader(header, token);
+			},
 			contentType : "application/json",
 			url : address,
 			data : JSON.stringify(data),
@@ -136,7 +142,6 @@ let panel_article = (function () {
 	
 	function showSandboxResult(result) {
 		showResult(result, sandboxContentMessage);
-		//articleEditContentField.value = result.content;
 		tinyMCE.activeEditor.setContent(result.content);
 	}
 	

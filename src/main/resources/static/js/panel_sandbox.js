@@ -7,6 +7,9 @@ let panel_sandbox = (function () {
 	const messageDiv = document.getElementById('ajax-message');
 	const showMessageTime = 4000;
 	
+	const token = $("meta[name='_csrf']").attr("content"); 
+	const header = $("meta[name='_csrf_header']").attr("content");
+	
 	
 	function registerSandboxEvent() {		
 		if (sandboxSave) {
@@ -22,6 +25,9 @@ let panel_sandbox = (function () {
 		
 		$.ajax({
 			type : "PUT",
+			beforeSend: function(request) {
+			    request.setRequestHeader(header, token);
+			},
 			contentType : "application/json",
 			url : sandboxSaveLink,
 			data : JSON.stringify(sandbox),

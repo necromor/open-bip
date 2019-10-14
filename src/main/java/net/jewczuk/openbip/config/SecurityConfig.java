@@ -56,11 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/").deleteCookies("JSESSIONID")
 				.invalidateHttpSession(true)
 			.and()
-			.exceptionHandling().accessDeniedPage("/access-denied")
-			.and().csrf().ignoringAntMatchers("/api/article/children-positions/**", 
-												"/api/article/attachments-positions/*", 
-												"/api/article/main-menu-positions",
-												"/api/sandbox/save");
+			.exceptionHandling().accessDeniedPage("/access-denied");
 	}
 	
 	
